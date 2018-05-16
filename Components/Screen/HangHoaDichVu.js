@@ -77,9 +77,8 @@ export default class HangHoaDichVu extends Component<Props> {
               }}>
               <Text style={styles.text_blue2}>
                 Hàng hóa
-
               </Text>
-              <Entypo name='plus' size={21} style={ styles.icon_add_hanghoa}/>
+              <Entypo name='plus' size={21} style={ [styles.icon_add_hanghoa]}/>
             </View>
             <List style={styles.list_hanghoa}>
               <View style={styles.hanghoa__item}>

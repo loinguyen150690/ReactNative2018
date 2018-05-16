@@ -24,12 +24,14 @@ import styles from '../Styles/Styles.js';
 
 import Icon from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
+import Entypo from "react-native-vector-icons/Entypo";
+
 
 export default class ThongTinGiaoNhan extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      checkBox1: false,
+      checkBox1: true
     };
   };
 
@@ -37,6 +39,8 @@ export default class ThongTinGiaoNhan extends Component<Props> {
     return (<Container>
       <Content>
         <View style={styles.detail_chuyen_hang}>
+          <View >
+
           <View style={styles.detail_chuyen_hang__row}>
             <Text style={styles.text_blue}>Điểm đi - điểm đến</Text>
             <View style={{
@@ -112,6 +116,7 @@ export default class ThongTinGiaoNhan extends Component<Props> {
               </View>
             </List>
           </View>
+
           <View style={styles.detail_chuyen_hang__row_3}>
             <Text style={styles.text_blue2}>Dịch vụ</Text>
             <List style={styles.list_hanghoa}>
@@ -150,6 +155,7 @@ export default class ThongTinGiaoNhan extends Component<Props> {
 
             </List>
           </View>
+
           <View style={styles.detail_chuyen_hang__row_3}>
             <Text style={styles.text_blue2}>Báo giá</Text>
             <View style={styles.thanhtien}>
@@ -159,23 +165,46 @@ export default class ThongTinGiaoNhan extends Component<Props> {
               </View>
             </View>
           </View>
+</View>
+          <ListItem onPress={() => {
+              this.setState({
+                checkBox1: !this.state.checkBox1
+              });
+
+            }} style={styles.giaonhan_checkbox}>
+            <CheckBox checked={this.state.checkBox1}/>
+            <Body>
+              <Text>Bạn đồng ý với mức giá trên</Text>
+            </Body>
+          </ListItem>
 
 
-            <ListItem onPress={()=>{this.setState({
-              checkBox1: !this.state.checkBox1
-            })}} style={{borderBottomWidth: 0}}>
-              <CheckBox checked={this.state.checkBox1}/>
-              <Body>
-                <Text>Bạn đồng ý với mức giá trên</Text>
-              </Body>
-            </ListItem>
 
-          <View style={styles.action_bottom_4}>
-            <Button block={true} rounded={true} bordered={true} style={styles.frmgetpass__btn}>
-              <Text style={styles.frmgetpass__btn__txt}>XÁC NHẬN</Text>
-            </Button>
+          <View style={{
+              opacity: this.state.checkBox1 === true
+                ? 1
+                : 0.2
+            }} pointerEvents={this.state.checkBox1 === true
+              ? 'auto'
+              : 'none'}>
+
+              <View style={styles.giao_nhan_add_hang_hoa}>
+              <Text style={[styles.text_blue2,styles.text_blue3]}>Thông tin giao hàng</Text>
+                <Entypo name='plus' size={21} style={ [styles.icon_add_hanghoa, styles.icon_add_hanghoa2]}/>
+              </View>
+              <View style={styles.giao_nhan_add_hang_hoa}>
+              <Text style={[styles.text_blue2,styles.text_blue3]}>Thông tin nhận hàng</Text>
+                <Entypo name='plus' size={21} style={ [styles.icon_add_hanghoa, styles.icon_add_hanghoa2]}/>
+              </View>
+
+            <View style={styles.action_bottom_4}>
+              <Button block={true} rounded={true} bordered={true} style={styles.frmgetpass__btn} onPress={() => {
+                  Alert.alert('clicked')
+                }}>
+                <Text style={styles.frmgetpass__btn__txt}>XÁC NHẬN</Text>
+              </Button>
+            </View>
           </View>
-
         </View>
       </Content>
 

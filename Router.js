@@ -227,5 +227,5 @@ export const RootStack = StackNavigator({
       alignItems: 'center'
     }
   },
-  initialRouteName: 'Login',
+  initialRouteName: 'ThongTinGiaoNhan',
 });

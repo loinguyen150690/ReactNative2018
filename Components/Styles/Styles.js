@@ -510,6 +510,12 @@ export default StyleSheet.create({
     color: globals.color.darkblue,
     fontWeight: 'bold'
   },
+  text_blue3:{
+    borderBottomWidth: 0,
+    paddingBottom: 0,
+    paddingTop: 0
+  }
+  ,
   hanghoa_picker: {
     height: 35,
     width: win.width - 20,
@@ -535,7 +541,11 @@ export default StyleSheet.create({
     borderRadius: 20,
     color: globals.color.darkblue,
     zIndex: 3
-  },
+  }
+  ,icon_add_hanghoa2:{
+      top: 15,
+  }
+  ,
   btn_change_lotrinh: {
     position: 'absolute',
     right: 10,
@@ -592,5 +602,18 @@ export default StyleSheet.create({
   thanhtien__txt2: {
       width: '50%',
    fontSize: 16
-  },
+  }
+  ,giaonhan_checkbox:{
+    borderBottomWidth: 0,
+    marginBottom:15,
+    marginTop: 15
+  }
+  ,giao_nhan_add_hang_hoa:{
+    alignSelf: 'stretch',
+    backgroundColor: '#fff',
+    padding: 10,
+    paddingTop: 15,
+    paddingBottom: 15,
+    marginTop: 10
+  }
 });
