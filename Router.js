@@ -14,6 +14,7 @@ import HangHoaDichVu from './Components/Screen/HangHoaDichVu.js';
 import ChuyenHang from './Components/Screen/DanhSachChuyenHang.js';
 import ThongTinGiaoNhan from './Components/Screen/ThongTinGiaoNhan.js';
 import DetailChuyenHang from './Components/Screen/DetailChuyenHang.js';
+import ScanQRCodeScreen from './Components/Screen/Camera.js';
 
 //Danh sach chuyen change
 
@@ -210,6 +211,15 @@ export const RootStack = StackNavigator({
     },
   }
   ,
+  ScanQRCode: {
+    screen: ScanQRCodeScreen,
+    navigationOptions: {
+       header: null,
+       headerBackTitle: null,
+    },
+  }
+  ,
+
   DetailChuyenHang: {
     screen: DetailChuyenHang,
     navigationOptions: {
@@ -227,5 +237,5 @@ export const RootStack = StackNavigator({
       alignItems: 'center'
     }
   },
-  initialRouteName: 'ThongTinGiaoNhan',
+  initialRouteName: 'HomePage',
 });
