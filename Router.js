@@ -21,6 +21,7 @@ import KichHoat from "./Components/Screen/KichHoat.js";
 import TrangChu from "./Components/Screen/TrangChu.js";
 import HoiDap from "./Components/Screen/HoiDap.js";
 import Intro from "./Components/Screen/Intro.js";
+import ChatScreen from './Components/Screen/Chat.js';
 
 //Danh sach chuyen change
 
@@ -30,6 +31,20 @@ import styles from "./Components/Styles/Styles.js";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+
+//LoiNguyen @20180526 : firebase init
+import firebase from 'firebase';
+// var config = {
+//    apiKey: "AIzaSyDgwAeVWyT3MMYQpU_MK7oFHqgym_IRCO8",
+//    authDomain: "bluedata-a6730.firebaseapp.com",
+//    databaseURL: "https://bluedata-a6730.firebaseio.com",
+//    projectId: "bluedata-a6730",
+//    storageBucket: "bluedata-a6730.appspot.com",
+//    messagingSenderId: "8182945351"
+//  };
+// firebase.initializeApp(config);
+//end firebase
+
 
 const BottomTabNav = TabNavigator(
     {
@@ -244,6 +259,11 @@ export const RootStack = StackNavigator(
         DetailChuyenHang: {
             screen: DetailChuyenHang,
             navigationOptions: {}
+        },
+        Chat: {
+            screen: ChatScreen,
+            navigationOptions: {
+            },
         }
     },
     {
