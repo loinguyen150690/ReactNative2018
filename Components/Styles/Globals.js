@@ -4,7 +4,7 @@ export default {
   color: {
     darkblue: '#1F75D1',
     lightblue: '#44A4F5',
-    grey: '#9A9A9A',
+    grey: '#707070',
     yellow: '#FCB931',
     activeColorTabbar: 'white',
     text_grey: '#9A9A9A',
