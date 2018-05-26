@@ -19,6 +19,77 @@ export default StyleSheet.create({
     alignItems: 'center',
     top: 45
   },
+
+
+  listItemCate:{
+   flex: 1,
+   flexDirection: 'row',
+   marginTop: 20,
+   marginBottom: 20
+ }
+ ,item_cate:{
+   width: '33.33%',
+   flex: 1,
+   alignItems: 'center',
+   alignContent: 'center'
+ }
+ ,icon4:{
+     height: 40,
+     width: 40,
+     lineHeight: 40,
+     fontSize: 25,
+     color: '#3395FE',
+    // backgroundColor: '#3395FE',
+     textAlign: 'center',
+     borderRadius:0,
+ }
+ ,item_cate__icon:{
+   height: 80,
+   width: 80,
+   lineHeight: 80,
+   fontSize: 40,
+   color: '#fff',
+   backgroundColor: '#3395FE',
+   textAlign: 'center',
+   borderRadius:100,
+ }
+ ,bgOrange:{
+   backgroundColor: "#FD8E33"
+ }
+ ,bgGrey:{
+   backgroundColor: "#666"
+ }
+ ,titlePage:{
+   paddingTop: 20,
+   paddingHorizontal: 20
+ }
+ ,imageFull:{
+   width: '100%',
+   height: 200
+ }
+ , textBanner: {
+   position: 'absolute',
+   flex: 1
+ },
+ textBanner__txt: {
+   fontSize: 20
+ }
+
+ ,icon1:{
+backgroundColor:'#C657FF'
+ }
+ ,icon2:{
+backgroundColor:'#8AC06D'
+ }
+ ,icon3:{
+backgroundColor: '#FF5757'
+ }
+
+ ,serial:{
+     paddingLeft: 16,
+     paddingRight: 16,
+ }
+ ,
   welcome: {
     color: '#fff'
   },
@@ -217,8 +288,9 @@ export default StyleSheet.create({
   },
   //tabBar
   tabIcon: {
-    width: 20,
-    height: 20
+    //width: 20,
+    //height: 20,
+    fontSize: 22
   },
 
   tabBar: {

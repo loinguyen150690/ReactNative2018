@@ -31,6 +31,7 @@ export default class DetailChuyenHang extends Component<Props> {
     const {setParams} = this.props.navigation;
     var x = this._getId();
   };
+
   _getId() {
     let id = 0;
     if (this.props.navigation.state.params) {
@@ -40,14 +41,7 @@ export default class DetailChuyenHang extends Component<Props> {
     return id;
   }
 
-  static navigationOptions = ({navigation}) => {
-    const {state} = navigation;
-    if (state.params != undefined) {
-      return {
-        title: 'Chi tiết chuyến hàng - TestID:' + `${state.params.id}`
-      }
-    }
-  };
+
 
   render() {
 
