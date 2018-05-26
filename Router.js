@@ -8,13 +8,15 @@ import CreateAccount from './Components/Screen/CreateAccount.js';
 import EnterPhoneNumber from './Components/Screen/EnterPhoneNumber.js';
 import Home from './Components/Screen/Home.js';
 import ListNews from './Components/Screen/ListNews.js';
-import ListNotification from './Components/Screen/ListNotification.js';
+import ListNotification from './Components/Screen/FriendsList.js';
 import More from './Components/Screen/More.js';
 import HangHoaDichVu from './Components/Screen/HangHoaDichVu.js';
 import ChuyenHang from './Components/Screen/DanhSachChuyenHang.js';
 import ThongTinGiaoNhan from './Components/Screen/ThongTinGiaoNhan.js';
 import DetailChuyenHang from './Components/Screen/DetailChuyenHang.js';
 import ScanQRCodeScreen from './Components/Screen/Camera.js';
+import ChatScreen from './Components/Screen/Chat.js';
+
 
 //Danh sach chuyen change
 
@@ -23,6 +25,7 @@ import styles from './Components/Styles/Styles.js';
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import firebase from 'firebase';
 
 //Icon tabbar navigation
 const icon_tabbar_home = './Components/images/icon_tabbar_home.png';
@@ -36,7 +39,15 @@ const icon_tabbar_notification_active = './Components/images/icon_tabbar_notific
 
 const icon_tabbar_more = './Components/images/icon_tabbar_more.png';
 const icon_tabbar_more_active = './Components/images/icon_tabbar_more_active.png';
-
+var config = {
+   apiKey: "AIzaSyDgwAeVWyT3MMYQpU_MK7oFHqgym_IRCO8",
+   authDomain: "bluedata-a6730.firebaseapp.com",
+   databaseURL: "https://bluedata-a6730.firebaseio.com",
+   projectId: "bluedata-a6730",
+   storageBucket: "bluedata-a6730.appspot.com",
+   messagingSenderId: "8182945351"
+ };
+firebase.initializeApp(config);
 const BottomTabNav = TabNavigator({
   ChuyenHang: {
     screen: ChuyenHang,
@@ -222,6 +233,12 @@ export const RootStack = StackNavigator({
 
   DetailChuyenHang: {
     screen: DetailChuyenHang,
+    navigationOptions: {
+    },
+  }
+  ,
+  Chat: {
+    screen: ChatScreen,
     navigationOptions: {
     },
   }
