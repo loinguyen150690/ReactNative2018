@@ -32,7 +32,7 @@ export default class Login extends Component<Props> {
     super(props);
     this.state = {
       introPage: true,
-      phone: '',
+      username: '',
       password: '',
       loginned: false,
       isLoading: 0
@@ -61,7 +61,7 @@ export default class Login extends Component<Props> {
       loginned: false,
     });
 
-    if(this.state.phone == '')
+    if(this.state.username == '')
     {
       Alert.alert('Thông báo', 'Chưa nhập số điện thoại!');
       return;
@@ -73,25 +73,28 @@ export default class Login extends Component<Props> {
     }
 
       this.setState({isLoading: 1});
-      fetch('http://api.shippers.byte.vn/api/user/login', {
+      fetch('http://dev.baohanhdientu.net/api/Member_API/Login', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({Phone: this.state.phone, Password: this.state.password})
+        body: JSON.stringify({username: this.state.username, Password: this.state.password})
       })
 
       .then(response => {
         this.setState({isLoading: 0});
         if (response.status === 200) {
           return response.json().then(async (responseJson) => {
-            if (responseJson == 1){
+
+            if (responseJson){
+              Alert.alert('Thông báo', responseJson.LoginName);
               this.props.navigation.navigate('HomePage');
               try {
-                await AsyncStorage.setItem('@Loginned:key', 'true');
+                //await AsyncStorage.setItem('@Loginned:user',JSON.stringify(responseJson));
               } catch (e) {
                 console.log(e);
+                Alert.alert('Thông báo',e);
               } finally {}
             }
             else if (responseJson == 2) {
@@ -145,13 +148,13 @@ export default class Login extends Component<Props> {
       <Content>
         <View style={styles.page_title}>
           <Text full={true} style={styles.welcome}>Chào mừng đến với</Text>
-          <Text style={styles.shipper_text}>Shippers</Text>
+          <Text style={styles.shipper_text}>Ewarranty</Text>
         </View>
         <KeyboardAvoidingView behavior="padding" enabled={true}>
           <Form style={styles.frmlogin}>
             <Item floatingLabel={true} style={styles.frmlogin__item}>
-              <Label style={styles.frmlogin__label}>Số điện thoại</Label>
-              <Input keyboardType="phone-pad" value={this.state.phone} onChangeText={(phone) => this.setState({phone})} style={styles.frmlogin__input}/>
+              <Label style={styles.frmlogin__label}>Tài khoản</Label>
+              <Input value={this.state.username} onChangeText={(username) => this.setState({username})} style={styles.frmlogin__input}/>
             </Item>
             <Item floatingLabel={true} style={styles.frmlogin__item}>
               <Label style={styles.frmlogin__label}>Mật khẩu</Label>
@@ -173,7 +176,7 @@ export default class Login extends Component<Props> {
           <Text style={styles.create_account_txt}>Bạn chưa có tài khoản ?{' '}</Text>
           <Text style={styles.create_account_link}>Tạo tài khoản</Text>
         </TouchableOpacity> */}
-        <TouchableOpacity onPress={() => this.props.navigation.navigate("EnterPhoneNumber", {phone: this.state.phone})}>
+        <TouchableOpacity onPress={() => this.props.navigation.navigate("EnterPhoneNumber", {username: this.state.username})}>
           <Text style={styles.forget_pass_txt}>Bạn quên mật khẩu ?</Text>
         </TouchableOpacity>
       </Footer>

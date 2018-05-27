@@ -30,7 +30,7 @@ export default class Chat extends Component {
             messages: []
         };
 
-        this.user = firebase.auth().currentUser
+        this.user = {uid : '0979150724'};//{firebase.auth().currentUser}
 
         this.friend = this.props.navigation.state.params.friend;
 

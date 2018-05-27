@@ -41,7 +41,7 @@ export default class ScanCamera extends Component<Props> {
         ); //this.setState({qrcode: e.data});
           const { navigation } = this.props;
           navigation.goBack();
-          navigation.state.params.onSelect({ selected: e.data });
+          navigation.state.params.onSelect({ serial: e.data });
     }
     // _goBack() {
     //   Alert.alert(

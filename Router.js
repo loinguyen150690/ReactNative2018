@@ -34,15 +34,17 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 //LoiNguyen @20180526 : firebase init
 import firebase from 'firebase';
-// var config = {
-//    apiKey: "AIzaSyDgwAeVWyT3MMYQpU_MK7oFHqgym_IRCO8",
-//    authDomain: "bluedata-a6730.firebaseapp.com",
-//    databaseURL: "https://bluedata-a6730.firebaseio.com",
-//    projectId: "bluedata-a6730",
-//    storageBucket: "bluedata-a6730.appspot.com",
-//    messagingSenderId: "8182945351"
-//  };
-// firebase.initializeApp(config);
+ var config = {
+    apiKey: "AIzaSyDgwAeVWyT3MMYQpU_MK7oFHqgym_IRCO8",
+    authDomain: "bluedata-a6730.firebaseapp.com",
+    databaseURL: "https://bluedata-a6730.firebaseio.com",
+    projectId: "bluedata-a6730",
+   storageBucket: "bluedata-a6730.appspot.com",
+   messagingSenderId: "8182945351"
+  };
+ if (!firebase.apps.length) {
+	firebase.initializeApp(config);
+ }
 //end firebase
 
 
@@ -278,6 +280,6 @@ export const RootStack = StackNavigator(
                 alignItems: "center"
             }
         },
-        initialRouteName: "Intro"
+        initialRouteName: "Login"
     }
 );

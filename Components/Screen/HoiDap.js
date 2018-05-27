@@ -35,9 +35,12 @@ export default class FriendsList extends Component {
     }
 
     getRef() {
-      firebase.auth()
-         .signInWithEmailAndPassword('nobita.teo90@gmail.com', '123456')
-         var user = firebase.auth().currentUser;
+      //firebase.auth()
+      //   .signInWithEmailAndPassword('nobita.teo90@gmail.com', '123456')
+      //firebase.auth().signOut();
+      // firebase.auth()
+      //    .signInWithEmailAndPassword('nobita.teo90@gmail.com', '123456')
+      //    var user = firebase.auth().currentUser;
       //   Alert.alert('Thông báo',user.email + '123123');
         return firebase.database().ref();
     }
@@ -51,7 +54,7 @@ export default class FriendsList extends Component {
             var items = [];
             snap.forEach((child) => {
 
-                if(child.val().email != user.email)
+                //if(child.val().email != user.email)
                     items.push({
                         name: child.val().name,
                         uid: child.val().uid,
