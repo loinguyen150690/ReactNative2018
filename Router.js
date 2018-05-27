@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { StackNavigator, TabNavigator } from "react-navigation";
-import { Image, TouchableOpacity, View } from "react-native";
+import { Image, TouchableOpacity, View, AsyncStorage } from "react-native";
 import { Button, Text, Badge } from "native-base";
 import Login from "./Components/Screen/Login.js";
 import FogotPass from "./Components/Screen/FogotPass.js";
@@ -125,7 +125,7 @@ const BottomTabNav = TabNavigator(
         }
     },
     {
-        navigationOptions: {
+        navigationOptions : ({ navigate, navigation }) => ({
             activeTintColor: globals.color.activeColorTabbar,
             headerBackImage: null,
             headerBackTitle: null,
@@ -162,6 +162,8 @@ const BottomTabNav = TabNavigator(
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={{ height: 40, paddingLeft: 10, marginRight: 10 }}
+                        onPress={()=>{ AsyncStorage.removeItem("username"); navigation.navigate('Login')}
+                      }
                     >
                         <MaterialIcons
                             name="power-settings-new"
@@ -172,7 +174,7 @@ const BottomTabNav = TabNavigator(
                     </TouchableOpacity>
                 </View>
             )
-        },
+        }),
         tabBarPosition: "bottom",
         tabBarOptions: {
             showIcon: true,
@@ -280,6 +282,7 @@ export const RootStack = StackNavigator(
                 alignItems: "center"
             }
         },
-        initialRouteName: "Login"
+        //initialRouteName: "Intro" //"Login"
+        initialRouteName: "Login" //"Login"
     }
 );

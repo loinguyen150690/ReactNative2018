@@ -7,7 +7,8 @@ import {
   ActivityIndicator,
   StatusBar,
   Alert,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  AsyncStorage
 } from 'react-native';
 
 import {
@@ -32,10 +33,11 @@ export default class Login extends Component<Props> {
     super(props);
     this.state = {
       introPage: true,
-      username: '',
-      password: '',
+      username:'admin',
+      password:'123456abc++',
       loginned: false,
-      isLoading: 0
+      isLoading: 0,
+      id_token:''
     };
 
     setTimeout(function() {
@@ -48,13 +50,38 @@ export default class Login extends Component<Props> {
 
   _loadInitialState = async () => {
     try {
-      var value = await AsyncStorage.getItem('@Loginned:key');
-      if (value) {
-        console.log(value);
-        this.props.navigation.navigate('HomePage');
-      }
+      await AsyncStorage.getItem('username').then(token => {
+        //Alert.alert('Thông báo', token);
+        var ojUserName = JSON.parse(token);
+         if(ojUserName.LoginName){
+             //Alert.alert('Thông báo', ojUserName.LoginName);
+             this.props.navigation.navigate('HomePage');
+         }
+         else {
+       }
+     });
+
     } catch (e) {} finally {}
   }
+
+  async saveItem(item, selectedValue) {
+      try {
+        await AsyncStorage.setItem(item, selectedValue);
+        this.setState({ id_token: selectedValue });
+        //Alert.alert("Login Success!");
+      } catch (error) {
+        console.error("AsyncStorage error: " + error.message);
+      }
+    }
+    async userLogout() {
+      try {
+        await AsyncStorage.removeItem("id_token");
+        this.setState({ id_token: "" });
+        Alert.alert("Logout Success!");
+      } catch (error) {
+        console.log("AsyncStorage error: " + error.message);
+      }
+    }
 
   onLogin() {
     this.setState({
@@ -86,12 +113,10 @@ export default class Login extends Component<Props> {
         this.setState({isLoading: 0});
         if (response.status === 200) {
           return response.json().then(async (responseJson) => {
-
             if (responseJson){
-              Alert.alert('Thông báo', responseJson.LoginName);
-              this.props.navigation.navigate('HomePage');
+                this.props.navigation.navigate('HomePage');
               try {
-                //await AsyncStorage.setItem('@Loginned:user',JSON.stringify(responseJson));
+                  this.saveItem('username', JSON.stringify(responseJson));
               } catch (e) {
                 console.log(e);
                 Alert.alert('Thông báo',e);

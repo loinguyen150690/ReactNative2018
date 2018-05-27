@@ -6,7 +6,8 @@ import {
     TouchableOpacity,
     ListView,
     Image,
-    Alert
+    Alert,
+    ActivityIndicator
 } from 'react-native';
 import firebase from 'firebase';
 
@@ -16,7 +17,8 @@ import { Colors, Styles } from './Shared'
 import TextField from './Components/TextField';
 import Button from './Components/Button';
 import Separator from './Components/Separator';
-
+const background_img = '../images/background.png';
+const logo_img = '../images/logo.png';
 var navigator;
 
 export default class FriendsList extends Component {
@@ -27,7 +29,7 @@ export default class FriendsList extends Component {
             dataSource: new ListView.DataSource({
                 rowHasChanged: (row1, row2) => row1 !== row2,
             }),
-            loading: true
+            isLoading: 1
         };
         this.friendsRef = this.getRef().child('friends');
 
@@ -64,15 +66,15 @@ export default class FriendsList extends Component {
 
             this.setState({
                 dataSource: this.state.dataSource.cloneWithRows(items),
-                loading: false
+                isLoading: 0
             });
 
         });
     }
 
     componentDidMount() {
+      this.setState({isLoading: 1});
         this.listenForItems(this.friendsRef);
-
     }
 
     static route = {
@@ -106,20 +108,24 @@ export default class FriendsList extends Component {
     }
 
     render() {
+      if (this.state.isLoading == 1) {
         return (
-            <View style={styles.container}>
-                <View style={styles.topGroup}>
-                    <Text style={styles.myFriends}>My Friends</Text>
-                    <TouchableOpacity>
-                        <Text style={styles.inviteFriends}>Invite More Freinds</Text>
-                    </TouchableOpacity>
-                </View>
-                <ListView
-                    dataSource={this.state.dataSource}
-                    renderRow={this.renderRow} />
+          <ActivityIndicator style={styles.activity_indicator} size="large"  color="#0000ff"  />)
+      }
+      return (
+          <View style={styles.container}>
+              <View style={styles.topGroup}>
+                  <Text style={styles.myFriends}>My Friends</Text>
+                  <TouchableOpacity>
+                      <Text style={styles.inviteFriends}>Invite More Freinds</Text>
+                  </TouchableOpacity>
+              </View>
+              <ListView
+                  dataSource={this.state.dataSource}
+                  renderRow={this.renderRow} />
 
-            </View>
-        );
+          </View>
+      );
     }
 }
 

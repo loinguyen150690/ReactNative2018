@@ -45,7 +45,6 @@ export default class More extends Component<Props> {
     };
 
     onActive() {
-      Alert.alert('Thông báo','Test');
       this.setState({isLoading: 1});
       fetch('http://dev.baohanhdientu.net/api/SMS_DynamicAPI/Active_Online', {
         method: 'POST',
@@ -101,6 +100,10 @@ export default class More extends Component<Props> {
     }
 
     render() {
+      if (this.state.isLoading == 1) {
+        return (
+          <ActivityIndicator style={styles.activity_indicator} size="large"  color="#0000ff"  />)
+      }
         return (
             <Container>
                 <Content style={{ backgroundColor: "#fff", paddingTop: 30 }}>

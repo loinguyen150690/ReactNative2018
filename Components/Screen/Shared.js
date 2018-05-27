@@ -9,5 +9,11 @@ export const Styles = {
     NavBarStyles: {
         backgroundColor: Colors.mainColor,
         tintColor: Colors.tintColor,
+    },
+    activity_indicator:{
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#3DB2E3',
     }
 }

@@ -18,15 +18,12 @@ export default class Intro extends Component<Props> {
   };
   render() {
     return (<View style={{
-        backgroundColor: '#3DB2E3',
+        backgroundColor: '#008FE5',
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
       }}>
-      <Image source={require(logo_img)} style={{
-          width: 48,
-          height: 48
-        }}/>
+      <Image source={require(logo_img)} />
     </View>);
   }
 }
