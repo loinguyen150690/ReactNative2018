@@ -16,7 +16,7 @@ import {
 } from 'native-base';
 
 import styles from '../Styles/Styles.js';
-const src_img_icon = '../images/icon_newpass.png';
+const src_img_icon = '../Images/icon_newpass.png';
 
 export default class NewPass extends Component<Props> {
   render() {

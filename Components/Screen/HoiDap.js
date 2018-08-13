@@ -17,8 +17,8 @@ import { Colors, Styles } from './Shared'
 import TextField from './Components/TextField';
 import Button from './Components/Button';
 import Separator from './Components/Separator';
-const background_img = '../images/background.png';
-const logo_img = '../images/logo.png';
+const background_img = '../Images/background.png';
+const logo_img = '../Images/logo.png';
 var navigator;
 
 export default class FriendsList extends Component {

@@ -6,8 +6,8 @@ import {
   ActivityIndicator,
 } from 'react-native';
 
-const background_img = '../images/background.png';
-const logo_img = '../images/logo.png';
+const background_img = '../Images/background.png';
+const logo_img = '../Images/logo.png';
 
 export default class Intro extends Component<Props> {
   constructor(props) {

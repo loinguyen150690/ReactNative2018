@@ -8,7 +8,8 @@ import {
   StatusBar,
   Alert,
   KeyboardAvoidingView,
-  AsyncStorage
+  AsyncStorage,
+  Modal
 } from 'react-native';
 
 import {
@@ -22,12 +23,20 @@ import {
   Container,
   Header,
   Footer,
+  Spinner,
   Content
 } from 'native-base';
 
 import styles from '../Styles/Styles.js';
-const background_img = '../images/background.png';
-const logo_img = '../images/logo.png';
+import globals from "../Styles/Globals.js";
+
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import EvilIcons from "react-native-vector-icons/EvilIcons";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+
+const background_img = '../Images/background.png';
+const logo_img = '../Images/logo.png';
 export default class Login extends Component<Props> {
   constructor(props) {
     super(props);
@@ -36,7 +45,7 @@ export default class Login extends Component<Props> {
       username:'admin',
       password:'123456abc++',
       loginned: false,
-      isLoading: 0,
+      isLoading: false,
       id_token:''
     };
 
@@ -51,10 +60,8 @@ export default class Login extends Component<Props> {
   _loadInitialState = async () => {
     try {
       await AsyncStorage.getItem('username').then(token => {
-        //Alert.alert('Thông báo', token);
         var ojUserName = JSON.parse(token);
          if(ojUserName.LoginName){
-             //Alert.alert('Thông báo', ojUserName.LoginName);
              this.props.navigation.navigate('HomePage');
          }
          else {
@@ -99,7 +106,7 @@ export default class Login extends Component<Props> {
       return;
     }
 
-      this.setState({isLoading: 1});
+      this.setState({isLoading: true});
       fetch('http://dev.baohanhdientu.net/api/Member_API/Login', {
         method: 'POST',
         headers: {
@@ -110,7 +117,7 @@ export default class Login extends Component<Props> {
       })
 
       .then(response => {
-        this.setState({isLoading: 0});
+        this.setState({isLoading: false});
         if (response.status === 200) {
           return response.json().then(async (responseJson) => {
             if (responseJson){
@@ -140,21 +147,23 @@ export default class Login extends Component<Props> {
 
       .then(response => {
         console.debug(response);
-        this.setState({isLoading: 0});
+        this.setState({isLoading: false});
       })
 
       .catch(error => {
         console.error(error);
-        this.setState({isLoading: 0});
+        this.setState({isLoading: false});
         Alert.alert('Thông báo', 'Lỗi kết nối, vui lòng thử lại sau!');
       });
   }
-  render() {
+  navToQuenMatKhau(){
+    this.props.navigation.navigate('QuenMatKhau');
+  }
+  navToDangKy(){
+    this.props.navigation.navigate('DangKy');
+  }
 
-    if (this.state.isLoading == 1) {
-      return (
-        <ActivityIndicator style={styles.activity_indicator}  color="#fff"  />)
-    }
+  render() {
     if (this.state.introPage) {
       return (<View style={{
           backgroundColor: '#3DB2E3',
@@ -168,8 +177,22 @@ export default class Login extends Component<Props> {
           }}/>
       </View>)
     };
-    return (<Container>
-      <Image source={require(background_img)} style={styles.backgroundImage}></Image>
+    return (<Container style={{backgroundColor: "#41ABE9"}}>
+      <Modal
+          style={styles.modalLoading}
+          animationType="fade"
+          transparent={true}
+          visible={this.state.isLoading}
+        >
+          <View style={styles.loadingView}>
+            <Spinner
+              style={styles.spinerLoading}
+              color={globals.color.loading}
+            />
+          </View>
+        </Modal>
+
+      {/* <Image source={require(background_img)} style={styles.backgroundImage}></Image> */}
       <Content>
         <View style={styles.page_title}>
           <Text full={true} style={styles.welcome}>Chào mừng đến với</Text>
@@ -177,34 +200,45 @@ export default class Login extends Component<Props> {
         </View>
         <KeyboardAvoidingView behavior="padding" enabled={true}>
           <Form style={styles.frmlogin}>
-            <Item floatingLabel={true} style={styles.frmlogin__item}>
-              <Label style={styles.frmlogin__label}>Tài khoản</Label>
+            <Item style={[styles.frmlogin__item, styles.bgf]} rounded>
               <Input value={this.state.username} onChangeText={(username) => this.setState({username})} style={styles.frmlogin__input}/>
             </Item>
-            <Item floatingLabel={true} style={styles.frmlogin__item}>
-              <Label style={styles.frmlogin__label}>Mật khẩu</Label>
+            <Item style={[styles.frmlogin__item, styles.bgf]} rounded>
               <Input value={this.state.password} onChangeText={(password) => this.setState({password})} secureTextEntry={true} style={styles.frmlogin__input}/>
             </Item>
             <Button block={true} rounded={true} style={styles.frmlogin__btn} onPress={this.onLogin.bind(this)}>
               <Text style={styles.frmlogin__btn__txt}>ĐĂNG NHẬP</Text>
             </Button>
+            <View style={[{flexDirection: 'row', alignItems: 'center', justifyContent: 'center' , marginTop: 24,}]}>
+                <Text style={{color: '#fff', fontSize: 13}}><FontAwesome name="circle-thin" size={20} />{'  '}Mở khóa bằng vân tay</Text>
+            </View>
+            <View style={[{flexDirection: 'row',marginTop: 24,}]}>
+              <TouchableOpacity style={{alignItems: 'flex-start', flex: 1}} onPress={()=> this.navToQuenMatKhau()}>
+                <Text style={{color: '#fff'}}>QUÊN MẬT KHẨU</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={{alignItems: 'flex-end', flex: 1}}  onPress={()=> this.navToDangKy()}>
+                <Text style={{color: '#fff'}}>ĐĂNG KÝ TÀI KHOẢN</Text>
+              </TouchableOpacity>
 
-            <Button block={true} bordered={true} rounded={true} light={true}  style={styles.frmlogin__btn2} onPress={() => this.props.navigation.navigate("CreateAccount", {})}>
+
+            </View>
+
+            {/* <Button block={true} bordered={true} rounded={true} light={true}  style={styles.frmlogin__btn2} onPress={() => this.props.navigation.navigate("CreateAccount", {})}>
               <Text style={styles.frmlogin__btn__txt}>ĐĂNG KÝ</Text>
-            </Button>
+            </Button> */}
 
           </Form>
         </KeyboardAvoidingView>
       </Content>
-      <Footer style={styles.footer_page}>
+      {/* <Footer style={styles.footer_page}> */}
         {/* <TouchableOpacity style={styles.create_account} onPress={() => this.props.navigation.navigate("CreateAccount", {})}>
           <Text style={styles.create_account_txt}>Bạn chưa có tài khoản ?{' '}</Text>
           <Text style={styles.create_account_link}>Tạo tài khoản</Text>
         </TouchableOpacity> */}
-        <TouchableOpacity onPress={() => this.props.navigation.navigate("EnterPhoneNumber", {username: this.state.username})}>
+        {/* <TouchableOpacity onPress={() => this.props.navigation.navigate("EnterPhoneNumber", {username: this.state.username})}>
           <Text style={styles.forget_pass_txt}>Bạn quên mật khẩu ?</Text>
-        </TouchableOpacity>
-      </Footer>
+        </TouchableOpacity> */}
+      {/* </Footer> */}
     </Container>);
   }
 }

@@ -17,7 +17,7 @@ import {
   Content
 } from 'native-base';
 import styles from '../Styles/Styles.js';
-// const src_img_icon = '../images/icon_getpass.png';
+// const src_img_icon = '../Images/icon_getpass.png';
 
 export default class FogotPass extends Component<Props> {
 

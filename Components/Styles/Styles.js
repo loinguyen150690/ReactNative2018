@@ -3,8 +3,29 @@ import globals from './Globals.js';
 import {Platform, Dimensions} from 'react-native';
 const win = Dimensions.get('window');
 const HEIGHT_TAB = 52;
+const HEIGHT_TAB_NAV = 52;
+
+const HEIGHT_FOOTER_HOME_ITEM = win.width / 4 ;
+const HEIGHT_FOOTER_HOME = win.width / 4 * 2;
 
 export default StyleSheet.create({
+  modalLoading: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, .3)"
+  },
+  loadingView: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, .3)",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  spinerLoading: {
+    color: "#fff"
+  },
   activity_indicator:{
     flex: 1,
     justifyContent: 'center',
@@ -19,8 +40,6 @@ export default StyleSheet.create({
     alignItems: 'center',
     top: 45
   },
-
-
   listItemCate:{
    flex: 1,
    flexDirection: 'row',
@@ -118,8 +137,12 @@ backgroundColor: '#FF5757'
   frmlogin__item: {
     marginLeft: 0,
     marginRight: 0,
-    marginTop: 15,
-    paddingBottom: 10
+     marginTop: 16,
+     paddingLeft: 16,
+     // paddingBottom: 10
+  },
+  bgf:{
+    backgroundColor: '#fff',
   },
   frm__label: {
     fontSize: 14
@@ -132,12 +155,12 @@ backgroundColor: '#FF5757'
     fontSize: 14
   },
   frmlogin__input: {
-    color: 'white'
+    color: '#000'
   },
   frmlogin__btn: {
     marginLeft: 0,
     marginRight: 0,
-    marginTop: 35,
+    marginTop: 24,
     backgroundColor: globals.color.yellow,
     shadowOpacity: 0,
     shadowColor: 'transparent'
@@ -256,26 +279,7 @@ backgroundColor: '#FF5757'
     backgroundColor: '#F9F9F9',
     borderTopWidth: 1,
     borderTopColor: '#D8D8D8'
-  },
-  action_bottom_3: {
-    padding: 15,
-    paddingTop: 40,
-    paddingBottom: 40,
-  }
-  ,action_bottom_4: {
-    padding: 15,
-  }
-  ,dieu_khoan_su_dung: {
-    marginBottom: 25,
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    alignItems: 'center',
-    alignSelf: 'stretch',
-    justifyContent: 'center'
-
-  },
-  dieu_khoan_su_dung_txt: {},
-  dieu_khoan_su_dung_link: {},
+  } ,
   footer_page: {
     backgroundColor: 'transparent',
     borderTopWidth: 0,
@@ -286,146 +290,7 @@ backgroundColor: '#FF5757'
       width: 0
     }
   },
-  //tabBar
-  tabIcon: {
-    //width: 20,
-    //height: 20,
-    fontSize: 22
-  },
 
-  tabBar: {
-    borderWidth: 0,
-    backgroundColor: 'white',
-    height: HEIGHT_TAB
-  },
-
-  labelTabBar: {
-    fontSize: 12,
-    marginTop: 2, // <- This is the guilty one in my case, simply removed it and it worked as expected on iOS 10 & 11
-    marginBottom: 2
-  },
-
-  indicatorTabBar: {
-    backgroundColor: globals.color.darkblue,
-    position: 'absolute',
-    top: 0,
-    height: HEIGHT_TAB
-  },
-  tabBarSelectedItemStyle: {
-    color: 'white'
-  },
-  //tab danh sach chuyen hang
-  heading: {},
-  tabStyle: {},
-  activeTabStyle: {},
-  textStyle: {
-    paddingLeft: 3,
-    paddingRight: 3
-  },
-  activeTextStyle: {
-    color: globals.color.darkblue
-  },
-  tabBarUnderlineStyle: {
-    height: 0,
-    backgroundColor: globals.color.darkblue
-  },
-  tablist: {
-    borderBottomColor: globals.color.darkblue
-  },
-  tablist__item: {},
-  tabStyle: {},
-  list: {
-    paddingTop: 10,
-    backgroundColor: '#f4f4f4'
-  },
-  chuyenhang__item: {
-    paddingBottom: 10
-  },
-  chuyenhang__item__inner: {
-    backgroundColor: '#fff',
-    shadowOpacity: 0.1,
-    shadowColor: '#333',
-    shadowOffset: {
-      width: 0,
-      height: 4
-    },
-    borderBottomColor: '#eee',
-    borderBottomWidth: 1
-  },
-  chuyenhang__item__txt: {
-    padding: 10
-  },
-  chuyenhang_txt1: {
-    flexDirection: 'row',
-    flex: 1,
-    marginBottom: 10
-  },
-  chuyenhang_txt11: {
-    width: '50%'
-  },
-  chuyenhang_ngay: {
-    textAlign: 'left',
-    alignSelf: 'stretch'
-  },
-  chuyenhang_gio: {
-    textAlign: 'left',
-    alignSelf: 'stretch',
-    color: globals.color.text_grey,
-    marginTop: 5
-  },
-  chuyenhang_giatien: {
-    textAlign: 'right',
-    alignSelf: 'stretch',
-    fontWeight: 'bold',
-    color: globals.color.darkblue
-  },
-  chuyenhang_khoiluong: {
-    textAlign: 'right',
-    alignSelf: 'stretch',
-    color: globals.color.text_grey,
-    marginTop: 5
-  },
-  chuyenhang_khoihanh: {
-    textAlign: 'left',
-    alignSelf: 'stretch',
-    fontSize: 14
-
-  },
-  chuyenhang_ketthuc: {
-    textAlign: 'left',
-    alignSelf: 'stretch',
-    marginTop: 8,
-    fontSize: 14
-  },
-  icon_chuyenhang: {
-    marginRight: 20,
-    paddingRight: 20
-  },
-  btn_detail: {
-    marginBottom: 0,
-    paddingLeft: 0,
-    paddingRight: 15,
-    flexDirection: 'row',
-    alignSelf: 'stretch',
-    backgroundColor: 'white',
-    borderTopWidth: 1,
-    borderTopColor: '#eee'
-  },
-  btn_detail_text: {
-    color: globals.color.yellow,
-    textAlign: 'left',
-    flex: 1
-  },
-  chuyenhang_txt2: {
-    flexDirection: 'row'
-  },
-  icon_lo_trinh: {
-    height: 40,
-    width: 7,
-    marginTop: (Platform.OS === 'ios')
-      ? 5
-      : 8
-  },
   // chi tiet chuyen hang
   text_blue: {
     color: globals.color.darkblue,
@@ -433,57 +298,6 @@ backgroundColor: '#FF5757'
     marginTop: 5,
     marginBottom: 5
   },
-  detail_chuyen_hang__row: {
-    padding: 10,
-    backgroundColor: '#fff',
-    shadowOpacity: 0.1,
-    shadowColor: '#333',
-    shadowOffset: {
-      width: 0,
-      height: 5
-    },
-    borderBottomColor: '#eee',
-    borderBottomWidth: 1
-  },
-  detail_chuyen_hang__row_2: {
-    backgroundColor: '#fff',
-    marginTop: 10,
-    paddingTop: 10,
-    backgroundColor: '#fff',
-    shadowOpacity: 0.1,
-    shadowColor: '#333',
-    shadowOffset: {
-      width: 0,
-      height: 5
-    },
-    borderBottomColor: '#eee',
-    borderBottomWidth: 1
-  },
-
-  detail_chuyen_hang__row_3: {
-    backgroundColor: '#fff',
-    marginTop: 0,
-    paddingTop: 10,
-    backgroundColor: '#fff',
-    shadowOpacity: 0.1,
-    shadowColor: '#333',
-    shadowOffset: {
-      width: 0,
-      height: 5
-    },
-    borderBottomColor: '#eee',
-    borderBottomWidth: 1
-  },
-  detail_chuyen_hang__input: {
-    marginTop: 10,
-    borderColor: globals.color.darkblue,
-    height: 40
-  },
-  detail_chuyen_hang__input__icon: {
-    marginLeft: 8
-  },
-  list_hanghoa: {},
-
   list_hanghoa2: {
     paddingBottom: 20
   },
@@ -496,196 +310,89 @@ backgroundColor: '#FF5757'
   input_fzsm: {
     fontSize: 14
   },
-  hanghoa__item: {
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee'
+  //tabBar navigate
+  footerTab: {
+    backgroundColor: "#fff"
   },
-  hanghoa__item2: {
-    paddingLeft: 10,
-    paddingRight: 10
-  },
-  hanghoa__item__inner2: {
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee'
-  },
-  hanghoa__item__txt: {
-    padding: 10
-  },
-  hanghoa_txt1: {
-    flexDirection: 'row',
-    flex: 1
-  },
-  hanghoa_txt11: {
-    width: '50%'
-  },
-  hanghoa_ngay: {
-    textAlign: 'left',
-    alignSelf: 'stretch',
-    fontSize: 14
-  },
-  hanghoa_left_1: {
-    textAlign: 'left',
-    alignSelf: 'stretch',
-    fontSize: 14
-  },
-  hanghoa_left_2: {
-    textAlign: 'left',
-    alignSelf: 'stretch',
-    color: globals.color.text_grey,
-    marginTop: 5,
-    fontSize: 12,
-  }
-  ,
-  hanghoa_gio: {
-    textAlign: 'left',
-    alignSelf: 'stretch',
-    color: globals.color.text_grey,
-    marginTop: 5,
-    fontSize: 14
-  },
-  hanghoa_giatien: {
-    textAlign: 'right',
-    alignSelf: 'stretch',
-    fontWeight: 'bold',
-    color: globals.color.darkblue,
-    fontSize: 14
-  },
-  hanghoa_right_1: {
-    textAlign: 'right',
-    alignSelf: 'stretch',
-    fontWeight: 'bold',
-    color: globals.color.darkblue,
-    fontSize: 14
-  },
-  hanghoa_right_2: {
-    textAlign: 'right',
-    alignSelf: 'stretch',
-    color: globals.color.text_grey,
-    marginTop: 5,
-    fontSize: 12
-  },
-  hanghoa_khoiluong: {
-    textAlign: 'right',
-    alignSelf: 'stretch',
-    color: globals.color.text_grey,
-    marginTop: 5,
-    fontSize: 14
-  },
-  text_blue2: {
-    textAlign: 'left',
-    alignSelf: 'stretch',
-    paddingLeft: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-    paddingBottom: 15,
-    paddingTop: 5,
-    color: globals.color.darkblue,
-    fontWeight: 'bold'
-  },
-  text_blue3:{
-    borderBottomWidth: 0,
-    paddingBottom: 0,
-    paddingTop: 0
-  }
-  ,
-  hanghoa_picker: {
-    height: 35,
-    width: win.width - 20,
-    paddingLeft: 0
-  },
-  hanghoa_lbl_picker: {
-    textAlign: 'left',
-    alignSelf: 'stretch',
-    color: globals.color.text_grey,
-    marginTop: 10,
-    fontSize: 14,
-    paddingLeft: 8
-  },
-  hanghoa_picker__item: {},
-  icon_add_hanghoa: {
-    position: 'absolute',
-    right: 10,
-    top: 5,
-    width: 22,
-    height: 22,
-    borderWidth: 1,
-    borderColor: globals.color.darkblue,
-    borderRadius: 20,
-    color: globals.color.darkblue,
-    zIndex: 3
-  }
-  ,icon_add_hanghoa2:{
-      top: 15,
-  }
-  ,
-  btn_change_lotrinh: {
-    position: 'absolute',
-    right: 10,
-    top: 35,
-    width: 35,
-    height: 35,
-    zIndex: 3
-  },
-  img_change_lotrinh: {
-    width: 35,
-    height: 35,
-    opacity: 1
-  },
-  //thongtingiaonhan_txt1
-
-  thongtingiaonhan_txt1: {
-    paddingLeft: 6,
-    alignSelf: 'stretch',
-    fontSize: 14,
-    color: globals.color.grey
-  },
-  thongtingiaonhan_icon1: {
-    marginTop: 2,
-    fontSize: 16
-  },
-  thongtingiaonhan_icon2: {
-    marginTop: 1,
-    fontSize: 17
-  },
-  thongtingiaonhan_icon3: {
-    marginTop: 1,
-    fontSize: 16,
-   position: 'absolute',
-   right: '50%',
-   marginRight: 15
-  },
-  thongtingiaonhan_txt2: {
-    fontSize: 14,
-    color: globals.color.grey,
-    width: '50%'
-  }
-  ,thanhtien:{
-    padding: 10
-  }
-  ,thanhtien__inner:{
-    flexDirection: 'row',
-    flex: 1
-  },
-  thanhtien__txt: {
-    width: '50%',
-    color: '#666'
+  tabIcon: {
+    width: 24,
+    height: 24
   },
 
-  thanhtien__txt2: {
-      width: '50%',
-   fontSize: 16
-  }
-  ,giaonhan_checkbox:{
-    borderBottomWidth: 0,
-    marginBottom:15,
-    marginTop: 15
-  }
-  ,giao_nhan_add_hang_hoa:{
-    alignSelf: 'stretch',
-    backgroundColor: '#fff',
-    padding: 10,
-    paddingTop: 15,
-    paddingBottom: 15,
-    marginTop: 10
+  tabBar: {
+    borderWidth: 0,
+    backgroundColor: "white",
+    height: HEIGHT_TAB_NAV,
+    paddingLeft: 0,
+    paddingRight: 0
+  },
+
+  labelTabBar: {
+    fontSize: 9,
+    marginTop: 2, // <- This is the guilty one in my case, simply removed it and it worked as expected on iOS 10 & 11
+    marginBottom: 2,
+    flex: 1,
+    paddingLeft: 0,
+    paddingRight: 0,
+    marginLeft: 0,
+    marginRight: 0
+    //  color: globals.color.tabNav
+  },
+
+  tabBarActiveTextColor: {
+    color: "red"
+  },
+  tab_item: {
+    backgroundColor: "white"
+  },
+  tab_text: {
+    color: globals.color.tabs,
+    fontSize: globals.fontSize.tabs,
+    fontWeight: "400"
+  },
+  indicatorTabBar: {
+    backgroundColor: globals.color.darkblue,
+    position: "absolute",
+    top: 0,
+    height: HEIGHT_TAB_NAV
+  },
+  tabBarSelectedItemStyle: {
+    color: "white"
+  },
+
+  flexrow:{
+    flexDirection:'row',
+    flex: 1
+  },
+  footer_home__item:{
+    flex: 1,
+    alignItems: 'center',
+    justifyContent:'center',
+    height: HEIGHT_FOOTER_HOME_ITEM,
+    borderBottomColor: '#4AC1E7',
+    borderBottomWidth: 1
+  },
+  footer_home__item_mid:{
+    borderLeftColor: '#4AC1E7',
+    borderLeftWidth: 1,
+    borderRightColor: '#4AC1E7',
+    borderRightWidth: 1
+  },
+
+  footer_home__item__text:{
+    color: '#fff',
+    fontSize: 13,
+    marginTop: 3,
+  },
+  footer_home__item__icon:{
+    color: '#fff'
+  },
+  footer_home:{
+    height: HEIGHT_FOOTER_HOME,
+    backgroundColor: globals.color.lightblue,
+    flexDirection: 'column'
+  },
+  footer_home_row:{
+
   }
 });
