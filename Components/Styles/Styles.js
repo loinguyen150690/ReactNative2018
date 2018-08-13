@@ -138,7 +138,7 @@ backgroundColor: '#FF5757'
     marginLeft: 0,
     marginRight: 0,
      marginTop: 16,
-     paddingLeft: 16,
+
      // paddingBottom: 10
   },
   bgf:{
@@ -161,7 +161,7 @@ backgroundColor: '#FF5757'
     marginLeft: 0,
     marginRight: 0,
     marginTop: 24,
-    backgroundColor: globals.color.yellow,
+    backgroundColor: globals.color.darkblue,
     shadowOpacity: 0,
     shadowColor: 'transparent'
   },
@@ -395,4 +395,37 @@ backgroundColor: '#FF5757'
   footer_home_row:{
 
   }
+  ,icon_touch_id:{
+    width: 30,
+    height: 30
+  },
+  btn_blue:{
+    backgroundColor: globals.color.lightblue,
+    borderColor:globals.color.lightblue
+  },
+  btn_blue__text:{
+    color: '#fff'
+  },
+  frm_input_area:{
+    padding: 16,
+    borderWidth: 1,
+    borderColor: '#EBE9ED',
+    marginTop: 8,
+    justifyContent: 'flex-start'
+  },
+  lichsu__item:{
+    marginLeft: 0,
+    backgroundColor: '#fff',
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 6,
+    paddingBottom: 6
+  },
+  bdb0:{
+borderBottomWidth: 0
+},
+img_lichsu:{
+  height: 40,
+  width: 40
+}
 });

@@ -22,7 +22,6 @@ import LichSu from "./Components/Screen/LichSu.js";
 import KichHoat from "./Components/Screen/KichHoat.js";
 import TrangChu from "./Components/Screen/TrangChu.js";
 import HoiDap from "./Components/Screen/HoiDap.js";
-import Intro from "./Components/Screen/Intro.js";
 import ChatScreen from './Components/Screen/Chat.js';
 import TabScreen from "./Components/Screen/TabScreen.js";
 //Danh sach chuyen change

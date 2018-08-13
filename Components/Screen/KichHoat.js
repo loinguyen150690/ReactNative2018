@@ -8,7 +8,8 @@ import {
     Alert,
     KeyboardAvoidingView,
     ScrollView,
-    Dimensions
+    Dimensions,
+    TextInput
 } from "react-native";
 
 import {
@@ -37,7 +38,7 @@ export default class More extends Component<Props> {
             fullname: "",
             phone: "",
             address: "",
-            isLoading: 0
+            isLoading: false
         };
     }
     onSelect = data => {
@@ -45,7 +46,7 @@ export default class More extends Component<Props> {
     };
 
     onActive() {
-      this.setState({isLoading: 1});
+      this.setState({isLoading: true});
       fetch('http://dev.baohanhdientu.net/api/SMS_DynamicAPI/Active_Online', {
         method: 'POST',
         headers: {
@@ -64,7 +65,7 @@ export default class More extends Component<Props> {
       })
 
       .then(response => {
-        this.setState({isLoading: 0});
+        this.setState({isLoading: false});
         if (response.status === 200) {
           return response.json().then(responseJson => {
             if (responseJson){
@@ -88,19 +89,19 @@ export default class More extends Component<Props> {
 
       .then(response => {
         console.debug(response);
-        this.setState({isLoading: 0});
+        this.setState({isLoading: false});
       })
 
       .catch(error => {
         console.error(error);
-        this.setState({isLoading: 0});
+        this.setState({isLoading: false});
         Alert.alert('Thông báo', 'Lỗi kết nối, vui lòng thử lại sau!');
       });
 
     }
 
     render() {
-      if (this.state.isLoading == 1) {
+      if (this.state.isLoading) {
         return (
           <ActivityIndicator style={styles.activity_indicator} size="large"  color="#0000ff"  />)
       }
@@ -108,23 +109,24 @@ export default class More extends Component<Props> {
             <Container>
                 <Content style={{ backgroundColor: "#fff", paddingTop: 30 }}>
                     <KeyboardAvoidingView behavior="padding" enabled={true}>
+                      <Label style={[styles.frm__label, {paddingLeft: 16}]}>
+                          Serial
+                      </Label>
                         <View style={styles.serial}>
                             <View style={{ flexDirection: "row" }}>
                                 <View style={{ flex: 4 }}>
-                                    <Item floatingLabel={true}>
-                                        <Label style={styles.frm__label}>
-                                            Serial
-                                        </Label>
-                                        <Input
-                                            value={this.state.serial}
-                                            onChangeText={serial =>
-                                                this.setState({ serial })
-                                            }
-                                            style={styles.frm_input}
-                                        />
-                                    </Item>
+                                    <TextInput
+                                          multiline = {true}
+                                        underlineColorAndroid={'white'}
+                                          numberOfLines = {4}
+                                           value={this.state.serial}
+                                           onChangeText={serial =>
+                                               this.setState({ serial })
+                                           }
+                                           style={[styles.frm_input,styles.frm_input_area] }
+                                      />
                                 </View>
-                                <View style={{ flex: 1 }}>
+                                <View style={{ flex: 1, justifyContent: 'center' , alignItems: 'center'}}>
                                     <TouchableOpacity
                                         style={{
                                             marginTop: 10,
@@ -136,6 +138,7 @@ export default class More extends Component<Props> {
                                             style={[styles.icon4]}
                                             name="qrcode"
                                         />
+                                        <Text style={{fontSize: 12, textAlign: 'center', color:'#666'}}>Quét{'\n'}mã code</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -177,7 +180,7 @@ export default class More extends Component<Props> {
                                 style={styles.frmlogin__item}
                             >
                                 <Label style={styles.frm__label}>
-                                    Địac chỉ
+                                    Địa chỉ
                                 </Label>
                                 <Input
                                     value={this.state.address}
@@ -199,10 +202,10 @@ export default class More extends Component<Props> {
                             block={true}
                             bordered={true}
                             rounded={true}
-                            style={styles.frmgetpass__btn}
+                            style={styles.btn_blue}
                             onPress={this.onActive.bind(this)}
                         >
-                            <Text style={styles.frmgetpass__btn__txt}>
+                            <Text style={styles.btn_blue__text}>
                                 KÍCH HOẠT
                             </Text>
                         </Button>

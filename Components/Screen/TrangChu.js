@@ -29,6 +29,9 @@ import Slideshow from "react-native-slideshow";
 import styles from "../Styles/Styles.js";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+
+
 const logo_img = "../Images/logo.png";
 
 //size img w500 x h100
@@ -62,7 +65,7 @@ export default class TrangChu extends Component<Props> {
       password: "",
       position: 1,
       interval: null,
-      isLoading: 0,
+      isLoading: false,
       dataSource: [
         {
           title: "Title 1",
@@ -103,29 +106,56 @@ export default class TrangChu extends Component<Props> {
   componentWillUnmount() {
     clearInterval(this.state.interval);
   }
+  async saveItem(item, selectedValue) {
+    try {
+      await AsyncStorage.setItem(item, selectedValue);
+    } catch (error) {
+      console.error("AsyncStorage error: " + error.message);
+    }
+  }
+  navToKichHoat() {
+    this.saveItem("@TabBarActive",'3');
+    this.props.navigation.navigate("KichHoat");
+  }
+  navToLichSu() {
+    this.saveItem("@TabBarActive",'5');
+    this.props.navigation.navigate("LichSu");
+  }
 
+  navToHoiDap() {
+    this.props.navigation.navigate("HoiDap");
+  }
+  navToDiemTichLuy() {
+    // this.props.navigation.navigate("DiemTichLuy");
+  }
+  navToThongKe() {
+    // this.props.navigation.navigate("ThongKe");
+  }
+  navToSuaChuaBaoHanh() {
+    // this.props.navigation.navigate("SuaChuaBaoHanh");
+  }
   render() {
     return (<Container>
       <Content>
-        <Slideshow dataSource={this.state.dataSource} position={this.state.position} onPositionChanged={position => this.setState({position})} arrowSize={0} indicatorSize={16}/>
+        <Slideshow dataSource={this.state.dataSource} position={this.state.position} onPositionChanged={position => this.setState({position})} arrowSize={0} indicatorSize={12}/>
       </Content>
       <Footer style={styles.footer_home}>
         <View style={[styles.flexrow, styles.footer_home_row]}>
-          <TouchableOpacity style={[styles.footer_home__item]}>
+          <TouchableOpacity style={[styles.footer_home__item]} onPress={()=> this.navToKichHoat()}>
             <Text style={styles.footer_home__item__icon}>
               <FontAwesome name='qrcode' size={30}/>
             </Text>
             <Text style={styles.footer_home__item__text}>Kích hoạt</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.footer_home__item,styles.footer_home__item_mid ]}>
+          <TouchableOpacity style={[styles.footer_home__item,styles.footer_home__item_mid ]}  onPress={()=> this.navToLichSu()}>
             <Text style={styles.footer_home__item__icon}>
-              <FontAwesome name='qrcode' size={30}/>
+              <Ionicons name='ios-list-box' size={36}/>
             </Text>
             <Text style={styles.footer_home__item__text}>Lịch sử</Text>
           </TouchableOpacity>
           <TouchableOpacity style={[styles.footer_home__item]}>
             <Text style={styles.footer_home__item__icon}>
-              <FontAwesome name='qrcode' size={30}/>
+              <FontAwesome name='commenting-o' size={30}/>
             </Text>
             <Text style={styles.footer_home__item__text}>Hỏi đáp</Text>
           </TouchableOpacity>
@@ -134,19 +164,19 @@ export default class TrangChu extends Component<Props> {
         <View style={[styles.flexrow, styles.footer_home_row]}>
           <TouchableOpacity style={[styles.footer_home__item]}>
             <Text style={styles.footer_home__item__icon}>
-              <FontAwesome name='qrcode' size={30}/>
+              <FontAwesome name='credit-card' size={30}/>
             </Text>
             <Text style={styles.footer_home__item__text}>Điểm tích lũy</Text>
           </TouchableOpacity>
           <TouchableOpacity style={[styles.footer_home__item,styles.footer_home__item_mid ]}>
             <Text style={styles.footer_home__item__icon}>
-              <FontAwesome name='qrcode' size={30}/>
+              <MaterialIcons name='pie-chart-outlined' size={30}/>
             </Text>
             <Text style={styles.footer_home__item__text}>Thống kê</Text>
           </TouchableOpacity>
           <TouchableOpacity style={[styles.footer_home__item]}>
             <Text style={styles.footer_home__item__icon}>
-              <FontAwesome name='qrcode' size={30}/>
+              <Ionicons name='ios-build' size={30}/>
             </Text>
             <Text style={styles.footer_home__item__text}>Sữa chửa bảo hành</Text>
           </TouchableOpacity>

@@ -31,7 +31,7 @@ export default class FogotPass extends Component<Props> {
       email: '',
       password: '',
       repassword: '',
-      isLoading: 0
+      isLoading: false
     };
   };
 
@@ -73,7 +73,7 @@ export default class FogotPass extends Component<Props> {
       return;
     }
 
-    this.setState({isLoading: 1});
+    this.setState({isLoading: true});
     fetch('http://api.shippers.byte.vn/api/user/insert', {
       method: 'POST',
       headers: {
@@ -84,7 +84,7 @@ export default class FogotPass extends Component<Props> {
     })
 
     .then(response => {
-      this.setState({isLoading: 0});
+      this.setState({isLoading: false});
       if (response.status === 200) {
         return response.json().then(async (responseJson) => {
           if (responseJson > 0){
@@ -111,12 +111,12 @@ export default class FogotPass extends Component<Props> {
 
     .then(response => {
       console.debug(response);
-      this.setState({isLoading: 0});
+      this.setState({isLoading: false});
     })
 
     .catch(error => {
       console.error(error);
-      this.setState({isLoading: 0});
+      this.setState({isLoading: false});
       Alert.alert('Thông báo', 'Lỗi kết nối, vui lòng thử lại sau!');
     });
 
@@ -126,7 +126,7 @@ export default class FogotPass extends Component<Props> {
     var {
       navigate
     } = this.props.navigation;
-    if (this.state.isLoading == 1) {
+    if (this.state.isLoading) {
       return (
         <ActivityIndicator style={{
             flex: 1,

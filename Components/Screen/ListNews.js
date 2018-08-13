@@ -24,7 +24,7 @@ export default class ListNews extends Component<Props> {
         super(props);
         this._navigateToScreen = this._navigateToScreen.bind(this);
     }
-    state = { selected: '',   isLoading: 0 };
+    state = { selected: '',   isLoading: false };
 
     onSelect = data => {
       this.setState(data);
@@ -36,7 +36,7 @@ export default class ListNews extends Component<Props> {
   //  onBarCodeRead = (e) => this.setState({qrcode: e.data});
 
   onInsert() {
-    this.setState({isLoading: 1});
+    this.setState({isLoading: true});
     fetch('http://dev.baohanhdientu.net/api/SMS_DynamicAPI/Active_Online', {
       method: 'POST',
       headers: {
@@ -54,7 +54,7 @@ export default class ListNews extends Component<Props> {
     })
 
     .then(response => {
-      this.setState({isLoading: 0});
+      this.setState({isLoading: false});
       if (response.status === 200) {
         return response.json().then(responseJson => {
           if (responseJson){
@@ -78,12 +78,12 @@ export default class ListNews extends Component<Props> {
 
     .then(response => {
       console.debug(response);
-      this.setState({isLoading: 0});
+      this.setState({isLoading: false});
     })
 
     .catch(error => {
       console.error(error);
-      this.setState({isLoading: 0});
+      this.setState({isLoading: false});
       Alert.alert('Thông báo', 'Lỗi kết nối, vui lòng thử lại sau!');
     });
 
@@ -95,7 +95,7 @@ export default class ListNews extends Component<Props> {
   }
 
   render() {
-    if (this.state.isLoading == 1) {
+    if (this.state.isLoading) {
       return (
         <ActivityIndicator style={{
             flex: 1,

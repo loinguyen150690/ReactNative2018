@@ -63,7 +63,6 @@ export default class TabScreen extends Component<Props> {
   };
   componentWillMount() {
     this.getTabBarActive()
-    this.getInfoUserByPhone();
   }
   async saveItem(item, selectedValue) {
     try {
@@ -78,95 +77,30 @@ export default class TabScreen extends Component<Props> {
       if (token !== null && token !== "") {
         this.setState({TAB_ACTIVE: parseInt(token)});
         if(parseInt(token) == 1){
-          this.navToDonHang()
-        }
-        else if(parseInt(token) == 2){
-          this.navToChuyenHang()
+          this.navToTrangChu()
         }
         else if(parseInt(token) == 3){
-          this.navToTinTuc()
+          this.navToKichHoat()
         }
         else if(parseInt(token) == 4){
           this.navToThongBao()
         }
-        else if(parseInt(token) == 6){
-          this.navToXe()
+        else if(parseInt(token) == 5){
+          this.navToLichSu()
         }
       }
     });
   }
 
-  getInfoUserByPhone() {
-    AsyncStorage.getItem("@Phone").then(token => {
-      if (token !== null && token !== "") {
-        this.setState({PHONE_USER: token}, function(){
-          this.getTypeUser();
-        });
-      }
-    });
-  }
-
-  getTypeUser() {
-    fetch(myApi.User.GetUserInfoByPhone + this.state.PHONE_USER).then(response => response.json()).then(responseJson => {
-      this.setState({
-       TYPE_USER: responseJson.Type
-      }, function() {});
-    }).catch(error => {
-      console.error(error);
-    });
-  }
 
 
-  renderTabXe() {
-    if (this.state.TYPE_USER == 1) {
-      return (<Button style={[
-          st.btnTabNav, {
-            backgroundColor: this.state.TAB_ACTIVE === 2
-              ? tabActiveBgColor
-              : tabBgColor
-          }
-        ]} vertical={true} onPress={() => this.navToChuyenHang()}
-        active={this.state.TAB_ACTIVE === 2}>
-        <Image source={this.state.TAB_ACTIVE === 2
-            ? require(icon_tabbar_ch_active)
-            : require(icon_tabbar_ch)} style={styles.tabIcon}/>
-        <Text style={[
-            st.tabBarText, {
-              color: this.state.TAB_ACTIVE === 2
-                ? tabBarActiveTextColor
-                : tabBarTextColor
-            }
-          ]} uppercase={false}>Chuyến hàng</Text>
-      </Button>)
-    }
-    if (this.state.TYPE_USER == 2) {
-      return (<Button style={[
-          st.btnTabNav, {
-            backgroundColor: this.state.TAB_ACTIVE === 6
-              ? tabActiveBgColor
-              : tabBgColor
-          }
-        ]} vertical={true} onPress={() => this.navToXe()} active={this.state.TAB_ACTIVE === 6}>
-        <Image source={this.state.TAB_ACTIVE === 6
-            ? require(icon_tabbar_car_active)
-            : require(icon_tabbar_car)} style={styles.tabIcon}/>
-        <Text style={[
-            st.tabBarText, {
-              color: this.state.TAB_ACTIVE === 6
-                ? tabBarActiveTextColor
-                : tabBarTextColor
-            }
-          ]} uppercase={false}>Danh sách xe</Text>
-      </Button>)
-    }
-  }
 
   navToTrangChu() {
     this.saveItem("@TabBarActive",'1');
     this.setState({TAB_ACTIVE: 1});
     this.props.navigation.navigate("TrangChu");
   }
-   
+
 
   navToKichHoat() {
     this.setState({TAB_ACTIVE: 3});
@@ -188,7 +122,6 @@ export default class TabScreen extends Component<Props> {
 
   render() {
     return (
-      // <Footer style={{display:this.state.TYPE_USER == -1 ? 'none' : 'flex'}}>
       <Footer>
       <FooterTab style={styles.footerTab} tabBarActiveTextColor='#000'>
         <Button style={[
@@ -269,9 +202,6 @@ export default class TabScreen extends Component<Props> {
               }
             ]} uppercase={false}>Thông báo</Text>
         </Button>
-
-
-
       </FooterTab>
     </Footer>);
   }

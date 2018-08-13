@@ -29,7 +29,7 @@ export default class FriendsList extends Component {
             dataSource: new ListView.DataSource({
                 rowHasChanged: (row1, row2) => row1 !== row2,
             }),
-            isLoading: 1
+            isLoading: true
         };
         this.friendsRef = this.getRef().child('friends');
 
@@ -66,14 +66,14 @@ export default class FriendsList extends Component {
 
             this.setState({
                 dataSource: this.state.dataSource.cloneWithRows(items),
-                isLoading: 0
+                isLoading: false
             });
 
         });
     }
 
     componentDidMount() {
-      this.setState({isLoading: 1});
+      this.setState({isLoading: true});
         this.listenForItems(this.friendsRef);
     }
 
@@ -108,7 +108,7 @@ export default class FriendsList extends Component {
     }
 
     render() {
-      if (this.state.isLoading == 1) {
+      if (this.state.isLoading) {
         return (
           <ActivityIndicator style={styles.activity_indicator} size="large"  color="#0000ff"  />)
       }

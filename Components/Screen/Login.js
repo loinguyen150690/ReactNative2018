@@ -34,8 +34,9 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import EvilIcons from "react-native-vector-icons/EvilIcons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-
+touch_id
 const background_img = '../Images/background.png';
+const touch_id = '../Images/touch_id.png';
 const logo_img = '../Images/logo.png';
 export default class Login extends Component<Props> {
   constructor(props) {
@@ -177,7 +178,7 @@ export default class Login extends Component<Props> {
           }}/>
       </View>)
     };
-    return (<Container style={{backgroundColor: "#41ABE9"}}>
+    return (<Container style={{backgroundColor: "#1BC1F5"}}>
       <Modal
           style={styles.modalLoading}
           animationType="fade"
@@ -200,19 +201,19 @@ export default class Login extends Component<Props> {
         </View>
         <KeyboardAvoidingView behavior="padding" enabled={true}>
           <Form style={styles.frmlogin}>
-            <Item style={[styles.frmlogin__item, styles.bgf]} rounded>
+            <Item style={[styles.frmlogin__item, styles.bgf, {paddingLeft: 16,}]} rounded>
               <Input value={this.state.username} onChangeText={(username) => this.setState({username})} style={styles.frmlogin__input}/>
             </Item>
-            <Item style={[styles.frmlogin__item, styles.bgf]} rounded>
+            <Item style={[styles.frmlogin__item, styles.bgf ,{paddingLeft: 16,}]} rounded>
               <Input value={this.state.password} onChangeText={(password) => this.setState({password})} secureTextEntry={true} style={styles.frmlogin__input}/>
             </Item>
             <Button block={true} rounded={true} style={styles.frmlogin__btn} onPress={this.onLogin.bind(this)}>
               <Text style={styles.frmlogin__btn__txt}>ĐĂNG NHẬP</Text>
             </Button>
-            <View style={[{flexDirection: 'row', alignItems: 'center', justifyContent: 'center' , marginTop: 24,}]}>
-                <Text style={{color: '#fff', fontSize: 13}}><FontAwesome name="circle-thin" size={20} />{'  '}Mở khóa bằng vân tay</Text>
+            <View style={[{flexDirection: 'row', alignItems: 'center', justifyContent: 'center' , marginTop: 36,}]}>
+                <Image source={require(touch_id)} style={styles.icon_touch_id}/><Text style={{color: '#fff', fontSize: 13, }}>{'  '}Mở khóa bằng vân tay</Text>
             </View>
-            <View style={[{flexDirection: 'row',marginTop: 24,}]}>
+            <View style={[{flexDirection: 'row',marginTop: 36,}]}>
               <TouchableOpacity style={{alignItems: 'flex-start', flex: 1}} onPress={()=> this.navToQuenMatKhau()}>
                 <Text style={{color: '#fff'}}>QUÊN MẬT KHẨU</Text>
               </TouchableOpacity>
