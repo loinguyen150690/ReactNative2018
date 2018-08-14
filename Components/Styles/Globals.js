@@ -14,7 +14,7 @@ export default {
     buttonBlue:'#004BA0',
     colorIcon: '#707070',
     tabNav: '#707070',
-    tabNavActive: '#fff',
+    tabNavActive: '#10B8DF',
     tabNavActiveBgc: '#004BA0',
     tabs: '#757575',
     tabsActive: '#004BA0',

@@ -27,26 +27,18 @@ import myApi from "../Fetch/Api.js";
 const icon_tabbar_home = "../Images/icon_tabbar_home.png";
 const icon_tabbar_home_active = "../Images/icon_tabbar_home_active.png";
 
-const icon_tabbar_ch = "../Images/icon_tabbar_ch.png";
-const icon_tabbar_ch_active = "../Images/icon_tabbar_ch_active.png";
+const icon_tabbar_kich_hoat = "../Images/icon_tabbar_kich_hoat.png";
+const icon_tabbar_kich_hoat_active = "../Images/icon_tabbar_kich_hoat_active.png";
 
-const icon_tabbar_dh = "../Images/icon_tabbar_dh.png";
-const icon_tabbar_dh_active = "../Images/icon_tabbar_dh_active.png";
+const icon_tabbar_thong_bao = "../Images/icon_tabbar_thong_bao.png";
+const icon_tabbar_thong_bao_active = "../Images/icon_tabbar_thong_bao_active.png";
 
-const icon_tabbar_news = "../Images/icon_tabbar_news.png";
-const icon_tabbar_news_active = "../Images/icon_tabbar_news_active.png";
+const icon_tabbar_lich_su = "../Images/icon_tabbar_lich_su.png";
+const icon_tabbar_lich_su_active = "../Images/icon_tabbar_lich_su_active.png";
 
-const icon_tabbar_notification = "../Images/icon_tabbar_notification.png";
-const icon_tabbar_notification_active = "../Images/icon_tabbar_notification_active.png";
-
-const icon_tabbar_more = "../Images/icon_tabbar_more.png";
-const icon_tabbar_more_active = "../Images/icon_tabbar_more_active.png";
-
-const icon_tabbar_car = "../Images/icon_tabbar_car.png";
-const icon_tabbar_car_active = "../Images/icon_tabbar_car_active.png";
 
 let tabBgColor = 'white',
-  tabActiveBgColor = globals.color.darkblue,
+  tabActiveBgColor = 'white',
   tabBarTextColor = globals.color.tabNav,
   tabBarActiveTextColor = globals.color.tabNavActive;
 
@@ -132,8 +124,8 @@ export default class TabScreen extends Component<Props> {
             }
           ]} vertical={true} active={this.state.TAB_ACTIVE === 1} onPress={() => this.navToTrangChu()}>
           <Image source={this.state.TAB_ACTIVE === 1
-              ? require(icon_tabbar_dh_active)
-              : require(icon_tabbar_dh)} style={styles.tabIcon}/>
+              ? require(icon_tabbar_home_active)
+              : require(icon_tabbar_home)} style={styles.tabIcon}/>
           <Text style={[
               st.tabBarText, {
                 color: this.state.TAB_ACTIVE === 1
@@ -153,8 +145,8 @@ export default class TabScreen extends Component<Props> {
             }
           ]} vertical={true} onPress={() => this.navToKichHoat()} active={this.state.TAB_ACTIVE === 3}>
           <Image source={this.state.TAB_ACTIVE === 3
-              ? require(icon_tabbar_news_active)
-              : require(icon_tabbar_news)} style={styles.tabIcon}/>
+              ? require(icon_tabbar_kich_hoat_active)
+              : require(icon_tabbar_kich_hoat)} style={styles.tabIcon}/>
           <Text style={[
               st.tabBarText, {
                 color: this.state.TAB_ACTIVE === 3
@@ -172,8 +164,8 @@ export default class TabScreen extends Component<Props> {
             }
           ]} vertical={true} onPress={() => this.navToLichSu()} active={this.state.TAB_ACTIVE === 5}>
           <Image source={this.state.TAB_ACTIVE === 5
-              ? require(icon_tabbar_more_active)
-              : require(icon_tabbar_more)} style={styles.tabIcon}/>
+              ? require(icon_tabbar_lich_su_active)
+              : require(icon_tabbar_lich_su)} style={styles.tabIcon}/>
           <Text style={[
               st.tabBarText, {
                 color: this.state.TAB_ACTIVE === 5
@@ -192,8 +184,8 @@ export default class TabScreen extends Component<Props> {
             }
           ]} vertical={true} onPress={() => this.navToThongBao()} active={this.state.TAB_ACTIVE === 4}>
           <Image source={this.state.TAB_ACTIVE === 4
-              ? require(icon_tabbar_notification_active)
-              : require(icon_tabbar_notification)} style={styles.tabIcon}/>
+              ? require(icon_tabbar_thong_bao_active)
+              : require(icon_tabbar_thong_bao)} style={styles.tabIcon}/>
           <Text style={[
               st.tabBarText, {
                 color: this.state.TAB_ACTIVE === 4
