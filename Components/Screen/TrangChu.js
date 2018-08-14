@@ -45,6 +45,10 @@ try {
   Width_Holder = Dimensions.get("window").width;
 } catch (e) {} finally {}
 
+const win = Dimensions.get('window');
+const HEIGHT_SLIDER= win.height - ((win.width / 4 * 2) + 52 + 50) -33;
+
+
 export default class TrangChu extends Component<Props> {
   static navigationOptions = ({navigation}) => {
     const {
@@ -68,16 +72,16 @@ export default class TrangChu extends Component<Props> {
       isLoading: false,
       dataSource: [
         {
-          title: "Title 1",
-          caption: "Caption 1",
+          title: null,
+          caption: null,
           url: "https://bxslider.com/assets/Images/plant.jpg"
         }, {
-          title: "Title 2",
-          caption: "Caption 2",
+          title: null,
+          caption: null,
           url: "https://bxslider.com/assets/Images/daisies.jpg"
         }, {
-          title: "Title 3",
-          caption: "Caption 3",
+          title: null,
+          caption: null,
           url: "https://bxslider.com/assets/Images/succulents.jpg"
         }
       ]
@@ -100,7 +104,7 @@ export default class TrangChu extends Component<Props> {
             ? 0
             : this.state.position + 1
         });
-      }, 2000)});
+      }, 3000)});
   }
 
   componentWillUnmount() {
@@ -137,7 +141,7 @@ export default class TrangChu extends Component<Props> {
   render() {
     return (<Container>
       <Content>
-        <Slideshow dataSource={this.state.dataSource} position={this.state.position} onPositionChanged={position => this.setState({position})} arrowSize={0} indicatorSize={12}/>
+        <Slideshow height={HEIGHT_SLIDER} dataSource={this.state.dataSource} position={this.state.position} onPositionChanged={position => this.setState({position})} arrowSize={0} indicatorSize={10}/>
       </Content>
       <Footer style={styles.footer_home}>
         <View style={[styles.flexrow, styles.footer_home_row]}>
