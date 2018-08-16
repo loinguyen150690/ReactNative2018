@@ -76,19 +76,19 @@ export default class ChiTietLichSu extends Component<Props> {
     return (
       <Container>
         <Content>
-            <View>
-            <Text>
+            <View style={{backgroundColor:'white', flexDirection:'column', alignItems:'center', paddingTop:30, paddingBottom:30}}>
+            <Text style={{fontSize:20}}>
               {this.state.data.SmsMessage}
             </Text>
-            <Text>
-              {this.state.data.CreatedDate}
-            </Text>
-            <Text>
+            <Text style={{fontSize:18,color: this.state.data.WarrantSmsReceverStatus==1 ? "green" : "red"}}>
               {this.state.data.WarrantSmsReceverStatus==1 ? "Thành công" : "Thất bại"}
             </Text>
+            <Text >
+              {this.state.data.CreatedDate}
+            </Text>
             </View>
-            <View style={{marginTop:24}}>
-              <Text>
+            <View style={{marginTop:24,backgroundColor:'white', flexDirection:'column', alignItems:'center', padding:30}}>
+              <Text style={{textAlign:'center', fontSize:16}}>
                 {this.state.data.Remark}
               </Text>
             </View>

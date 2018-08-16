@@ -85,7 +85,7 @@ export default class More extends Component<Props> {
                    }}>{item.WarrantSmsReceverStatus == 1 ? "Thành công" : "Thất bại"}</Text>
                </Body>
                <Right style={styles.bdb0}>
-                 <Text note>10/05/2018</Text>
+                 <Text note>{item.CreatedDate}</Text>
                </Right>
           </ListItem>
 
