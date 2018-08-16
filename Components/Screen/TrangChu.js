@@ -157,7 +157,7 @@ export default class TrangChu extends Component<Props> {
             </Text>
             <Text style={styles.footer_home__item__text}>Lịch sử</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.footer_home__item]}>
+          <TouchableOpacity style={[styles.footer_home__item]} onPress={()=> this.navToHoiDap()}>
             <Text style={styles.footer_home__item__icon}>
               <FontAwesome name='commenting-o' size={30}/>
             </Text>

@@ -419,7 +419,9 @@ backgroundColor: '#FF5757'
     paddingLeft: 16,
     paddingRight: 16,
     paddingTop: 6,
-    paddingBottom: 6
+    paddingBottom: 6,
+    borderBottomWidth:1,
+    borderBottomColor:'#F5F5F5'
   },
   bdb0:{
 borderBottomWidth: 0

@@ -29,7 +29,7 @@ export default class ListNotification extends Component<Props> {
     return (<Container>
       <Content>
         <Text>
-          danh sach thong bao
+          chức năng đang phát triển......
         </Text>
 
       </Content>

@@ -24,6 +24,7 @@ import TrangChu from "./Components/Screen/TrangChu.js";
 import HoiDap from "./Components/Screen/HoiDap.js";
 import ChatScreen from './Components/Screen/Chat.js';
 import TabScreen from "./Components/Screen/TabScreen.js";
+import ChiTietLichSu from "./Components/Screen/ChiTietLichSu.js";
 //Danh sach chuyen change
 
 import globals from "./Components/Styles/Globals.js";
@@ -98,22 +99,29 @@ export const RootTab = TabNavigator({
     screen: KichHoat,
     navigationOptions: {
       title: "Kích hoạt",
-      tabBarLabel: "Trang chủ"
+      tabBarLabel: "Kích hoạt"
     }
   },
   DanhSachThongBao: {
     screen: DanhSachThongBao,
     navigationOptions: {
-      title: "Thong bao",
-      tabBarLabel: "Thong bao"
+      title: "Thông báo",
+      tabBarLabel: "Thông báo"
     }
   },
 
   LichSu: {
     screen: LichSu,
     navigationOptions: {
-      title: "LichSu",
-      tabBarLabel: "Lich su"
+      title: "Lịch sử",
+      tabBarLabel: "Lịch sử"
+    }
+  },
+   HoiDap: {
+    screen: HoiDap,
+    navigationOptions: {
+      title: "Hỏi đáp",
+      tabBarLabel: "Hỏi đáp"
     }
   }
 }, {
@@ -167,10 +175,19 @@ export const RootStack = StackNavigator({
     screen: RootTab
   },
   ScanQRCode: {
-    screen: ScanQRCodeScreen
+    screen: ScanQRCodeScreen,
+    navigationOptions: {
+      title: "Quét mã vạch"
+    }
   },
   Chat: {
     screen: ChatScreen
+  },
+  ChiTietLichSu: {
+    screen: ChiTietLichSu,
+    navigationOptions: {
+      title: "Chi tiết lịch sử"
+    }
   }
 }, {
   navigationOptions: {
