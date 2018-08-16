@@ -7,7 +7,8 @@ import {
     ListView,
     Image,
     Alert,
-    ActivityIndicator
+    ActivityIndicator,
+    AsyncStorage
 } from 'react-native';
 import firebase from 'firebase';
 
@@ -29,10 +30,10 @@ export default class FriendsList extends Component {
             dataSource: new ListView.DataSource({
                 rowHasChanged: (row1, row2) => row1 !== row2,
             }),
-            isLoading: true
+            isLoading: true,
+            userInfo:{},
+            userId:"22"
         };
-        this.friendsRef = this.getRef().child('friends');
-
         navigator = this.props.navigator
     }
 
@@ -49,32 +50,47 @@ export default class FriendsList extends Component {
 
     listenForItems(friendsRef) {
         var user = firebase.auth().currentUser;
+        //new user from api bao hanh dien tu
+        var items = [];
 
-        friendsRef.on('value', (snap) => {
-
-            // get children as an array
-            var items = [];
-            snap.forEach((child) => {
-
-                //if(child.val().email != user.email)
-                    items.push({
-                        name: child.val().name,
-                        uid: child.val().uid,
-                        email: child.val().email
-                    });
+        fetch('http://dev.baohanhdientu.net/api/Member_API/GetList?UserName=""', {method: "GET"}).then(response => {
+          if (response.status === 200) {
+            return response.json().then(responseJson => {
+              responseJson.forEach((child) => {
+                      if(child.ID != this.state.userId)
+                      items.push({
+                          name: child.FullName,
+                          uid: child.ID
+                      });
+              });
+              this.setState({
+                  dataSource: this.state.dataSource.cloneWithRows(items)
+              });
             });
-
-            this.setState({
-                dataSource: this.state.dataSource.cloneWithRows(items),
-                isLoading: false
-            });
-
+          }
+        }).then(response => {
+          console.debug(response);
+          this.setState({isLoading: false});
+        }).catch(error => {
+          console.error(error);
+          this.setState({isLoading: false});
         });
+
     }
 
     componentDidMount() {
       this.setState({isLoading: true});
-        this.listenForItems(this.friendsRef);
+      AsyncStorage.getItem("username").then((value) => {
+          this.setState({userInfo:JSON.parse(value)});
+          this.setState({userId:String(this.state.userInfo.ID)});
+          this.friendsRef = this.getRef().child('friends');
+          this.listenForItems(this.friendsRef);
+          //this.state.userInfo= JSON.parse(value);
+          //this.setState({userInfo : });
+          //Alert.alert('Thông báo',String(this.state.userInfo.ID));
+          //return JSON.parse(value);
+      })
+
     }
 
     static route = {

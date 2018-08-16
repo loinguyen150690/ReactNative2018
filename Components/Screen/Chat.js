@@ -3,7 +3,8 @@ import {
     View,
     Text,
     StyleSheet,
-    Alert
+    Alert,
+    AsyncStorage
 } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
 import firebase from 'firebase';
@@ -27,20 +28,17 @@ export default class Chat extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            messages: []
+            messages: [],
+            userInfo:{},
+            userId:"11"
         };
 
-        this.user = {uid : '0979150724'};//{firebase.auth().currentUser}
+        //var test = this.state.userInfo;
 
-        this.friend = this.props.navigation.state.params.friend;
 
-        this.chatRef = this.getRef().child('chat/' + this.generateChatId());
-        this.chatRefData = this.chatRef.orderByChild('order')
-        this.onSend = this.onSend.bind(this);
     }
 
     generateChatId() {
-
       if(this.user.uid > this.friend.uid)
         return `${this.user.uid}-${this.friend.uid}`
       else
@@ -86,7 +84,23 @@ export default class Chat extends Component {
     }
 
     componentDidMount() {
-        this.listenForItems(this.chatRefData);
+      AsyncStorage.getItem("username").then((value) => {
+          this.setState({userInfo:JSON.parse(value)});
+          this.setState({userId:String(this.state.userInfo.ID)});
+          this.user = {uid : String(this.state.userInfo.ID)};//{firebase.auth().currentUser}
+
+          this.friend = this.props.navigation.state.params.friend;
+
+          this.chatRef = this.getRef().child('chat/' + this.generateChatId());
+          this.chatRefData = this.chatRef.orderByChild('order')
+          this.onSend = this.onSend.bind(this);
+          this.listenForItems(this.chatRefData);
+          //this.state.userInfo= JSON.parse(value);
+          //this.setState({userInfo : });
+          //Alert.alert('Thông báo',String(this.state.userInfo.ID));
+          //return JSON.parse(value);
+      })
+
     }
 
     componentWillUnmount() {
@@ -104,7 +118,7 @@ export default class Chat extends Component {
                 _id: now,
                 text: message.text,
                 createdAt: now,
-                uid: this.user.uid,
+                uid: this.state.userId,
                 order: -1 * now
             })
         })
@@ -117,7 +131,7 @@ export default class Chat extends Component {
                 messages={this.state.messages}
                 onSend={this.onSend.bind(this)}
                 user={{
-                    _id: this.user.uid,
+                    _id: this.state.userId,
                 }}
                 />
         );
