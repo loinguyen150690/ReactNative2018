@@ -24,6 +24,8 @@ import {
 
 const img_lichsu = "../Images/icon_change.png";
 import styles from "../Styles/Styles.js";
+import Moment from 'moment';
+
 
 export default class More extends Component<Props> {
   constructor(props) {
@@ -61,6 +63,7 @@ export default class More extends Component<Props> {
  }
 
   render() {
+    Moment.locale('vi');
     if(this.state.isLoading){
       return (<Spinner color='blue' />);
     }
@@ -85,7 +88,7 @@ export default class More extends Component<Props> {
                    }}>{item.WarrantSmsReceverStatus == 1 ? "Thành công" : "Thất bại"}</Text>
                </Body>
                <Right style={styles.bdb0}>
-                 <Text note>{item.CreatedDate}</Text>
+                 <Text note>{Moment(item.CreatedDate).format('DD/MM/YY, HH:mm:ss')}</Text>
                </Right>
           </ListItem>
 

@@ -25,6 +25,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import styles from "../Styles/Styles.js";
 import globals from "../Styles/Globals.js";
 import myApi from "../Fetch/Api.js";
+import Moment from 'moment';
 
 export default class ChiTietLichSu extends Component<Props> {
   constructor(props) {
@@ -70,6 +71,7 @@ export default class ChiTietLichSu extends Component<Props> {
   }
 
   render() {
+    Moment.locale('vi');
     if(this.state.isLoading){
       return (<Spinner color='blue' />);
     }
@@ -84,7 +86,7 @@ export default class ChiTietLichSu extends Component<Props> {
               {this.state.data.WarrantSmsReceverStatus==1 ? "Thành công" : "Thất bại"}
             </Text>
             <Text >
-              {this.state.data.CreatedDate}
+              {Moment(this.state.data.CreatedDate).format('DD/MM/YY, HH:mm:ss')}
             </Text>
             </View>
             <View style={{marginTop:24,backgroundColor:'white', flexDirection:'column', alignItems:'center', padding:30}}>
