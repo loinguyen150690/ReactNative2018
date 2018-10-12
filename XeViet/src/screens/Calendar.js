@@ -7,62 +7,16 @@ import {
   View,
   Alert,
   ScrollView,
-  Button,
-  Modal
+  Modal,
+  Picker
 } from 'react-native';
-import {Icon } from 'native-base';
+import {Icon, Button } from 'native-base';
 
 import {Calendar, CalendarList, Agenda, LocaleConfig} from 'react-native-calendars';
-LocaleConfig.locales['vn'] = {
-  monthNames: [
-    'Tháng 1',
-    'Tháng 2',
-    'Tháng 3',
-    'Tháng 4',
-    'Tháng 5',
-    'Tháng 6',
-    'Tháng 7',
-    'Tháng 8',
-    'Tháng 9',
-    'Tháng 10',
-    'Tháng 11',
-    'Tháng 12'
-  ],
-  monthNamesShort: [
-    'Thg1',
-    'Thg2',
-    'Thg3',
-    'Thg4',
-    'Thg5',
-    'Thg6',
-    'Thg7',
-    'Thg8',
-    'Thg9',
-    'Thg10',
-    'Thg11',
-    'Thg12'
-  ],
-  dayNames: [
-    'Chủ nhật',
-    'Thứ 2',
-    'Thứ 3',
-    'Thứ 4',
-    'Thứ 5',
-    'Thứ 6',
-    'Thứ 7'
-  ],
-  dayNamesShort: [
-    'CN',
-    'T2',
-    'T3',
-    'T4',
-    'T5',
-    'T6',
-    'T7'
-  ]
-};
+
 import styles from "../styles/styles";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 LocaleConfig.defaultLocale = 'vn';
 export default class App extends Component<Props> {
@@ -70,41 +24,16 @@ export default class App extends Component<Props> {
     super(props);
     this.state = {
       modalVisible: false,
-      day: null,
-      text: null,
-      DataCalendar:{
-        '2018-10-01' : {
-          bgColor: 'blue',
-          textColor: '#000',
-          content: "Complete"
-        },
-        '2018-10-16' : {
-          bgColor: 'green',
-          textColor: '#000',
-          content: "OnGoing"
-        },
-        '2018-10-17' : {
-          bgColor: 'red',
-          textColor: '#000',
-          content: "Off"
-        },
-        '2018-10-18' : {
-          bgColor: 'pink',
-          textColor: '#000',
-          content: "Booked"
-        },
-        '2018-10-19' : {
-          bgColor: 'red',
-          textColor: '#000',
-          content: "Off"
-        }
-      }
+      statusId: '',
+      DataCalendar:{},
+      arrStatus:[]
     }
   }
 
   componentWillMount() {
     var id = this._getId();
     this._loadDataXeDetail(id);
+    this._loadDataStatus('admin');
   }
 
   _getId() {
@@ -115,7 +44,85 @@ export default class App extends Component<Props> {
     return id;
   }
 
+  _loadDataStatus(userName) {
+    this.setState({
+      arrStatus:[
+        {
+          Id:"1",
+          Name:"Complete"
+        },
+        {
+          Id:"2",
+          Name:"OnGoing"
+        },
+        {
+          Id:"3",
+          Name:"Off"
+        },
+        {
+          Id:"4",
+          Name:"Booked"
+        }
+      ]
+    });
+
+  }
+
+  _buidPickerStatus(){
+    var list = this.state.arrStatus;
+    //build data to picker.item
+    let mycontent = [],
+       length = list.length,
+       i = 0,
+       item;
+     if (length > 0) {
+       for (; i < length; i++) {
+         item = list[i];
+         mycontent.push(<Picker.Item label={item.Name} value={item.Id} tilte={item.Name}/>);
+       }
+     }
+    return mycontent;
+  }
   _loadDataXeDetail(id) {
+    //data temp
+      this.setState({
+        DataCalendar:{
+          '2018-10-01' : {
+            bgColor: 'blue',
+            textColor: '#000',
+            content: "Complete",
+            statusId:"1"
+
+          },
+          '2018-10-16' : {
+            bgColor: 'green',
+            textColor: '#000',
+            content: "OnGoing",
+            statusId:"2"
+          },
+          '2018-10-17' : {
+            bgColor: 'red',
+            textColor: '#000',
+            content: "Off",
+            statusId:"3"
+          },
+          '2018-10-18' : {
+            bgColor: 'pink',
+            textColor: '#000',
+            content: "Booked",
+            statusId:"4"
+          },
+          '2018-10-19' : {
+            bgColor: 'red',
+            textColor: '#000',
+            content: "Off",
+            statusId:"3"
+          }
+
+        }
+    })
+
+    //api
     // fetch(myApi.Xe.ChiTiet + `${id}`).then(response => response.json()).then(responseJson => {
     //     this.setState({data: responseJson});
     // }).catch(error => {
@@ -124,11 +131,16 @@ export default class App extends Component<Props> {
 
   }
 
-  openModal(day, text){
+  //update status
+  _updateStatus(){
+    
+  }
+
+  openModal(day, statusId){
     this.setState({
       modalVisible: true,
       day: JSON.stringify(day),
-      text: text
+      statusId: statusId
     })
   }
 
@@ -200,7 +212,7 @@ export default class App extends Component<Props> {
         markingType={'period'}
 
         dayComponent={({date, state, marking}) => {
-          return (<TouchableOpacity onPress={()=> this.openModal(date, marking.content)}
+          return (<TouchableOpacity onPress={()=> this.openModal(date, marking.statusId)}
             style={{
               width: '100%',
               padding:1,
@@ -271,10 +283,12 @@ export default class App extends Component<Props> {
                      textStyle={styles.hanghoa_picker__textStyle} mode="dialog"
                      headerBackButtonText={<FontAwesome name = "angle-left" size = {20} />}
                      iosHeader="Trạng thái" iosIcon={<FontAwesome name = "angle-down" />}
-                     selectedValue={this.state.TrangThai}
+                     selectedValue={this.state.statusId}
+                     onValueChange={(value, index) => this.setState({statusId: value})}
                      itemStyle={styles.picker__itemStyle}>
-                     {this.buildPickerTinhTP()}
+                     {this._buidPickerStatus()}
                    </Picker>
+                 <Button success onPress={() => this._updateStatus()}>><Text> Cập nhật </Text></Button>
             </View>
           </ScrollView>
         </View>
@@ -282,3 +296,54 @@ export default class App extends Component<Props> {
     </View>);
   }
 }
+
+
+//config calendar
+LocaleConfig.locales['vn'] = {
+  monthNames: [
+    'Tháng 1',
+    'Tháng 2',
+    'Tháng 3',
+    'Tháng 4',
+    'Tháng 5',
+    'Tháng 6',
+    'Tháng 7',
+    'Tháng 8',
+    'Tháng 9',
+    'Tháng 10',
+    'Tháng 11',
+    'Tháng 12'
+  ],
+  monthNamesShort: [
+    'Thg1',
+    'Thg2',
+    'Thg3',
+    'Thg4',
+    'Thg5',
+    'Thg6',
+    'Thg7',
+    'Thg8',
+    'Thg9',
+    'Thg10',
+    'Thg11',
+    'Thg12'
+  ],
+  dayNames: [
+    'Chủ nhật',
+    'Thứ 2',
+    'Thứ 3',
+    'Thứ 4',
+    'Thứ 5',
+    'Thứ 6',
+    'Thứ 7'
+  ],
+  dayNamesShort: [
+    'CN',
+    'T2',
+    'T3',
+    'T4',
+    'T5',
+    'T6',
+    'T7'
+  ]
+};
