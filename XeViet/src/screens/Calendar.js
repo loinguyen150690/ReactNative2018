@@ -17,6 +17,7 @@ import {Calendar, CalendarList, Agenda, LocaleConfig} from 'react-native-calenda
 import styles from "../styles/styles";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import myApi from "../common/api.js";
 
 LocaleConfig.defaultLocale = 'vn';
 export default class App extends Component<Props> {
@@ -24,15 +25,23 @@ export default class App extends Component<Props> {
     super(props);
     this.state = {
       modalVisible: false,
-      statusId: '',
+      xeId:null,
+      statusId: 'OnGoing',
       DataCalendar:{},
-      arrStatus:[]
+      arrStatus:[],
+      monthcurrent: '10',
+      datecurrent:''
     }
   }
 
   componentWillMount() {
     var id = this._getId();
-    this._loadDataXeDetail(id);
+    var date = new Date();
+    this.setState({xeId:id}, function () {
+        this._loadDataXeDetail(id, this.state.monthcurrent);
+    });
+
+
     this._loadDataStatus('admin');
   }
 
@@ -45,25 +54,22 @@ export default class App extends Component<Props> {
   }
 
   _loadDataStatus(userName) {
-    this.setState({
-      arrStatus:[
-        {
-          Id:"1",
-          Name:"Complete"
-        },
-        {
-          Id:"2",
-          Name:"OnGoing"
-        },
-        {
-          Id:"3",
-          Name:"Off"
-        },
-        {
-          Id:"4",
-          Name:"Booked"
-        }
-      ]
+    fetch(myApi.TrangThai.DanhSach, {
+      method: "GET"
+    }).then(response => {
+      if (response.status === 200) {
+        return response.json().then(responseJson => {
+          this.setState({
+            arrStatus: responseJson.DataResult
+          });
+        });
+      }
+    }).then(response => {
+      console.debug(response);
+      this.setState({isLoading: false, refreshing : false});
+    }).catch(error => {
+      console.error(error);
+      this.setState({isLoading: false, refreshing : false});
     });
 
   }
@@ -78,69 +84,136 @@ export default class App extends Component<Props> {
      if (length > 0) {
        for (; i < length; i++) {
          item = list[i];
-         mycontent.push(<Picker.Item label={item.Name} value={item.Id} tilte={item.Name}/>);
+         mycontent.push(<Picker.Item label={item.Ten} value={item.Ma} tilte={item.Ten}/>);
        }
      }
     return mycontent;
   }
-  _loadDataXeDetail(id) {
+  _loadDataXeDetail(id, month) {
+    //alert(id.toString() + ":"+ month);
     //data temp
-      this.setState({
-        DataCalendar:{
-          '2018-10-01' : {
-            bgColor: 'blue',
-            textColor: '#000',
-            content: "Complete",
-            statusId:"1"
-
-          },
-          '2018-10-16' : {
-            bgColor: 'green',
-            textColor: '#000',
-            content: "OnGoing",
-            statusId:"2"
-          },
-          '2018-10-17' : {
-            bgColor: 'red',
-            textColor: '#000',
-            content: "Off",
-            statusId:"3"
-          },
-          '2018-10-18' : {
-            bgColor: 'pink',
-            textColor: '#000',
-            content: "Booked",
-            statusId:"4"
-          },
-          '2018-10-19' : {
-            bgColor: 'red',
-            textColor: '#000',
-            content: "Off",
-            statusId:"3"
-          }
-
-        }
-    })
+    //   this.setState({
+    //     DataCalendar:{
+    //       '2018-10-01' : {
+    //         bgColor: 'blue',
+    //         textColor: '#000',
+    //         content: "Complete",
+    //         statusId:"1"
+    //
+    //       },
+    //       '2018-10-16' : {
+    //         bgColor: 'green',
+    //         textColor: '#000',
+    //         content: "OnGoing",
+    //         statusId:"2"
+    //       },
+    //       '2018-10-17' : {
+    //         bgColor: 'red',
+    //         textColor: '#000',
+    //         content: "Off",
+    //         statusId:"3"
+    //       },
+    //       '2018-10-18' : {
+    //         bgColor: 'pink',
+    //         textColor: '#000',
+    //         content: "Booked",
+    //         statusId:"4"
+    //       },
+    //       '2018-10-19' : {
+    //         bgColor: 'red',
+    //         textColor: '#000',
+    //         content: "Off",
+    //         statusId:"3"
+    //       }
+    //
+    //     }
+    // })
 
     //api
-    // fetch(myApi.Xe.ChiTiet + `${id}`).then(response => response.json()).then(responseJson => {
-    //     this.setState({data: responseJson});
-    // }).catch(error => {
-    //   console.error(error);
-    // });
-
+    //var dayNow =
+    fetch(myApi.LichXe.DanhSach + "?xeid=" + id + "&thang="  + month, {
+      method: "GET"
+    }).then(response => {
+      if (response.status === 200) {
+        response.json().then(responseJson => {
+           var data = responseJson.DataResult;
+          var dataCalendar ={};
+          data.forEach(function(element) {
+              dataCalendar[element.NgayBook] =  {
+                bgColor: element.bgColor,
+                textColor: element.textColor,
+                content: element.content,
+                statusId: element.TrangThaiCode
+              }
+          });
+          this.setState({DataCalendar: dataCalendar});
+        });
+      }
+    }).then(response => {
+      console.debug(response);
+      this.setState({isLoading: false, refreshing : false});
+    }).catch(error => {
+      console.error(error);
+      this.setState({isLoading: false, refreshing : false});
+    });
   }
 
   //update status
   _updateStatus(){
-    
+    // alert(JSON.stringify({
+    //   trangthai: this.state.statusId
+    // }));
+    this.setState({isLoading: true});
+    fetch(myApi.LichXe.CapNhat, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      xeid: this.state.xeId,
+      ngay: this.state.datecurrent,
+      trangthai: this.state.statusId
+    })
+  }).then(response => {
+    if (response.status === 200) {
+      return response.json().then(responseJson => {
+        if (responseJson.Result == true) {
+          this.setState({isLoading: false});
+          this.setState({idCurrent: responseJson});
+          Alert.alert("Thông báo", "Thêm thành công");
+          this.closeModal();
+          this._loadDataXeDetail(this.state.xeId, this.state.monthcurrent);
+
+        } else {
+          this.setState({isLoading: false});
+          Alert.alert("Thông báo", "Không thành công");
+        }
+    });
+      } else {
+        this.setState({isLoading: false});
+        Alert.alert("Thông báo", "API lỗi, xin vui lòng thử lại sau");
+        console.debug(response);
+      }
+
+    }).catch(error => {
+      console.error(error);
+      this.setState({isLoading: false});
+      Alert.alert("Thông báo", "Lỗi kết nối, xin vui lòng thử lại sau");
+    });
   }
 
   openModal(day, statusId){
+    //alert(JSON.stringify(day));
+    var status_tmp =this.state.statusId;
+    if(statusId){
+      status_tmp = statusId;
+    }
+
     this.setState({
       modalVisible: true,
-      day: JSON.stringify(day),
-      statusId: statusId
+      datecurrent: day.dateString,
+      statusId: status_tmp
     })
   }
 
@@ -181,7 +254,13 @@ export default class App extends Component<Props> {
         monthFormat={'MM/yyyy'}
         // Handler which gets executed when visible month changes in calendar. Default = undefined
         onMonthChange={(month) => {
-          console.log('month changed', month)
+          //console.log('month changed', month)
+          var date = new Date(), y = month.year,  m = month.month;
+          var firstDay = new Date(2018, 9, 1, 0,0,0);
+          var lastDay = new Date(y, m + 1, 0);
+          firstDay.setMinutes(firstDay.getMinutes() - firstDay.getTimezoneOffset())
+          alert(firstDay);
+          //alert('month changed:' m);
         }}
         // Hide month navigation arrows. Default = false
         hideArrows={false}
@@ -273,7 +352,7 @@ export default class App extends Component<Props> {
           <View style={styles.modal_header_page}>
               <TouchableOpacity style={ styles.buton_back_header}
                 onPress={() => this.closeModal()}>
-                <Ionicons name={Platform.OS === 'ios' ? 'ios-close' : 'md-close'} style={styles.icon_back_header}/>
+                <Ionicons name={'md-close'} style={styles.icon_back_header}/>
               </TouchableOpacity>
               <Text style={[styles.modal_header_tilte]}>Modal</Text>
           </View>
@@ -288,7 +367,7 @@ export default class App extends Component<Props> {
                      itemStyle={styles.picker__itemStyle}>
                      {this._buidPickerStatus()}
                    </Picker>
-                 <Button success onPress={() => this._updateStatus()}>><Text> Cập nhật </Text></Button>
+                 <Button success onPress={() => this._updateStatus()}><Text> Cập nhật </Text></Button>
             </View>
           </ScrollView>
         </View>

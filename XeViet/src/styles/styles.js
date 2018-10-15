@@ -243,4 +243,101 @@ button_more_list_car: {
  fabAdd: {
     backgroundColor: variables.color.yellow
   },
+  modal__bg_nopad: {
+  padding: 0,
+  flex: 1,
+  flexDirection: "column",
+  justifyContent: "center"
+},
+modal__bg_2: {
+  backgroundColor: "rgba(0, 0, 0,0.6)",
+  flex: 1,
+  flexDirection: "column",
+  justifyContent: "flex-end"
+},
+modal__bg_3: {
+  backgroundColor: "rgba(0, 0, 0,0.6)",
+  flex: 1,
+  flexDirection: "column",
+  justifyContent: "center",
+  padding: 16
+},
+modal__content: {
+  backgroundColor: "#fff",
+  borderRadius: 10,
+  flex: 1
+},
+modal__content_2: {
+  borderRadius: 10,
+  flex: 1
+},
+bdrd: {
+  borderRadius: 5
+},
+modal__close: {
+  position: "absolute",
+  top: Platform.OS === "ios"? 24 :  5,
+  right: 5,
+  zIndex: 2
+},
+modal__close__icon: {
+  fontSize: 30,
+  color: "#ccc"
+},
+modal__close_inputmap: {
+  padding: Platform.OS === "ios" ? 4 : 12,
+  top:  3
+},
+frm__input: {
+  fontSize: 14
+},
+picker__style: {
+  height: 35,
+  width: "100%",
+  paddingLeft: 0,
+  left: 0,
+  marginLeft: 0
+},
+picker__style_full: {
+  height: 35,
+  width: Platform.OS === "ios"
+    ? 'auto'
+    : win.width - 20,
+  paddingLeft: 0,
+  left: 0,
+  marginLeft: 0
+},
+picker__style_2: {
+  height: 35,
+  width: Platform.OS === "ios"
+    ? 'auto'
+    : '100%',
+  paddingLeft: 0,
+  left: 0,
+  marginLeft: 0,
+  alignSelf: 'stretch'
+},
+picker__itemStyle: {
+  paddingLeft: 0,
+  marginLeft: 0,
+  left: 0,
+  fontSize: 12
+},
+picker__itemSelected: {
+  paddingLeft: 0,
+  marginLeft: 0,
+  left: 0,
+  fontSize: 14
+},
+text_blue: {
+    color: variables.color.darkblue,
+    fontWeight: "bold",
+    marginTop: 0,
+    marginBottom: 0
+  },
+  pd10: {
+    padding: 10,
+    paddingLeft: 16,
+    paddingRight: 16
+  },
 });

@@ -2,10 +2,28 @@ const URL = "http://api.emdiu.com";
 
 export default {
    Xe:{
-     DanhSach:"http://api.emdiu.com/api/XeGetAll",
-     ChiTiet:"http://api.emdiu.com/api/XeGetAll"
+     DanhSach:URL + "/api/XeGetAll",
+     ChiTiet: URL + "/api/XeGetAll",
+     CapNhat: URL + "/api/XeGetAll"
+   },
+   LichXe:{
+     DanhSach: URL + "/api/LichXeGetAll",
+     CapNhat: URL + "/api/LichXeChange"
    },
    Image:{
-     URL: URL + "/images/Xe/"
+     URLXe: URL + "/images/Xe/"
+   },
+   LoaiXe:{
+     DanhSach:URL + "/api/DanhMucGetAll?TenDanhMuc=DM_LoaiXe"
+   },
+   LoaiDongCo:{
+     DanhSach:URL + "/api/DanhMucGetAll?TenDanhMuc=DM_DongCo"
+   },
+   TrangThai:{
+     DanhSach:URL + "/api/DanhMucTrangThai"
+   },
+   NguoiDung:{
+     DangNhap:"",
+     DangKy:""
    }
 }
