@@ -36,8 +36,8 @@ const icon_tabbar_more_active = "../images/icon_tabbar_more_active.png";
 const icon_tabbar_car = "../images/icon_tabbar_car.png";
 const icon_tabbar_car_active = "../images/icon_tabbar_car_active.png";
 
-let tabBgColor = 'white',
-  tabActiveBgColor = variables.color.darkblue,
+let tabBgColor = variables.color.tabNavBgc,
+  tabActiveBgColor = variables.color.tabNavActiveBgc,
   tabBarTextColor = variables.color.tabNav,
   tabBarActiveTextColor = variables.color.tabNavActive;
 
@@ -61,20 +61,16 @@ export default class TabScreen extends Component<Props> {
     }
   }
 
-  navToDonHang() {
+  navToMenu() {
     this.saveItem("@TabBarActive",'1');
     this.setState({TAB_ACTIVE: 1});
-    this.props.navigation.navigate("Calendar");
+    // this.props.navigation.navigate("Calendar");
   }
 
 
-  navToTinTuc() {
-    this.setState({TAB_ACTIVE: 3});
-    this.saveItem("@TabBarActive",'3');
-   // this.props.navigation.navigate("Chart");
-  }
 
-  navToThongBao() {
+
+  navToDanhSachXe() {
     this.setState({TAB_ACTIVE: 4});
     this.saveItem("@TabBarActive",'4');
     this.props.navigation.navigate("DanhSachXe");
@@ -86,45 +82,40 @@ export default class TabScreen extends Component<Props> {
   render() {
     return (<Footer style={{display:this.state.TYPE_USER == -1 ? 'none' : 'flex'}}>
       <FooterTab style={styles.footerTab} tabBarActiveTextColor='#000'>
-
-
-
         <Button style={[
             st.btnTabNav, {
               backgroundColor: this.state.TAB_ACTIVE === 4
                 ? tabActiveBgColor
                 : tabBgColor
             }
-          ]} vertical={true} onPress={() => this.navToThongBao()} active={this.state.TAB_ACTIVE === 4}>
-          <Image source={this.state.TAB_ACTIVE === 4
-              ? require(icon_tabbar_car_active)
-              : require(icon_tabbar_car)} style={styles.tabIcon}/>
+          ]} vertical={true} onPress={() => this.navToDanhSachXe()} active={this.state.TAB_ACTIVE === 4}>
+          <Ionicons name='logo-model-s' size={30} color={this.state.TAB_ACTIVE === 4 ? tabBarActiveTextColor : tabBarTextColor }/>
           <Text style={[
               st.tabBarText, {
                 color: this.state.TAB_ACTIVE === 4
                   ? tabBarActiveTextColor
                   : tabBarTextColor
               }
-            ]} uppercase={false}>Xe</Text>
+            ]} uppercase={false}>Danh sách xe</Text>
         </Button>
 
         <Button style={[
             st.btnTabNav, {
-              backgroundColor: this.state.TAB_ACTIVE === 5
+              backgroundColor: this.state.TAB_ACTIVE === 1
                 ? tabActiveBgColor
                 : tabBgColor
             }
-          ]} vertical={true} onPress={() => this.navDrawer()} active={this.state.TAB_ACTIVE === 5}>
-          <Image source={this.state.TAB_ACTIVE === 5
-              ? require(icon_tabbar_more_active)
-              : require(icon_tabbar_more)} style={styles.tabIcon}/>
+          ]} vertical={true} onPress={() => this.navToMenu()}
+          active={this.state.TAB_ACTIVE === 1}>
+          <Ionicons name='ios-options' size={30}
+            color={this.state.TAB_ACTIVE === 1 ? tabBarActiveTextColor : tabBarTextColor }/>
           <Text style={[
               st.tabBarText, {
-                color: this.state.TAB_ACTIVE === 5
+                color: this.state.TAB_ACTIVE === 1
                   ? tabBarActiveTextColor
                   : tabBarTextColor
               }
-            ]} uppercase={false}>...</Text>
+            ]} uppercase={false}>Menu</Text>
         </Button>
 
       </FooterTab>

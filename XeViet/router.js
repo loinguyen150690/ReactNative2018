@@ -274,7 +274,7 @@ export default RootDrawer = DrawerNavigator(
    // LoginStack: {
    //   screen: LoginStack,
    // },
-   Home: {
+   Home: { 
      screen: HomeDrawer
    }
  }

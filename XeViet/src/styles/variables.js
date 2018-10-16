@@ -2,15 +2,17 @@ export default {
   //STORE_KEY: 'a56z0fzrNpl^2',
   //BASE_URL: 'http://someurl.com',
   color: {
-    darkblue: '#004BA0',
+    darkblue: '#F64E4F',
     lightblue: '#44A4F5',
     grey: '#9A9A9A',
     yellow: '#FEB20E',
-    tabNav: '#707070',
-    tabNavActive: '#fff',
-    tabNavActiveBgc: '#004BA0',
+    tabNav: '#fff',
+    tabNavBgc: '#F64E4F',
+    tabNavActive: '#000',
+    tabNavActiveBgc: '#F64E4F',
     tabs: '#757575',
     tabsActive: '#004BA0',
+    headerTitle: '#fff'
 
   },
   fontSize:{

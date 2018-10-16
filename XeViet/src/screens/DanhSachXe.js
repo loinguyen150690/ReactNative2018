@@ -41,7 +41,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 
-//import pick from "../common/picker.js";
+import pick from "../common/picker.js";
 
 const MAX_IMG_BAOHIEM = 2, MAX_IMG_GIAYDANGKIEM = 2, MAX_IMG_XE = 4;
 export default class DanhSachXe extends Component<Props> {
@@ -88,23 +88,29 @@ export default class DanhSachXe extends Component<Props> {
       titleModal: "Thêm mới xe",
       dataDetail: [],
       //upload hinh xe
-      uploadButtonVisible: false,
-      listHinhXe: [],
-      listHinhXe_upload: [],
-      refreshingHinhXe: false,
-      listHinhXe_download: [],
-
-      //upload giay dang kiem
-      listHinhGiayDangKiem: [],
-      listHinhGiayDangKiem_upload: [],
-      refreshingHinhGiayDangKiem: false,
-      listHinhGiayDangKiem_download: [],
-
-      //upload giay dang kiem
-      listHinhBaoHiem: [],
-      listHinhBaoHiem_upload: [],
-      refreshingHinhBaoHiem: false,
-      listHinhBaoHiem_download: [],
+      // uploadButtonVisible: false,
+      dataHinhXe: {
+            Source:null,
+            FileName: null,
+            FileType: null,
+            Base64String: null,
+        }
+      // listHinhXe: [],
+      // listHinhXe_upload: [],
+      // refreshingHinhXe: false,
+      // listHinhXe_download: [],
+      //
+      // //upload giay dang kiem
+      // listHinhGiayDangKiem: [],
+      // listHinhGiayDangKiem_upload: [],
+      // refreshingHinhGiayDangKiem: false,
+      // listHinhGiayDangKiem_download: [],
+      //
+      // //upload giay dang kiem
+      // listHinhBaoHiem: [],
+      // listHinhBaoHiem_upload: [],
+      // refreshingHinhBaoHiem: false,
+      // listHinhBaoHiem_download: [],
     };
   }
   componentWillMount() {
@@ -438,7 +444,23 @@ openModalCapNhatXe() {
   }
   //endregion
 
+  showGetHinhXe() {
+      pick((source, filename, data, type) => {
+        this.onThemHinhXe(source, filename, data, type);
+      });
+    }
 
+  onThemHinhXe(source, filename, data, type) {
+    var list = this.state.dataHinhXe;
+    list["Source"] = source;
+    list["FileName"] = filename;
+    list["FileType"] = data;
+    list["Base64String"] = type;
+
+    this.setState({
+      dataHinhXe: list
+    });
+  }
 
   render() {
     return (<Container style={{
@@ -585,21 +607,22 @@ openModalCapNhatXe() {
               styles.bgf,
               styles.shadow
             ]}>
-            <View style={styles.title_chuyenhang2}>
-              <Text style={[styles.text_blue]}>Thông tin xe</Text>
-            </View>
             <View style={[styles.pd10]}>
-              <Item stackedLabel={true}>
+              <View style={styles.title_chuyenhang2}>
+                <Text style={[styles.text_blue]}>Thông tin xe</Text>
+              </View>
+              <Item stackedLabel={true}  style={[styles.frmInput__item]} >
                 <Label style={styles.frm__label}>Tên xe</Label>
                 <Input style={styles.frm_input} value={this.state.tenxe} onChangeText={tenxe => this.setState({tenxe})} ref={input => (this.tenxe = input)}/>
               </Item>
-              <Item stackedLabel={true}>
+
+              <Item stackedLabel={true}  style={[styles.frmInput__item]}>
                 <Label style={styles.frm__label}>Biển số</Label>
                 <Input style={styles.frm_input} value={this.state.bienso} onChangeText={bienso => this.setState({bienso})} ref={input => (this.bienso = input)}/>
               </Item>
 
-              <Item stackedLabel={true} style={[styles.frm__item__fl, styles.frm__item_2]}>
-                <Text style={styles.hanghoa_lbl_picker_2}>
+              <Item stackedLabel={true} style={[styles.frmInput__item]}>
+                <Text style={styles.frm__label}>
                   Loại xe
                 </Text>
                 <Picker style={styles.picker__style_2} textStyle={styles.hanghoa_picker__textStyle} mode="dialog" headerBackButtonText={<FontAwesome name = "angle-left" size = {
@@ -610,8 +633,8 @@ openModalCapNhatXe() {
                 </Picker>
               </Item>
 
-              <Item stackedLabel={true} style={[styles.frm__item__fl, styles.frm__item_2]}>
-                <Text style={styles.hanghoa_lbl_picker_2}>Loại động cơ xe</Text>
+              <Item stackedLabel={true}  style={[styles.frmInput__item]}>
+                <Text style={styles.frm__label}>Loại động cơ xe</Text>
                 <Picker style={styles.picker__style_2} textStyle={styles.hanghoa_picker__textStyle} mode="dialog" headerBackButtonText={<FontAwesome name = "angle-left" size = {
                     20
                   } />
@@ -625,7 +648,7 @@ openModalCapNhatXe() {
                     flex: 1,
                     paddingRight: 12
                   }}>
-                  <Item stackedLabel={true}>
+                  <Item stackedLabel={true}  style={[styles.frmInput__item]}>
                     <Label style={styles.frm__label}>Số chỗ ngồi</Label>
                     <Input style={styles.frm_input} value={this.state.sochongoi} onChangeText={sochongoi => this.setState({sochongoi})} ref={input => (this.sochongoi = input)}/>
                   </Item>
@@ -634,7 +657,7 @@ openModalCapNhatXe() {
                     flex: 1,
                     paddingLeft: 12
                   }}>
-                  <Item stackedLabel={true}>
+                  <Item stackedLabel={true}  style={[styles.frmInput__item]}>
                     <Label style={styles.frm__label}>Màu sắc</Label>
                     <Input style={styles.frm_input} value={this.state.mauxe} onChangeText={mauxe => this.setState({mauxe})} ref={input => (this.mauxe = input)}/>
                   </Item>
@@ -646,7 +669,7 @@ openModalCapNhatXe() {
                     flex: 1,
                     paddingRight: 12
                   }}>
-                  <Item stackedLabel={true}>
+                  <Item stackedLabel={true}  style={[styles.frmInput__item]}>
                     <Label style={styles.frm__label}>Phí thuê</Label>
                     <Input keyboardType="numeric" style={styles.frm_input} value={this.state.sotien} onChangeText={sotien => this.setState({sotien})} ref={input => (this.sotien = input)}/>
                   </Item>
@@ -655,26 +678,36 @@ openModalCapNhatXe() {
                     flex: 1,
                     paddingLeft: 12
                   }}>
-                  <Item stackedLabel={true}>
+                  <Item stackedLabel={true}  style={[styles.frmInput__item]}>
                     <Label style={styles.frm__label}>Tiền chủ xe (%)</Label>
                     <Input style={styles.frm_input} value={this.state.tilechuxe} onChangeText={tilechuxe => this.setState({tilechuxe})} ref={input => (this.tilechuxe = input)}/>
                   </Item>
                 </View>
               </View>
 
-            </View>
-            <View style={[styles.pd10]}>
-              <Item stackedLabel={true}>
+              <Item stackedLabel={true}  style={[styles.frmInput__item]}>
                 <Label style={styles.frm__label}>Ghi chú</Label>
                 <Input style={styles.frm_input} value={this.state.ghichu} onChangeText={ghichu => this.setState({ghichu})} ref={input => (this.ghichu = input)}/>
               </Item>
+
+              <Item stackedLabel={true} style={[styles.frmInput__item]}>
+                <Label style={styles.frm__label}>Hình xe</Label>
+                <Input style={styles.text_input}/>
+                <TouchableOpacity style={styles.button_them_hinh} onPress={() => this.showGetHinhXe()}>
+                  <FontAwesome name="plus-square-o" size={21} style={[styles.icon_input_text, styles.icon_blue]}/>
+                </TouchableOpacity>
+              </Item>
+
+              <View style={styles.box_img_upload}>
+                <Image source={this.state.dataHinhXe['Source']} style={styles.img_upload}/>
+              </View>
+
             </View>
           </View>
 
-
         </ScrollView>
         <Footer style={[styles.footer_page, styles.footer_action]}>
-          <Button full block={true} bordered={true} rounded={true} style={[
+          <Button full={true} block={true} bordered={true} rounded={true} style={[
               styles.frmgetpass__btn, {
                 display: this.state.buttonThemMoiXeVisible == true
                   ? "flex"

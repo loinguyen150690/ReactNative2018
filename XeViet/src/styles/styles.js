@@ -381,6 +381,71 @@ text_blue: {
      width: 0,
      height: 1
    },
-   flexDirection: 'row'
  },
+ button_upload: {
+
+    textAlign: 'center',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  box_img_upload: {
+    width: 100 + 5,
+    marginTop: 5,
+    height: 100,
+  },
+  img_upload: {
+    height: 100,
+    width: 100
+  },
+  button_them_hinh: {
+    position: "absolute",
+    left: 0,
+    bottom: 0,
+    top: 0,
+    width: "100%",
+    zIndex: 3
+  },
+  icon_input_text: {
+    position: "absolute",
+    right: 0,
+    top: 30,
+    zIndex: 2
+  },
+  frm__label: {
+    width: '100%',
+    fontSize: 14,
+    color: variables.color.labelInput
+  },
+  frmInput__item: {
+    marginTop: 10,
+    borderBottomColor: '#ddd',
+    borderBottomWidth: 1,
+    padding: 0,
+    width: '100%'
+  },
+  text_input: {
+    textAlign: 'left',
+    borderBottomWidth: 0,
+    shadowOpacity: 0,
+    marginBottom: 6,
+    marginTop: 4,
+    paddingTop: 0,
+    paddingBottom: 0,
+    height: 32,
+    width: '100%'
+  },
+  frmgetpass__btn: {
+    marginLeft: 0,
+    marginRight: 0,
+    borderColor: variables.color.darkblue,
+    backgroundColor: "#fff",
+    height: 44,
+    flex: 1
+  },
+  tabBarText:{
+    fontSize: 13
+  },
+  btn_border_blue__txt: {
+    color: variables.color.darkblue,
+  }
 });
