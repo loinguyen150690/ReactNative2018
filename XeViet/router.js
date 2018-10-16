@@ -21,7 +21,7 @@ const MenuRightStack = StackNavigator(
     Test: {
       screen: Test,
       navigationOptions: {
-        title: "Thay đổi mật khẩu"
+        title: "Tét"
       }
     },
 

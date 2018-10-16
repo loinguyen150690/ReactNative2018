@@ -67,7 +67,9 @@ export default class TabScreen extends Component<Props> {
     this.saveItem("@TabBarActive",'4');
     this.props.navigation.navigate("DanhSachXe");
   }
-
+  openMenuright() {
+    this.props.navigation.navigate("DrawerOpen");
+  }
   navTest() {
     this.setState({TAB_ACTIVE: 1});
     this.saveItem("@TabBarActive",'1');
