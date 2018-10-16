@@ -97,7 +97,7 @@ export default class TabScreen extends Component<Props> {
 
 const st = StyleSheet.create({
   tabBarText: {
-    fontSize: fz,
+    // fontSize: fz,
     paddingLeft: 0,
     paddingRight: 0
   },
