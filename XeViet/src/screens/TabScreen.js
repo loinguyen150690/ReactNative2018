@@ -94,7 +94,7 @@ export default class TabScreen extends Component<Props> {
     </Footer>);
   }
 }
-
+let fz = 10;
 const st = StyleSheet.create({
   tabBarText: {
     fontSize: fz,
