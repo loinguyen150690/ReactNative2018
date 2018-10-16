@@ -14,14 +14,16 @@ import DrawerScreen   from "./src/screens/DrawerScreen.js";
 import TabScreen   from "./src/screens/TabScreen.js";
 import Calendar   from "./src/screens/Calendar.js";
 import Test from "./src/screens/Test.js";
+import Test2 from "./src/screens/Test2.js";
+import Test3 from "./src/screens/Test3.js";
 import DanhSachXe   from "./src/screens/DanhSachXe.js";
 import UserOption   from "./src/screens/UserOption.js";
 import Login from "./src/screens/Login.js";
 
 const MenuRightStack = StackNavigator(
   {
-    Test: {
-      screen: Test,
+    Test2: {
+      screen: Test2,
       navigationOptions: {
         title: "Tét"
       }
@@ -64,19 +66,6 @@ export const RootTab = TabNavigator(
         title: "Test"
       }
     },
-	/*,
-    Chart: {
-      screen: Chart,
-      navigationOptions: {
-        title: "Chart",
-      }
-    },
-    Photo: {
-      screen: Photo,
-      navigationOptions: {
-        title: "Photo",
-      }
-    },*/
   },
   {
     navigationOptions: {
@@ -127,15 +116,12 @@ export const RootTab = TabNavigator(
 });
 
 export const IntroStack = StackNavigator({
-
-  Test: {
-    screen: Test,
+  Test3: {
+    screen: Test3,
     navigationOptions: {
       header: null
     }
   },
-
-
 },
 {
   navigationOptions: {
@@ -197,28 +183,15 @@ export const LoginStack = StackNavigator({
 })
 export const RootStack = StackNavigator(
   {
-
-
     HomePage: {
       screen: RootTab
     },
-
     Calendar: {
       screen: Calendar,
       navigationOptions: {
         title: "Calendar",
       }
     },
-
-    Test: {
-      screen: Test,
-      navigationOptions: {
-        title: "Hàng hóa dịch vụ"
-      }
-    },
-
-
-
   },
   {
     navigationOptions: {

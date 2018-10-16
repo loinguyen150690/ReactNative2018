@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {
   Text,
   View,
+  TouchableOpacity,
+  AsyncStorage
 } from 'react-native';
 
 export default class App extends Component<Props> {
@@ -11,11 +13,22 @@ export default class App extends Component<Props> {
       modalVisible: false
     }
   }
-
-
+  async userLogout() {
+      try {
+        // await AsyncStorage.clear();
+        // await AsyncStorage.removeItem("@Phone");
+        await AsyncStorage.removeItem("@Logined");
+        this.props.navigation.navigate("LoginStack");
+      } catch (error) {
+        console.log("AsyncStorage error: " + error.message);
+      }
+    }
   render() {
-    return (<View>
-      <Text>Test</Text>
+    return (<View style={{padding: 20}}>
+      <TouchableOpacity onPress={()=> this.userLogout()}>
+          <Text>Logout</Text>
+      </TouchableOpacity>
+
     </View>);
   }
 }
