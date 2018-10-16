@@ -10,7 +10,7 @@ import {
   Modal,
   Picker
 } from 'react-native';
-import {Icon, Button } from 'native-base';
+import {Icon, Button, Item, Footer } from 'native-base';
 
 import {Calendar, CalendarList, Agenda, LocaleConfig} from 'react-native-calendars';
 
@@ -181,10 +181,9 @@ export default class App extends Component<Props> {
         if (responseJson.Result == true) {
           this.setState({isLoading: false});
           this.setState({idCurrent: responseJson});
-          Alert.alert("Thông báo", "Thêm thành công");
+          Alert.alert("Thông báo", "Thành công");
           this.closeModal();
           this._loadDataXeDetail(this.state.xeId, this.state.monthcurrent);
-
         } else {
           this.setState({isLoading: false});
           Alert.alert("Thông báo", "Không thành công");
@@ -354,22 +353,36 @@ export default class App extends Component<Props> {
                 onPress={() => this.closeModal()}>
                 <Ionicons name={'md-close'} style={styles.icon_back_header}/>
               </TouchableOpacity>
-              <Text style={[styles.modal_header_tilte]}>Modal</Text>
+              <Text style={[styles.modal_header_tilte]}>Thay đổi trạng thái</Text>
           </View>
           <ScrollView>
+            <View style={[styles.pd10]}>
+              <Item stackedLabel={true} style={[styles.frmInput__item]}>
+                <Text style={styles.frm__label}>
+                  Trạng thái
+                </Text>
+                <Picker style={styles.picker__style_2}
+                         textStyle={styles.hanghoa_picker__textStyle} mode="dialog"
+                         headerBackButtonText={<FontAwesome name = "angle-left" size = {20} />}
+                         iosHeader="Trạng thái" iosIcon={<FontAwesome name = "angle-down" />}
+                         selectedValue={this.state.statusId}
+                         onValueChange={(value, index) => this.setState({statusId: value})}
+                         itemStyle={styles.picker__itemStyle}>
+                         {this._buidPickerStatus()}
+                       </Picker>
+              </Item>
+            </View>
             <View style={{padding: 10}}>
-            <Picker style={styles.picker__style_2}
-                     textStyle={styles.hanghoa_picker__textStyle} mode="dialog"
-                     headerBackButtonText={<FontAwesome name = "angle-left" size = {20} />}
-                     iosHeader="Trạng thái" iosIcon={<FontAwesome name = "angle-down" />}
-                     selectedValue={this.state.statusId}
-                     onValueChange={(value, index) => this.setState({statusId: value})}
-                     itemStyle={styles.picker__itemStyle}>
-                     {this._buidPickerStatus()}
-                   </Picker>
-                 <Button success onPress={() => this._updateStatus()}><Text> Cập nhật </Text></Button>
+
             </View>
           </ScrollView>
+          <Footer style={[styles.footer_page, styles.footer_action]}>
+            <Button full={true} block={true} bordered={true} rounded={true} style={[
+                styles.frmgetpass__btn
+              ]} onPress={() => this._updateStatus()}>
+            <Text style={styles.btn_border_blue__txt}>CẬP NHẬT</Text>
+          </Button>
+          </Footer>
         </View>
       </Modal>
     </View>);

@@ -13,8 +13,10 @@ import styles     from "./src/styles/styles.js";
 import DrawerScreen   from "./src/screens/DrawerScreen.js";
 import TabScreen   from "./src/screens/TabScreen.js";
 import Calendar   from "./src/screens/Calendar.js";
-import Test   from "./src/screens/Test.js";
+import Test from "./src/screens/Test.js";
 import DanhSachXe   from "./src/screens/DanhSachXe.js";
+import UserOption   from "./src/screens/UserOption.js";
+import Login from "./src/screens/Login.js";
 
 const MenuRightStack = StackNavigator(
   {
@@ -159,29 +161,25 @@ export const IntroStack = StackNavigator({
 })
 
 export const LoginStack = StackNavigator({
-
-
-  Test: {
-    screen: Test,
+  UserOption: {
+    screen: UserOption,
+    navigationOptions: {
+      header: null
+    }
+  },
+  Login: {
+    screen: Login,
     navigationOptions: {
       header: null
     }
   },
 
-  // ForgotPass: {
-  //   screen: ForgotPass,
-  //   navigationOptions: {
-  //     title: "Nhập mã xác nhận"
-  //   }
-  // },
 },
 {
   navigationOptions: {
     headerBackTitle: null,
     headerStyle: {
      backgroundColor: variables.color.darkblue,
-      // flexDirection: "row",
-      // alignItems: "center",
       paddingLeft: 0,
       marginLeft: 0
     },
@@ -271,16 +269,16 @@ export const RootStack = StackNavigator(
 export default RootDrawer = DrawerNavigator(
  {
    // Test:{
-   //   screen: DanhSachXe
+   //   screen: UserOption
    // },
 
    // Intro:{
    //   screen: IntroStack
    // },
-   // LoginStack: {
-   //   screen: LoginStack,
-   // },
-   Home: {
+   LoginStack: {
+     screen: LoginStack,
+   },
+   HomePage: {
      screen: HomeDrawer
    }
  }

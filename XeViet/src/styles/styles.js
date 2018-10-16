@@ -465,4 +465,111 @@ text_blue: {
     fontSize: 13,
     color: variables.color.colorIcon
   },
+  backgroundImage: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
+    position: "absolute",
+    top: 0,
+    left: 0
+  },
+  rdo_list: {
+    margin: 0,
+    padding: 0
+  },
+  rdo: {
+    margin: 0,
+    padding: 0,
+    borderBottomWidth: 0,
+    marginLeft: 0,
+
+  },
+  radio__item: {
+    margin: 0,
+    padding: 0,
+    borderBottomWidth: 0,
+    marginLeft: 0,
+    backgroundColor: 'rgba(255,255,255,.8)',
+    width: 280,
+    paddingLeft: 40,
+    marginTop: 20,
+    borderRadius: 50,
+    borderWidth: 1,
+    borderColor: '#fff'
+  },
+  rdo__txt: {
+    paddingLeft: 12,
+    color: 'red'
+  },
+  radio_group: {
+    margin: 0,
+    borderBottomWidth: 1,
+    borderBottomColor: "#D8D8D8"
+  },
+
+  button_login_back:{
+    position: 'absolute'
+  },
+  icon_login_back:{
+    fontSize: 34,
+    color: '#fff',
+    padding: 12,
+    paddingLeft: 24,
+  },
+page_title: {
+    alignItems: "center",
+    top: 45
+  },
+  welcome: {
+    color: "#fff"
+  },
+  shipper_text: {
+    color: "#fff",
+    fontSize: 50
+  },
+text: {
+    color: "#fff",
+    fontSize: 50
+  },
+  frmlogin: {
+    marginTop: 20,
+    padding: 35
+  },
+  frmlogin__item: {
+    marginTop: 10,
+    marginLeft: 0,
+    marginRight: 0,
+    borderBottomColor: '#fff',
+    borderBottomWidth: 1,
+    //width: '100%'
+  },
+frmlogin__label: {
+    color: "#fff",
+    fontSize: 14
+  },
+  frmlogin__input: {
+    color: "white",
+    width: '100%',
+    height: 40,
+    borderBottomWidth: 0,
+    shadowOpacity: 0,
+    borderBottomColor: 'transparent',
+  },
+  frmlogin__btn: {
+    marginLeft: 0,
+    marginRight: 0,
+    marginTop: 35,
+    backgroundColor: variables.color.yellow,
+    shadowOpacity: 0,
+    shadowColor: "transparent"
+  },
+  frmlogin__btn2: {
+    marginTop: 10
+  },
+
+  forget_pass_txt: {
+    color: "#fff",
+    marginTop: 20
+  },
 });
