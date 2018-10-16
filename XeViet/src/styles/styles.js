@@ -340,4 +340,47 @@ text_blue: {
     paddingLeft: 16,
     paddingRight: 16
   },
+  modalLoading: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, .3)"
+  },
+  loadingView: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, .3)",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  spinerLoading: {
+    color: "#fff"
+  },
+  footer_page: {
+   backgroundColor: "transparent",
+   borderTopWidth: 0,
+   shadowOpacity: 0,
+   shadowColor: "transparent",
+   shadowOffset: {
+     height: 0,
+     width: 0
+   }
+ },
+ footer_action: {
+   height: 50,
+   backgroundColor: "#eee",
+   paddingLeft: 32,
+   paddingRight: 32,
+   paddingTop: (50 - 44) / 2,
+   shadowColor: "#ddd",
+   shadowRadius: 0,
+   shadowOpacity: 0.5,
+   elevation: 3,
+   shadowOffset: {
+     width: 0,
+     height: 1
+   },
+   flexDirection: 'row'
+ },
 });

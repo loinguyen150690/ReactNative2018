@@ -3,8 +3,9 @@ const URL = "http://api.emdiu.com";
 export default {
    Xe:{
      DanhSach:URL + "/api/XeGetAll",
-     ChiTiet: URL + "/api/XeGetAll",
-     CapNhat: URL + "/api/XeGetAll"
+     ChiTiet: URL + "/api/XeGetAll?xeid=",
+     CapNhat: URL + "/api/XeCreateUpdate",
+     Xoa:URL + "/api/XeDel?xeid="
    },
    LichXe:{
      DanhSach: URL + "/api/LichXeGetAll",
