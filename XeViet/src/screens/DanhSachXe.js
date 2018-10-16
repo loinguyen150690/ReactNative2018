@@ -58,7 +58,7 @@ export default class DanhSachXe extends Component<Props> {
       // them moi param
       modalThemMoiXeVisible: false,
       buttonThemMoiXeVisible: true,
-      dangchinhsua: false,
+      // dangchinhsua: false,
       //id: null,
 
       data: null,
@@ -88,7 +88,6 @@ export default class DanhSachXe extends Component<Props> {
       titleModal: "Thêm mới xe",
       dataDetail: [],
       //upload hinh xe
-      // uploadButtonVisible: false,
       dataHinhXe: {
             Source:null,
             FileName: null,
@@ -214,15 +213,15 @@ export default class DanhSachXe extends Component<Props> {
   }
 
   //Goi API Chinh sua xe
-openModalChinhSuaXe() {
-  this.closeModalMore();
-  this.setState({titleModal: "Chỉnh sửa xe", dangchinhsua: true});
-  this.openModalCapNhatXe();
-  this.loadDataDetail(this.state.idCurrent);
-}
+  openModalChinhSuaXe() {
+    this.closeModalMore();
 
-openModalCapNhatXe() {
-    //this._clearDataInput();
+    this.openModalCapNhatXe();
+    this.loadDataDetail(this.state.idCurrent);
+  }
+
+  openModalCapNhatXe() {
+    this.setState({titleModal: "Chỉnh sửa xe"});
     this.setState({modalThemMoiXeVisible: true, buttonThemMoiXeVisible: false});
   }
 
@@ -235,18 +234,7 @@ openModalCapNhatXe() {
       phienban: null,
       namdangky: null,
       bienso: null,
-      hinhxe: [],
-      giaydangkiem: [],
-      baohiemxe: [],
-
-      listHinhXe: [],
-      listHinhXe_upload: [],
-
-      listHinhGiayDangKiem: [],
-      listHinhGiayDangKiem_upload:[],
-
-      listHinhBaoHiem: [],
-      listHinhBaoHiem_upload: [],
+      dataHinhXe: [],
 
     });
   }
@@ -254,37 +242,31 @@ openModalCapNhatXe() {
   //load thong tin chi tiet xe khi chinh sua
   loadDataDetail(xeId) {
   //alert(xeId);
-  fetch(myApi.Xe.ChiTiet + `${xeId}`).then(response => response.json()).then(responseJson => {
-    //alert(JSON.stringify(responseJson));
-    var result = responseJson.DataResult[0];
-    //alert(result.SoChoNgoi);
-    this.setState({
-      dataDetail: responseJson
-    }, function() {
+    fetch(myApi.Xe.ChiTiet + `${xeId}`).then(response => response.json()).then(responseJson => {
+      //alert(JSON.stringify(responseJson));
+      var result = responseJson.DataResult[0];
+      //alert(result.SoChoNgoi);
       this.setState({
-        tenxe: result.TenXe,
-        bienso: result.BienSo,
-        loaixeId: result.LoaiXeCode,
-        loaidongcoId: result.LoaiDongCoCode,
-        sochongoi: `${result.SoChoNgoi}`,
-        mauxe:result.Mau,
-        sotien: `${result.SoTien}`,
-        tilechuxe: `${result.TiLeChuXe}`,
-        ghichu: result.GhiChu
-        // listHinhXe_download: result["ListImage"],
-        // listHinhGiayDangKiem_download: result["ListRegistrationCertificate"],
-        // listHinhBaoHiem_download: result["ListInsurancePaper"],
-        // tinhtp:result["CityId"],
-        // quanhuyen: result["DistrictId"],
-        //refreshingHinhXe: true
-        }, function(){
-          //this.onValueChangeTinhTP(result)
-          //this.setState({refreshingHinhXe: false})
+        dataDetail: responseJson
+      }, function() {
+        this.setState({
+          tenxe: result.TenXe,
+          bienso: result.BienSo,
+          loaixeId: result.LoaiXeCode,
+          loaidongcoId: result.LoaiDongCoCode,
+          sochongoi: `${result.SoChoNgoi}`,
+          mauxe:result.Mau,
+          sotien: `${result.SoTien}`,
+          tilechuxe: `${result.TiLeChuXe}`,
+          ghichu: result.GhiChu
+          }, function(){
+            //this.onValueChangeTinhTP(result)
+            //this.setState({refreshingHinhXe: false})
+          });
         });
+      }).catch(error => {
+        console.error(error);
       });
-    }).catch(error => {
-      console.error(error);
-    });
   }
 
 
@@ -422,13 +404,13 @@ openModalCapNhatXe() {
 
   //open modal them moi xe
   openModalThemMoiXe() {
-    //this._clearDataInput();
+    this._clearDataInput();
     this.setState({titleModal: "Thêm mới xe"});
     this.setState({modalThemMoiXeVisible: true, buttonThemMoiXeVisible: true});
   }
   //close modal them moi xe
   closeModalThemMoiXe() {
-    //this.closeModalMore();
+    this.closeModalMore();
     this.setState({modalThemMoiXeVisible: false});
   }
   setmodalXoa() {

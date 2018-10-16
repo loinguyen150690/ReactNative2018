@@ -53,9 +53,15 @@ export const RootTab = TabNavigator(
     DanhSachXe: {
       screen: DanhSachXe,
       navigationOptions: {
-        title: "DanhSachXe"
+        title: "Danh sách xe"
       }
-    }
+    },
+    Test: {
+      screen: Test,
+      navigationOptions: {
+        title: "Test"
+      }
+    },
 	/*,
     Chart: {
       screen: Chart,
@@ -274,7 +280,7 @@ export default RootDrawer = DrawerNavigator(
    // LoginStack: {
    //   screen: LoginStack,
    // },
-   Home: { 
+   Home: {
      screen: HomeDrawer
    }
  }

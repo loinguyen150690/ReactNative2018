@@ -447,5 +447,22 @@ text_blue: {
   },
   btn_border_blue__txt: {
     color: variables.color.darkblue,
-  }
+  },
+  bdrd: {
+    borderRadius: 5
+  },
+  thongtin_row: {
+    flexDirection: "row",
+    padding: 5,
+    paddingLeft: 16,
+    paddingRight: 16
+  },
+  thongtin_icon: {
+    fontSize: 14,
+    width: 22
+  },
+  thongtin_txt2: {
+    fontSize: 13,
+    color: variables.color.colorIcon
+  },
 });

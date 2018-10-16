@@ -61,14 +61,6 @@ export default class TabScreen extends Component<Props> {
     }
   }
 
-  navToMenu() {
-    this.saveItem("@TabBarActive",'1');
-    this.setState({TAB_ACTIVE: 1});
-    // this.props.navigation.navigate("Calendar");
-  }
-
-
-
 
   navToDanhSachXe() {
     this.setState({TAB_ACTIVE: 4});
@@ -76,8 +68,10 @@ export default class TabScreen extends Component<Props> {
     this.props.navigation.navigate("DanhSachXe");
   }
 
-  navDrawer() {
-    this.setState({TAB_ACTIVE: 5});
+  navTest() {
+    this.setState({TAB_ACTIVE: 1});
+    this.saveItem("@TabBarActive",'1');
+    this.props.navigation.navigate("Test");
   }
   render() {
     return (<Footer style={{display:this.state.TYPE_USER == -1 ? 'none' : 'flex'}}>
@@ -105,7 +99,7 @@ export default class TabScreen extends Component<Props> {
                 ? tabActiveBgColor
                 : tabBgColor
             }
-          ]} vertical={true} onPress={() => this.navToMenu()}
+          ]} vertical={true} onPress={() => this.navTest()}
           active={this.state.TAB_ACTIVE === 1}>
           <Ionicons name='ios-options' size={30}
             color={this.state.TAB_ACTIVE === 1 ? tabBarActiveTextColor : tabBarTextColor }/>
@@ -115,7 +109,7 @@ export default class TabScreen extends Component<Props> {
                   ? tabBarActiveTextColor
                   : tabBarTextColor
               }
-            ]} uppercase={false}>Menu</Text>
+            ]} uppercase={false}>Test</Text>
         </Button>
 
       </FooterTab>
