@@ -10,7 +10,7 @@ import {
   Modal,
   Picker
 } from 'react-native';
-import {Icon, Button, Item, Footer } from 'native-base';
+import {Icon, Button, Item, Footer, Spinner } from 'native-base';
 
 import {Calendar, CalendarList, Agenda, LocaleConfig} from 'react-native-calendars';
 
@@ -30,7 +30,8 @@ export default class App extends Component<Props> {
       DataCalendar:{},
       arrStatus:[],
       monthcurrent: '10',
-      datecurrent:''
+      datecurrent:'',
+      isLoading: false
     }
   }
 
@@ -131,6 +132,7 @@ export default class App extends Component<Props> {
 
     //api
     //var dayNow =
+    this.setState({isLoading:true});
     fetch(myApi.LichXe.DanhSach + "?xeid=" + id + "&thang="  + month, {
       method: "GET"
     }).then(response => {
@@ -146,7 +148,7 @@ export default class App extends Component<Props> {
                 statusId: element.TrangThaiCode
               }
           });
-          this.setState({DataCalendar: dataCalendar});
+          this.setState({DataCalendar: dataCalendar, isLoading:false});
         });
       }
     }).then(response => {
@@ -222,8 +224,20 @@ export default class App extends Component<Props> {
     })
   }
   render() {
-    return (<View>
-
+    return (
+      <View>
+      <Modal
+          style={styles.modalLoading}
+          animationType="fade"
+          transparent={true}
+          visible={this.state.isLoading}
+          >
+          <View style={styles.loadingView}>
+            <Spinner
+              style={styles.spinerLoading}
+            />
+          </View>
+        </Modal>
       <Calendar horizontal={true}
         // Enable paging on horizontal, default = false
         pagingEnabled={true}
@@ -255,11 +269,13 @@ export default class App extends Component<Props> {
         onMonthChange={(month) => {
           //console.log('month changed', month)
           var date = new Date(), y = month.year,  m = month.month;
-          var firstDay = new Date(2018, 9, 1, 0,0,0);
-          var lastDay = new Date(y, m + 1, 0);
-          firstDay.setMinutes(firstDay.getMinutes() - firstDay.getTimezoneOffset())
-          alert(firstDay);
+          // var firstDay = new Date(y, m - 1, 1, 0,0,0);
+          // var lastDay = new Date(y, m, 0);
+          // firstDay.setMinutes(firstDay.getMinutes() - firstDay.getTimezoneOffset())
+          // alert(firstDay);
           //alert('month changed:' m);
+          this.setState({monthcurrent:m});
+          this._loadDataXeDetail(this.state.xeId, m)
         }}
         // Hide month navigation arrows. Default = false
         hideArrows={false}

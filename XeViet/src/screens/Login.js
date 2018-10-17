@@ -42,14 +42,23 @@ export default class Login extends Component<Props> {
     super(props);
     this.state = {
       isLoading: false,
-      phone: '',
+      userName: '',
       password: '',
     };
   }
 
-
+  //Kiem tra đã đăng nhập && số điện thoại hợp lệ
+  GetInfoUser() {
+        AsyncStorage.getItem("@Logined")
+        .then(token => {
+          if (token) {
+           this.props.navigation.navigate("HomePage");
+          }
+        });
+  }
   componentWillMount() {
     //Kiem tra so dien thoai hop le & da dang nhap chuyen sang homepage
+    this.GetInfoUser();
   }
 
   async saveItem(item, selectedValue) {
@@ -66,13 +75,7 @@ export default class Login extends Component<Props> {
   }
 
   onLogin() {
-    // test
-    this.setTabBarActive()
-    return;
-    // end test
-
-
-    if (this.state.phone == "") {
+    if (this.state.userName == "") {
       Alert.alert(lang.alert.title, lang.alert.errlogin6);
       return;
     }
@@ -81,34 +84,26 @@ export default class Login extends Component<Props> {
       return;
     }
 
-
-
     this.setState({ isLoading: true });
-    fetch(myApi.User.Login, {
+    fetch(myApi.NguoiDung.DangNhap, {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        Phone: this.state.phone,
+        Username: this.state.userName,
         Password: this.state.password
       })
     })
     .then(response => {
       if (response.status === 200) {
         return response.json().then(responseJson => {
-          if (responseJson == 1) {
+          if (responseJson.Result == true) {
             this.setState({isLoading: false,});
-            this.saveItem("@Phone", this.state.phone);
+            this.saveItem("@UserName", this.state.userName);
             this.saveItem("@Logined", "1");
             this.setTabBarActive();
-          } else if (responseJson == 2) {
-            Alert.alert(lang.alert.title, lang.alert.errlogin2);
-            this.setState({ isLoading: false });
-          } else if (responseJson == 3) {
-            Alert.alert(lang.alert.title, lang.alert.errlogin3);
-            this.setState({ isLoading: false });
           } else {
             Alert.alert(lang.alert.title, lang.alert.errlogin0);
             this.setState({ isLoading: false });
@@ -159,7 +154,7 @@ export default class Login extends Component<Props> {
             <Text full={true} style={styles.welcome}>
               {lang.content.wel}
             </Text>
-            <Text style={styles.shipper_text}>Shippers</Text>
+            <Text style={styles.shipper_text}>Xe Việt</Text>
             <View style={[ { padding: 5, opacity: 0.1}]}>
             </View>
           </View>
@@ -168,12 +163,11 @@ export default class Login extends Component<Props> {
               <View style={styles.mgt10}>
                 <View style={styles.frmlogin__item}>
                   <Label style={styles.frmlogin__label}>
-                    {lang.form.phoneNumber}
+                    {lang.form.userName}
                   </Label>
                   <TextInput
-                    keyboardType="phone-pad"
-                    value={this.state.phone}
-                    onChangeText={phone => this.setState({ phone })}
+                    value={this.state.userName}
+                    onChangeText={userName => this.setState({ userName })}
                     style={styles.frmlogin__input}
                     underlineColorAndroid = "transparent"
                     ref={(input)=>this.inputUser = input}
@@ -230,7 +224,7 @@ export default class Login extends Component<Props> {
           <TouchableOpacity
             onPress={() =>
               this.props.navigation.navigate("EnterPhoneNumber", {
-                phone: this.state.phone
+                userName: this.state.userName
               })
             }
           >

@@ -79,7 +79,7 @@ export default class TabScreen extends Component<Props> {
             }
           ]} vertical={true} onPress={() => this.navTest()}
           active={this.state.TAB_ACTIVE === 1}>
-          <Ionicons name='ios-options' size={30}
+          <Ionicons name='ios-person' size={30}
             color={this.state.TAB_ACTIVE === 1 ? tabBarActiveTextColor : tabBarTextColor }/>
           <Text style={[
               st.tabBarText, {
@@ -87,7 +87,7 @@ export default class TabScreen extends Component<Props> {
                   ? tabBarActiveTextColor
                   : tabBarTextColor
               }
-            ]} uppercase={false}>Test</Text>
+            ]} uppercase={false}>Tài khoản</Text>
         </Button>
 
       </FooterTab>

@@ -211,37 +211,26 @@ export default class DanhSachXe extends Component<Props> {
       //alert(_xeId);
       this.props.navigation.navigate("Calendar", {id:_xeId});
   }
-
-  //Goi API Chinh sua xe
-  openModalChinhSuaXe() {
-    this.closeModalMore();
-
-    this.openModalCapNhatXe();
-    this.loadDataDetail(this.state.idCurrent);
-  }
-
-  openModalCapNhatXe() {
-    this.setState({titleModal: "Chỉnh sửa xe"});
-    this.setState({modalThemMoiXeVisible: true, buttonThemMoiXeVisible: false});
-  }
-
   _clearDataInput() {
     this.setState({
       tenxe: null,
-      hangsanxuat: 1,
-      loaixe: 4,
-      trongtai: null,
-      phienban: null,
-      namdangky: null,
       bienso: null,
-      dataHinhXe: [],
+      loaixeId: null,
+      loaidongcoId: null,
+      sochongoi: null,
+      mauxe: null,
+      bienso: null,
+      sotien:null,
+      tylechuxe:null,
+      ghichu:null,
+      dataHinhXe: {},
 
     });
   }
 
   //load thong tin chi tiet xe khi chinh sua
   loadDataDetail(xeId) {
-  //alert(xeId);
+  //alert(xeId)
     fetch(myApi.Xe.ChiTiet + `${xeId}`).then(response => response.json()).then(responseJson => {
       //alert(JSON.stringify(responseJson));
       var result = responseJson.DataResult[0];
@@ -291,8 +280,8 @@ export default class DanhSachXe extends Component<Props> {
         "GhiChu": this.state.ghichu,
         "TangGiaCuoiTuan": 100000,
         "TinhThanhID": 0,
-        "Images": null,
-        "FileName": null,
+        "Images": this.state.dataHinhXe.Base64String,
+        "FileName": this.state.dataHinhXe.FileName,
         "TiLeChuXe": this.state.tilechuxe
     })
   }).then(response => {
@@ -342,8 +331,8 @@ export default class DanhSachXe extends Component<Props> {
         "GhiChu": this.state.ghichu,
         "TangGiaCuoiTuan": 100000,
         "TinhThanhID": 0,
-        "Images": null,
-        "FileName": null,
+        "Images": this.state.dataHinhXe.Base64String,
+        "FileName": this.state.dataHinhXe.FileName,
         "TiLeChuXe": this.state.tilechuxe
     })
   }).then(response => {
@@ -430,15 +419,27 @@ export default class DanhSachXe extends Component<Props> {
       pick((source, filename, data, type) => {
         this.onThemHinhXe(source, filename, data, type);
       });
-    }
+  }
+  //Goi API Chinh sua xe
+  openModalChinhSuaXe() {
+    this.closeModalMore();
+    this.openModalCapNhatXe();
+    this.loadDataDetail(this.state.idCurrent);
+  }
+
+  openModalCapNhatXe() {
+    this._clearDataInput();
+    this.setState({titleModal: "Chỉnh sửa xe"});
+    this.setState({modalThemMoiXeVisible: true, buttonThemMoiXeVisible: false});
+  }
 
   onThemHinhXe(source, filename, data, type) {
     var list = this.state.dataHinhXe;
     list["Source"] = source;
     list["FileName"] = filename;
-    list["FileType"] = data;
-    list["Base64String"] = type;
-
+    list["FileType"] = type;
+    list["Base64String"] = data;
+    //alert(JSON.stringify(list));
     this.setState({
       dataHinhXe: list
     });

@@ -24,7 +24,7 @@ export default {
      DanhSach:URL + "/api/DanhMucTrangThai"
    },
    NguoiDung:{
-     DangNhap:"",
-     DangKy:""
+     DangNhap:URL + "/api/UserLogin",
+     DangKy:URL + "/api/UserCreateUpdate"
    }
 }

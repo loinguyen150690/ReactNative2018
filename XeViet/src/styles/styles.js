@@ -509,7 +509,8 @@ text_blue: {
   },
 
   button_login_back:{
-    position: 'absolute'
+    position: 'absolute',
+    opacity:0
   },
   icon_login_back:{
     fontSize: 34,

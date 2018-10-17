@@ -63,7 +63,7 @@ export const RootTab = TabNavigator(
     Test: {
       screen: Test,
       navigationOptions: {
-        title: "Test"
+        title: "Tài khoản"
       }
     },
   },
@@ -179,7 +179,7 @@ export const LoginStack = StackNavigator({
       marginLeft: 0
     }
   },
-  initialRouteName: "UserOption"
+  initialRouteName: "Login"
 })
 export const RootStack = StackNavigator(
   {
@@ -250,6 +250,8 @@ export default RootDrawer = DrawerNavigator(
    // },
    LoginStack: {
      screen: LoginStack,
+      //screen: DanhSachXe,
+
    },
    HomePage: {
      screen: HomeDrawer
