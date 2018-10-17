@@ -75,6 +75,9 @@ export default class Login extends Component<Props> {
   }
 
   onLogin() {
+      this.setTabBarActive();
+      return;
+
     if (this.state.userName == "") {
       Alert.alert(lang.alert.title, lang.alert.errlogin6);
       return;

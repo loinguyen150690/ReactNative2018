@@ -45,6 +45,25 @@ import pick from "../common/picker.js";
 
 const MAX_IMG_BAOHIEM = 2, MAX_IMG_GIAYDANGKIEM = 2, MAX_IMG_XE = 4;
 export default class DanhSachXe extends Component<Props> {
+
+  static navigationOptions = ({ navigation }) => {
+    const { params = {}} = navigation.state;
+    return {
+     headerRight: (
+       <TouchableOpacity onPress={params.handleSubmit}
+          style={{paddingRight: 20,paddingLeft: 20}}>
+          <FontAwesome name="search" size={25} color={"white"}/>
+        </TouchableOpacity>
+     ),
+   };
+  };
+  componentDidMount() {
+    this.props.navigation.setParams({handleSubmit: this.submitStatus});
+  }
+  submitStatus = () => {
+      this.openModalTimKiemXe();
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -58,7 +77,7 @@ export default class DanhSachXe extends Component<Props> {
       // them moi param
       modalThemMoiXeVisible: false,
       buttonThemMoiXeVisible: true,
-      // dangchinhsua: false,
+      modalTimKiemXeVisible: false,
       //id: null,
 
       data: null,
@@ -93,33 +112,33 @@ export default class DanhSachXe extends Component<Props> {
             FileName: null,
             FileType: null,
             Base64String: null,
-        }
-      // listHinhXe: [],
-      // listHinhXe_upload: [],
-      // refreshingHinhXe: false,
-      // listHinhXe_download: [],
-      //
-      // //upload giay dang kiem
-      // listHinhGiayDangKiem: [],
-      // listHinhGiayDangKiem_upload: [],
-      // refreshingHinhGiayDangKiem: false,
-      // listHinhGiayDangKiem_download: [],
-      //
-      // //upload giay dang kiem
-      // listHinhBaoHiem: [],
-      // listHinhBaoHiem_upload: [],
-      // refreshingHinhBaoHiem: false,
-      // listHinhBaoHiem_download: [],
+      },
+      //timkiem
+      arrStatus:[],
+      statusId: null,
+      timkiem_giatu: null,
+      timkiem_giaden: null,
+      timkiem_tungay: null,
+      timkiem_denngay: null,
+      timkiem_sochongoi: null,
+      timkiem_namsx: null,
     };
   }
+
+  openModalTimKiemXe() {
+    this.setState({modalTimKiemXeVisible: true})
+  }
+
+  closeModalTimKiemXe(){
+    this.setState({modalTimKiemXeVisible: false})
+  }
+
   componentWillMount() {
-    // this.loadListTinhTP();
-    // this.loadListNhaSanXuat();
-    // this.loadListLoaiXe();
-    // this.GetInfoUser();
+
     this._loadDataLoaiXe('admin');
     this._loadDataLoaiDongCo('admin');
     this.loadDanhSach();
+    this._loadDataStatus('admin');
   }
 
   _loadDataLoaiXe(userName) {
@@ -284,7 +303,7 @@ export default class DanhSachXe extends Component<Props> {
         "FileName": this.state.dataHinhXe.FileName,
         "TiLeChuXe": this.state.tilechuxe
     })
-  }).then(response => {
+    }).then(response => {
     if (response.status === 200) {
       return response.json().then(responseJson => {
         if (responseJson.Result == true) {
@@ -335,7 +354,7 @@ export default class DanhSachXe extends Component<Props> {
         "FileName": this.state.dataHinhXe.FileName,
         "TiLeChuXe": this.state.tilechuxe
     })
-  }).then(response => {
+    }).then(response => {
     if (response.status === 200) {
       return response.json().then(responseJson => {
         if (responseJson.Result == true) {
@@ -445,6 +464,43 @@ export default class DanhSachXe extends Component<Props> {
     });
   }
 
+
+  _loadDataStatus(userName) {
+    fetch(myApi.TrangThai.DanhSach, {
+      method: "GET"
+    }).then(response => {
+      if (response.status === 200) {
+        return response.json().then(responseJson => {
+          this.setState({
+            arrStatus: responseJson.DataResult
+          });
+        });
+      }
+    }).then(response => {
+      console.debug(response);
+      this.setState({isLoading: false, refreshing : false});
+    }).catch(error => {
+      console.error(error);
+      this.setState({isLoading: false, refreshing : false});
+    });
+
+  }
+
+  _buidPickerStatus(){
+    var list = this.state.arrStatus;
+    //build data to picker.item
+    let mycontent = [],
+       length = list.length,
+       i = 0,
+       item;
+     if (length > 0) {
+       for (; i < length; i++) {
+         item = list[i];
+         mycontent.push(<Picker.Item label={item.Ten} value={item.Ma} tilte={item.Ten}/>);
+       }
+     }
+    return mycontent;
+  }
   render() {
     return (<Container style={{
         backgroundColor: "#f4f4f4"
@@ -569,149 +625,288 @@ export default class DanhSachXe extends Component<Props> {
          </View>
        </Modal>
 
-    {/* modal Them moi xe */}
-    <Modal animationType="fade" transparent={false} visible={this.state.modalThemMoiXeVisible} presentationStyle="fullScreen">
-      <View style={[styles.modal__bg_nopad, styles.fixed_header_footer]}>
-        <View style={styles.modal_header_page}>
-            <TouchableOpacity style={ styles.buton_back_header} onPress={() => {
-                this.closeModalThemMoiXe();
-              }}>
-              <Ionicons name={'md-close'} style={styles.icon_back_header}/>
-            </TouchableOpacity>
+       {/* modal Them moi xe */}
+      <Modal animationType="fade" transparent={false} visible={this.state.modalThemMoiXeVisible} presentationStyle="fullScreen">
+        <View style={[styles.modal__bg_nopad, styles.fixed_header_footer]}>
+          <View style={styles.modal_header_page}>
+              <TouchableOpacity style={ styles.buton_back_header} onPress={() => {
+                  this.closeModalThemMoiXe();
+                }}>
+                <Ionicons name={'md-close'} style={styles.icon_back_header}/>
+              </TouchableOpacity>
 
-            <Text style={[styles.modal_header_tilte]}>{this.state.titleModal}</Text>
-        </View>
-        <ScrollView style={[
-            styles.modal__content_2, {
-              backgroundColor: "#f4f4f4"
-            }
-          ]}>
-          <View style={[
-              styles.bgf,
-              styles.shadow
-            ]}>
-            <View style={[styles.pd10]}>
-              <View style={styles.title_chuyenhang2}>
-                <Text style={[styles.text_blue]}>Thông tin xe</Text>
-              </View>
-              <Item stackedLabel={true}  style={[styles.frmInput__item]} >
-                <Label style={styles.frm__label}>Tên xe</Label>
-                <Input style={styles.frm_input} value={this.state.tenxe} onChangeText={tenxe => this.setState({tenxe})} ref={input => (this.tenxe = input)}/>
-              </Item>
-
-              <Item stackedLabel={true}  style={[styles.frmInput__item]}>
-                <Label style={styles.frm__label}>Biển số</Label>
-                <Input style={styles.frm_input} value={this.state.bienso} onChangeText={bienso => this.setState({bienso})} ref={input => (this.bienso = input)}/>
-              </Item>
-
-              <Item stackedLabel={true} style={[styles.frmInput__item]}>
-                <Text style={styles.frm__label}>
-                  Loại xe
-                </Text>
-                <Picker style={styles.picker__style_2} textStyle={styles.hanghoa_picker__textStyle} mode="dialog" headerBackButtonText={<FontAwesome name = "angle-left" size = {
-                    20
-                  } />
-                } iosHeader="Loại xe" iosIcon={<FontAwesome name = "angle-down" />} selectedValue={this.state.loaixeId} onValueChange={(value, index) => this.setState({loaixeId: value})} itemStyle={styles.picker__itemStyle}>
-                  {this._buildPickerByListData(this.state.listLoaiXe)}
-                </Picker>
-              </Item>
-
-              <Item stackedLabel={true}  style={[styles.frmInput__item]}>
-                <Text style={styles.frm__label}>Loại động cơ xe</Text>
-                <Picker style={styles.picker__style_2} textStyle={styles.hanghoa_picker__textStyle} mode="dialog" headerBackButtonText={<FontAwesome name = "angle-left" size = {
-                    20
-                  } />
-                } iosHeader="Loại động cơ" iosIcon={<FontAwesome name = "angle-down" />} selectedValue={this.state.loaidongcoId} onValueChange={(value, index) => this.setState ({loaidongcoId:value})} itemStyle={styles.picker__itemStyle}>
-                  {this._buildPickerByListData(this.state.listLoaiDongCo)}
-                </Picker>
-              </Item>
-
-              <View style={[styles.mgt20, styles.pdb, styles.flexrow]}>
-                <View style={{
-                    flex: 1,
-                    paddingRight: 12
-                  }}>
-                  <Item stackedLabel={true}  style={[styles.frmInput__item]}>
-                    <Label style={styles.frm__label}>Số chỗ ngồi</Label>
-                    <Input style={styles.frm_input} value={this.state.sochongoi} onChangeText={sochongoi => this.setState({sochongoi})} ref={input => (this.sochongoi = input)}/>
-                  </Item>
-                </View>
-                <View style={{
-                    flex: 1,
-                    paddingLeft: 12
-                  }}>
-                  <Item stackedLabel={true}  style={[styles.frmInput__item]}>
-                    <Label style={styles.frm__label}>Màu sắc</Label>
-                    <Input style={styles.frm_input} value={this.state.mauxe} onChangeText={mauxe => this.setState({mauxe})} ref={input => (this.mauxe = input)}/>
-                  </Item>
-                </View>
-              </View>
-
-              <View style={[styles.mgt20, styles.pdb, styles.flexrow]}>
-                <View style={{
-                    flex: 1,
-                    paddingRight: 12
-                  }}>
-                  <Item stackedLabel={true}  style={[styles.frmInput__item]}>
-                    <Label style={styles.frm__label}>Phí thuê</Label>
-                    <Input keyboardType="numeric" style={styles.frm_input} value={this.state.sotien} onChangeText={sotien => this.setState({sotien})} ref={input => (this.sotien = input)}/>
-                  </Item>
-                </View>
-                <View style={{
-                    flex: 1,
-                    paddingLeft: 12
-                  }}>
-                  <Item stackedLabel={true}  style={[styles.frmInput__item]}>
-                    <Label style={styles.frm__label}>Tiền chủ xe (%)</Label>
-                    <Input style={styles.frm_input} value={this.state.tilechuxe} onChangeText={tilechuxe => this.setState({tilechuxe})} ref={input => (this.tilechuxe = input)}/>
-                  </Item>
-                </View>
-              </View>
-
-              <Item stackedLabel={true}  style={[styles.frmInput__item]}>
-                <Label style={styles.frm__label}>Ghi chú</Label>
-                <Input style={styles.frm_input} value={this.state.ghichu} onChangeText={ghichu => this.setState({ghichu})} ref={input => (this.ghichu = input)}/>
-              </Item>
-
-              <Item stackedLabel={true} style={[styles.frmInput__item]}>
-                <Label style={styles.frm__label}>Hình xe</Label>
-                <Input style={styles.text_input}/>
-                <TouchableOpacity style={styles.button_them_hinh} onPress={() => this.showGetHinhXe()}>
-                  <FontAwesome name="plus-square-o" size={21} style={[styles.icon_input_text, styles.icon_blue]}/>
-                </TouchableOpacity>
-              </Item>
-
-              <View style={styles.box_img_upload}>
-                <Image source={this.state.dataHinhXe['Source']} style={styles.img_upload}/>
-              </View>
-
-            </View>
+              <Text style={[styles.modal_header_tilte]}>{this.state.titleModal}</Text>
           </View>
+          <ScrollView style={[
+              styles.modal__content_2, {
+                backgroundColor: "#f4f4f4"
+              }
+            ]}>
+            <View style={[
+                styles.bgf,
+                styles.shadow
+              ]}>
+              <View style={[styles.pd10]}>
+                <View style={styles.title_chuyenhang2}>
+                  <Text style={[styles.text_blue]}>Thông tin xe</Text>
+                </View>
+                <Item stackedLabel={true}  style={[styles.frmInput__item]} >
+                  <Label style={styles.frm__label}>Tên xe</Label>
+                  <Input style={styles.frm_input} value={this.state.tenxe} onChangeText={tenxe => this.setState({tenxe})} ref={input => (this.tenxe = input)}/>
+                </Item>
 
-        </ScrollView>
-        <Footer style={[styles.footer_page, styles.footer_action]}>
-          <Button full={true} block={true} bordered={true} rounded={true} style={[
-              styles.frmgetpass__btn, {
-                display: this.state.buttonThemMoiXeVisible == true
-                  ? "flex"
-                  : "none"
-              }
-            ]} onPress={() => this.onThemMoiXe()}>
-            <Text style={styles.btn_border_blue__txt}>THÊM MỚI</Text>
-          </Button>
-          <Button block={true} bordered={true} rounded={true} style={[
-              styles.frmgetpass__btn, {
-                display: this.state.buttonThemMoiXeVisible == false
-                  ? "flex"
-                  : "none"
-              }
-            ]} onPress={() => this.onCapNhatXe()}>
-            <Text style={styles.btn_border_blue__txt}>CẬP NHẬT</Text>
-          </Button>
-        </Footer>
-      </View>
-    </Modal>
-      </Container>)
+                <Item stackedLabel={true}  style={[styles.frmInput__item]}>
+                  <Label style={styles.frm__label}>Biển số</Label>
+                  <Input style={styles.frm_input} value={this.state.bienso} onChangeText={bienso => this.setState({bienso})} ref={input => (this.bienso = input)}/>
+                </Item>
+
+                <Item stackedLabel={true} style={[styles.frmInput__item]}>
+                  <Text style={styles.frm__label}>
+                    Loại xe
+                  </Text>
+                  <Picker style={styles.picker__style_2} textStyle={styles.hanghoa_picker__textStyle} mode="dialog" headerBackButtonText={<FontAwesome name = "angle-left" size = {
+                      20
+                    } />
+                  } iosHeader="Loại xe" iosIcon={<FontAwesome name = "angle-down" />} selectedValue={this.state.loaixeId} onValueChange={(value, index) => this.setState({loaixeId: value})} itemStyle={styles.picker__itemStyle}>
+                    {this._buildPickerByListData(this.state.listLoaiXe)}
+                  </Picker>
+                </Item>
+
+                <Item stackedLabel={true}  style={[styles.frmInput__item]}>
+                  <Text style={styles.frm__label}>Loại động cơ xe</Text>
+                  <Picker style={styles.picker__style_2} textStyle={styles.hanghoa_picker__textStyle} mode="dialog" headerBackButtonText={<FontAwesome name = "angle-left" size = {
+                      20
+                    } />
+                  } iosHeader="Loại động cơ" iosIcon={<FontAwesome name = "angle-down" />} selectedValue={this.state.loaidongcoId} onValueChange={(value, index) => this.setState ({loaidongcoId:value})} itemStyle={styles.picker__itemStyle}>
+                    {this._buildPickerByListData(this.state.listLoaiDongCo)}
+                  </Picker>
+                </Item>
+
+                <View style={[styles.mgt20, styles.pdb, styles.flexrow]}>
+                  <View style={{
+                      flex: 1,
+                      paddingRight: 12
+                    }}>
+                    <Item stackedLabel={true}  style={[styles.frmInput__item]}>
+                      <Label style={styles.frm__label}>Số chỗ ngồi</Label>
+                      <Input style={styles.frm_input} value={this.state.sochongoi} onChangeText={sochongoi => this.setState({sochongoi})} ref={input => (this.sochongoi = input)}/>
+                    </Item>
+                  </View>
+                  <View style={{
+                      flex: 1,
+                      paddingLeft: 12
+                    }}>
+                    <Item stackedLabel={true}  style={[styles.frmInput__item]}>
+                      <Label style={styles.frm__label}>Màu sắc</Label>
+                      <Input style={styles.frm_input} value={this.state.mauxe} onChangeText={mauxe => this.setState({mauxe})} ref={input => (this.mauxe = input)}/>
+                    </Item>
+                  </View>
+                </View>
+
+                <View style={[styles.mgt20, styles.pdb, styles.flexrow]}>
+                  <View style={{
+                      flex: 1,
+                      paddingRight: 12
+                    }}>
+                    <Item stackedLabel={true}  style={[styles.frmInput__item]}>
+                      <Label style={styles.frm__label}>Phí thuê</Label>
+                      <Input keyboardType="numeric" style={styles.frm_input} value={this.state.sotien} onChangeText={sotien => this.setState({sotien})} ref={input => (this.sotien = input)}/>
+                    </Item>
+                  </View>
+                  <View style={{
+                      flex: 1,
+                      paddingLeft: 12
+                    }}>
+                    <Item stackedLabel={true}  style={[styles.frmInput__item]}>
+                      <Label style={styles.frm__label}>Tiền chủ xe (%)</Label>
+                      <Input style={styles.frm_input} value={this.state.tilechuxe} onChangeText={tilechuxe => this.setState({tilechuxe})} ref={input => (this.tilechuxe = input)}/>
+                    </Item>
+                  </View>
+                </View>
+
+                <Item stackedLabel={true}  style={[styles.frmInput__item]}>
+                  <Label style={styles.frm__label}>Ghi chú</Label>
+                  <Input style={styles.frm_input} value={this.state.ghichu} onChangeText={ghichu => this.setState({ghichu})} ref={input => (this.ghichu = input)}/>
+                </Item>
+
+                <Item stackedLabel={true} style={[styles.frmInput__item]}>
+                  <Label style={styles.frm__label}>Hình xe</Label>
+                  <Input style={styles.text_input}/>
+                  <TouchableOpacity style={styles.button_them_hinh} onPress={() => this.showGetHinhXe()}>
+                    <FontAwesome name="plus-square-o" size={21} style={[styles.icon_input_text, styles.icon_blue]}/>
+                  </TouchableOpacity>
+                </Item>
+
+                <View style={styles.box_img_upload}>
+                  <Image source={this.state.dataHinhXe['Source']} style={styles.img_upload}/>
+                </View>
+
+              </View>
+            </View>
+
+          </ScrollView>
+          <Footer style={[styles.footer_page, styles.footer_action]}>
+            <Button full={true} block={true} bordered={true} rounded={true} style={[
+                styles.frmgetpass__btn, {
+                  display: this.state.buttonThemMoiXeVisible == true
+                    ? "flex"
+                    : "none"
+                }
+              ]} onPress={() => this.onThemMoiXe()}>
+              <Text style={styles.btn_border_blue__txt}>THÊM MỚI</Text>
+            </Button>
+            <Button block={true} bordered={true} rounded={true} style={[
+                styles.frmgetpass__btn, {
+                  display: this.state.buttonThemMoiXeVisible == false
+                    ? "flex"
+                    : "none"
+                }
+              ]} onPress={() => this.onCapNhatXe()}>
+              <Text style={styles.btn_border_blue__txt}>CẬP NHẬT</Text>
+            </Button>
+          </Footer>
+        </View>
+      </Modal>
+      {/* modal tim kiem xe  */}
+
+      <Modal animationType="fade" transparent={false} visible={this.state.modalTimKiemXeVisible} presentationStyle="fullScreen">
+        <View style={[styles.modal__bg_nopad, styles.fixed_header_footer]}>
+          <View style={styles.modal_header_page}>
+              <TouchableOpacity style={ styles.buton_back_header} onPress={() => {
+                  this.closeModalTimKiemXe();
+                }}>
+                <Ionicons name={'md-close'} style={styles.icon_back_header}/>
+              </TouchableOpacity>
+
+              <Text style={[styles.modal_header_tilte]}>Tìm kiếm xe</Text>
+          </View>
+          <ScrollView>
+            <View style={[ styles.bgf ]}>
+              <View style={[styles.pd10]}>
+                <View style={styles.title_chuyenhang2}>
+                  <Text style={[styles.text_blue]}>Thông tin tìm kiếm</Text>
+                </View>
+                <Item stackedLabel={true}  style={[styles.frmInput__item]} >
+                  <Label style={styles.frm__label}>Tên xe</Label>
+                  <Input style={styles.frm_input} value={this.state.tenxe} onChangeText={tenxe => this.setState({tenxe})} ref={input => (this.tenxe = input)}/>
+                </Item>
+
+                <Item stackedLabel={true} style={[styles.frmInput__item]}>
+                  <Text style={styles.frm__label}>Trạng thái</Text>
+                  <Picker style={styles.picker__style_2}
+                    textStyle={styles.hanghoa_picker__textStyle} mode="dialog" headerBackButtonText={<FontAwesome name = "angle-left" size = {
+                      20
+                    } />
+                  }
+                  iosHeader="Trạng thái" iosIcon={<FontAwesome name = "angle-down" />}
+                  selectedValue={this.state.statusId}
+                  onValueChange={(value, index) => this.setState({statusId: value})}
+                  itemStyle={styles.picker__itemStyle}>
+                    {this._buidPickerStatus()}
+                  </Picker>
+                </Item>
+
+                <Item stackedLabel={true} style={[styles.frmInput__item]}>
+                  <Text style={styles.frm__label}>
+                    Loại xe
+                  </Text>
+                  <Picker style={styles.picker__style_2} textStyle={styles.hanghoa_picker__textStyle} mode="dialog" headerBackButtonText={<FontAwesome name = "angle-left" size = {
+                      20
+                    } />
+                  } iosHeader="Loại xe" iosIcon={<FontAwesome name = "angle-down" />} selectedValue={this.state.loaixeId} onValueChange={(value, index) => this.setState({loaixeId: value})} itemStyle={styles.picker__itemStyle}>
+                    {this._buildPickerByListData(this.state.listLoaiXe)}
+                  </Picker>
+                </Item>
+
+                <Item stackedLabel={true}  style={[styles.frmInput__item]}>
+                  <Text style={styles.frm__label}>Loại động cơ xe</Text>
+                  <Picker style={styles.picker__style_2} textStyle={styles.hanghoa_picker__textStyle} mode="dialog" headerBackButtonText={<FontAwesome name = "angle-left" size = {
+                      20
+                    } />
+                  } iosHeader="Loại động cơ" iosIcon={<FontAwesome name = "angle-down" />} selectedValue={this.state.loaidongcoId} onValueChange={(value, index) => this.setState ({loaidongcoId:value})} itemStyle={styles.picker__itemStyle}>
+                    {this._buildPickerByListData(this.state.listLoaiDongCo)}
+                  </Picker>
+                </Item>
+
+                <View style={[styles.mgt20, styles.pdb, styles.flexrow]}>
+                  <View style={{
+                      flex: 1,
+                      paddingRight: 12
+                    }}>
+                    <Item stackedLabel={true}  style={[styles.frmInput__item]}>
+                      <Label style={styles.frm__label}>Giá từ(50000)</Label>
+                      <Input style={styles.frm_input} value={this.state.timkiem_giatu} onChangeText={timkiem_giatu => this.setState({timkiem_giatu})} ref={input => (this.timkiem_giatu = input)}/>
+                    </Item>
+                  </View>
+                  <View style={{
+                      flex: 1,
+                      paddingLeft: 12
+                    }}>
+                    <Item stackedLabel={true}  style={[styles.frmInput__item]}>
+                      <Label style={styles.frm__label}>Giá đến(500000)</Label>
+                      <Input style={styles.frm_input} value={this.state.timkiem_giaden} onChangeText={timkiem_giaden => this.setState({timkiem_giaden})} ref={input => (this.timkiem_giaden = input)}/>
+                    </Item>
+                  </View>
+                </View>
+
+                <View style={[styles.mgt20, styles.pdb, styles.flexrow]}>
+                  <View style={{
+                      flex: 1,
+                      paddingRight: 12
+                    }}>
+                    <Item stackedLabel={true}  style={[styles.frmInput__item]}>
+                      <Label style={styles.frm__label}>Năm sản xuất</Label>
+                      <Input keyboardType="numeric" style={styles.frm_input} value={this.state.timkiem_namsx} onChangeText={timkiem_namsx => this.setState({timkiem_namsx})} ref={input => (this.timkiem_namsx = input)}/>
+                    </Item>
+                  </View>
+                  <View style={{
+                      flex: 1,
+                      paddingLeft: 12
+                    }}>
+                    <Item stackedLabel={true}  style={[styles.frmInput__item]}>
+                      <Label style={styles.frm__label}>Số chỗ ngồi</Label>
+                      <Input style={styles.frm_input} value={this.state.timkiem_sochongoi} onChangeText={timkiem_sochongoi => this.setState({timkiem_sochongoi})} ref={input => (this.timkiem_sochongoi = input)}/>
+                    </Item>
+                  </View>
+                </View>
+
+                <View style={[styles.mgt20, styles.pdb, styles.flexrow]}>
+                  <View style={{
+                      flex: 1,
+                      paddingRight: 12
+                    }}>
+                    <Item stackedLabel={true}  style={[styles.frmInput__item]}>
+                      <Label style={styles.frm__label}>Từ ngày</Label>
+                      <Input style={styles.frm_input} value={this.state.timkiem_tungay} onChangeText={timkiem_tungay => this.setState({timkiem_tungay})} ref={input => (this.timkiem_tungay = input)}/>
+                    </Item>
+                  </View>
+                  <View style={{
+                      flex: 1,
+                      paddingLeft: 12
+                    }}>
+                    <Item stackedLabel={true}  style={[styles.frmInput__item]}>
+                      <Label style={styles.frm__label}>Đến ngày</Label>
+                      <Input style={styles.frm_input} value={this.state.timkiem_denngay} onChangeText={timkiem_denngay => this.setState({timkiem_denngay})} ref={input => (this.timkiem_denngay = input)}/>
+                    </Item>
+                  </View>
+                </View>
+
+              </View>
+            </View>
+
+          </ScrollView>
+          <Footer style={[styles.footer_page, styles.footer_action]}>
+            <Button full={true} block={true} bordered={true} rounded={true} style={[
+                styles.frmgetpass__btn
+              ]}
+              onPress={() => this.onTimXe()}>
+              <Text style={styles.btn_border_blue__txt}>Tìm xe</Text>
+            </Button>
+
+          </Footer>
+        </View>
+      </Modal>
+    </Container>)
     }
 
 }
