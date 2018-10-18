@@ -75,7 +75,12 @@ export default class Login extends Component<Props> {
   }
 
   onLogin() {
-      this.setTabBarActive();
+    this.setState({isLoading:true});
+    setTimeout(()=>{
+        this.setState({isLoading:false});
+        this.setTabBarActive();
+    },2000);
+
       return;
 
     if (this.state.userName == "") {
@@ -87,7 +92,7 @@ export default class Login extends Component<Props> {
       return;
     }
 
-    this.setState({ isLoading: true });
+
     fetch(myApi.NguoiDung.DangNhap, {
       method: "POST",
       headers: {

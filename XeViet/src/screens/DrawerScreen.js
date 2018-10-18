@@ -29,7 +29,7 @@ import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
-const background_user = "../images/background_user.png";
+const background_user = "../images/background_user.jpg";
 const user_img_1 = "../images/user1.png";
 
 export default class DrawerScreen extends Component<Props> {
