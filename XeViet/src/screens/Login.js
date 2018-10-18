@@ -33,9 +33,9 @@ import globals from "../styles/variables.js";
 import myApi from "../common/api.js";
 import lang from "../languages/vn.js";
 import Ionicons from "react-native-vector-icons/Ionicons";
-const background_img = "../images/background.png";
+const background_img = "../images/background.jpg";
 const logo_img = "../images/logo.png";
-
+import { LoginButton } from 'react-native-fbsdk';
 
 export default class Login extends Component<Props> {
   constructor(props) {
@@ -129,6 +129,16 @@ export default class Login extends Component<Props> {
     await AsyncStorage.removeItem("@TypeUse");
     this.props.navigation.navigate("UserOption");
   }
+
+  loginWithFaceBook(error, result){
+    if (error) {
+      Alert.alert("Login failed with error: " + error.message);
+    } else if (result.isCancelled) {
+      Alert.alert("Login was cancelled");
+    } else {
+      Alert.alert("Login was successful with permissions: " + result.grantedPermissions)
+    }
+  }
   render() {
     return (
       <Container>
@@ -180,7 +190,7 @@ export default class Login extends Component<Props> {
                   />
                 </View>
               </View>
-              <View style={styles.mgt20}>
+              <View style={styles.mgt10}>
               <View style={styles.frmlogin__item}>
                 <Label style={styles.frmlogin__label}>
                   {lang.form.password}
@@ -206,7 +216,7 @@ export default class Login extends Component<Props> {
                 </Text>
               </Button>
 
-              <Button
+              {/* <Button
                 block={true}
                 bordered={true}
                 rounded={true}
@@ -219,7 +229,22 @@ export default class Login extends Component<Props> {
                 <Text style={styles.frmlogin__btn__txt}>
                   {lang.button.registry}
                 </Text>
+              </Button> */}
+
+              <Button
+                block={true}
+                bordered={true}
+                rounded={true}
+                light={true}
+                style={[styles.frmlogin__btn2, {backgroundColor: "#4267B2", borderWidth: 0, borderColor:"transparent" }]}
+              >
+                <LoginButton
+                  publishPermissions={["email"]}
+                  onLoginFinished={ (error, result)=> this.loginWithFaceBook(error, result)}
+                  onLogoutFinished={() => alert("User logged out")}/>
               </Button>
+
+
             </View>
           </KeyboardAvoidingView>
         </Content>

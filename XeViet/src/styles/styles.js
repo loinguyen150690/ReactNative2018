@@ -561,14 +561,17 @@ frmlogin__label: {
     marginLeft: 0,
     marginRight: 0,
     marginTop: 35,
-    backgroundColor: variables.color.yellow,
+    backgroundColor: variables.color.darkblue,
     shadowOpacity: 0,
     shadowColor: "transparent"
   },
   frmlogin__btn2: {
     marginTop: 10
   },
-
+  frmlogin__btn__txt:{
+    fontSize: 16,
+    fontWeight: 'bold'
+  },
   forget_pass_txt: {
     color: "#fff",
     marginTop: 20
@@ -601,5 +604,11 @@ frmlogin__label: {
   },
   color_red:{
     color: variables.color.darkblue,
+  },
+  mgt10:{
+    marginTop: 10
+  },
+  mgt30:{
+    marginTop: 30
   }
 });
