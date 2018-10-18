@@ -573,4 +573,33 @@ frmlogin__label: {
     color: "#fff",
     marginTop: 20
   },
+
+  btn_abs_input: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    width: "100%",
+    height: 40,
+    //backgroundColor:'red'
+    zIndex: 2
+  },
+  button__lichtrinh: {
+    marginTop: 8,
+    height: 28,
+    borderWidth: 1,
+    borderColor: variables.color.darkblue,
+    backgroundColor: "white",
+    shadowOpacity: 0,
+    shadowColor: "transparent",
+    marginLeft: 10,
+    paddingTop: 0,
+    paddingBottom: 0
+  },
+  button__lichtrinh_txt: {
+    color: variables.color.darkblue,
+    fontSize: 12
+  },
+  color_red:{
+    color: variables.color.darkblue,
+  }
 });
