@@ -19,6 +19,8 @@ import Test3 from "./src/screens/Test3.js";
 import DanhSachXe   from "./src/screens/DanhSachXe.js";
 import UserOption   from "./src/screens/UserOption.js";
 import Login from "./src/screens/Login.js";
+import CreateAccount from "./src/screens/CreateAccount.js";
+
 
 const MenuRightStack = StackNavigator(
   {
@@ -159,7 +161,12 @@ export const LoginStack = StackNavigator({
       header: null
     }
   },
-
+  CreateAccount: {
+    screen: CreateAccount,
+    navigationOptions: {
+      title: "Tạo tài khoản"
+    }
+  }
 },
 {
   navigationOptions: {
@@ -241,18 +248,18 @@ export const RootStack = StackNavigator(
 
 export default RootDrawer = DrawerNavigator(
  {
-   // Test:{
-   //   screen: UserOption
-   // },
+   LoginStack:{
+     screen: UserOption
+   },
 
    // Intro:{
    //   screen: IntroStack
    // },
-   LoginStack: {
-     screen: LoginStack,
-      //screen: DanhSachXe,
+   //LoginStack: {
+   //  screen: LoginStack,
+   //   //screen: DanhSachXe,
 
-   },
+   //},
    HomePage: {
      screen: HomeDrawer
    }

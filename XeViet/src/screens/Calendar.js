@@ -8,7 +8,8 @@ import {
   Alert,
   ScrollView,
   Modal,
-  Picker
+  Picker,
+  AsyncStorage
 } from 'react-native';
 import {Icon, Button, Item, Footer, Spinner } from 'native-base';
 
@@ -26,7 +27,7 @@ export default class App extends Component<Props> {
     this.state = {
       modalVisible: false,
       xeId:null,
-      statusId: 'OnGoing',
+      statusId: 'Off',
       DataCalendar:{},
       arrStatus:[],
       monthcurrent: '10',
@@ -42,8 +43,15 @@ export default class App extends Component<Props> {
         this._loadDataXeDetail(id, this.state.monthcurrent);
     });
 
+    AsyncStorage.getItem("@UserName")
+    .then(userName_tmp => {
+      if (userName_tmp) {
+          //alert(userName_tmp);
+          this.setState({userName:userName_tmp});
+          this._loadDataStatus(userName_tmp);
+      }
+    });
 
-    this._loadDataStatus('admin');
   }
 
   _getId() {
@@ -55,12 +63,13 @@ export default class App extends Component<Props> {
   }
 
   _loadDataStatus(userName) {
-    fetch(myApi.TrangThai.DanhSach, {
+    fetch(myApi.TrangThai.DanhSach + userName, {
       method: "GET"
     }).then(response => {
       if (response.status === 200) {
         return response.json().then(responseJson => {
           this.setState({
+            statusId:responseJson.DataResult[0].Ma,
             arrStatus: responseJson.DataResult
           });
         });

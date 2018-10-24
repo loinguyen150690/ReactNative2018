@@ -84,6 +84,16 @@ export default class Home extends Component<Props> {
       console.error("AsyncStorage error: " + error.message);
     }
   }
+
+  GetInfoUser() {
+        AsyncStorage.getItem("@Logined")
+        .then(token => {
+          if (token) {
+           this.props.navigation.navigate("HomePage");
+          }
+        });
+  }
+
   componentWillMount() {
     // Kiem tra type user hop le chuyen sang page login
     // AsyncStorage.getItem("@TypeUse").then(token => {
@@ -91,6 +101,7 @@ export default class Home extends Component<Props> {
     //      this.props.navigation.navigate("Login");
     //   }
     // });
+    this.GetInfoUser();
   }
   navToLogin(){
     this.saveItem("@TypeUse",this.state.type.toString());
@@ -104,9 +115,9 @@ export default class Home extends Component<Props> {
       />
       <View style={{flexDirection: 'column', alignItems: 'center', paddingTop: 24, paddingBottom: 16}}>
         <Text style={{color: '#fff', fontSize: 20,}}>
-        Chao mung den voi
+        Chào mừng đến với
         </Text>
-        <Text style={{color: '#fff', fontSize: 50,}}>Shippers</Text>
+        <Text style={{color: '#fff', fontSize: 50,}}>Xe Việt</Text>
       </View>
       <View style={[{width:'100%', marginTop: 50, flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}]}>
         <ListItem onPress={()=> this.setState({ type: 1 })}
@@ -119,7 +130,7 @@ export default class Home extends Component<Props> {
             onPress={()=> this.setState({ type: 1 })}
             style={styles.rdo}
           />
-          <Text style={styles.rdo__txt}>Chủ hàng</Text>
+          <Text style={styles.rdo__txt}>Quản lý</Text>
         </ListItem>
 
         <ListItem onPress={()=> this.setState({ type: 2 })}

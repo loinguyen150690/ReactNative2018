@@ -573,4 +573,41 @@ frmlogin__label: {
     color: "#fff",
     marginTop: 20
   },
+  frm_create_acc: {
+   paddingTop: 16
+ },
+ radio_group__label: {
+   paddingLeft: 16
+ },
+ text_group: {
+   paddingLeft: 16,
+   paddingRight: 16
+ },
+ action_bottom_2: {
+   padding: 16,
+   paddingTop: 24,
+   paddingBottom: 24,
+   backgroundColor: "#F9F9F9",
+   borderTopWidth: 1,
+   borderTopColor: "#D8D8D8"
+ },
+
+ action_bottom_3: {
+   padding: 16,
+   paddingTop: 40,
+   paddingBottom: 40
+ },
+ action_bottom_4: {
+   padding: 16
+ },
+ dieu_khoan_su_dung: {
+   marginBottom: 25,
+   flexWrap: "wrap",
+   flexDirection: "row",
+   alignItems: "center",
+   alignSelf: "stretch",
+   justifyContent: "center"
+ },
+ dieu_khoan_su_dung_txt: {},
+ dieu_khoan_su_dung_link: {},
 });

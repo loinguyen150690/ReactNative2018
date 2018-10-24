@@ -75,8 +75,8 @@ export default class Login extends Component<Props> {
   }
 
   onLogin() {
-      this.setTabBarActive();
-      return;
+      //this.setTabBarActive();
+      //return;
 
     if (this.state.userName == "") {
       Alert.alert(lang.alert.title, lang.alert.errlogin6);
@@ -105,6 +105,7 @@ export default class Login extends Component<Props> {
           if (responseJson.Result == true) {
             this.setState({isLoading: false,});
             this.saveItem("@UserName", this.state.userName);
+            this.saveItem("@UserInfo", JSON.stringify(responseJson.DataResult));
             this.saveItem("@Logined", "1");
             this.setTabBarActive();
           } else {

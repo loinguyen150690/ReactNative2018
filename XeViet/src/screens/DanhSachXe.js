@@ -42,7 +42,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 
 import pick from "../common/picker.js";
-
+import InfoUser from "../common/InfoUser.js";
 const MAX_IMG_BAOHIEM = 2, MAX_IMG_GIAYDANGKIEM = 2, MAX_IMG_XE = 4;
 export default class DanhSachXe extends Component<Props> {
 
@@ -67,6 +67,9 @@ export default class DanhSachXe extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
+      user:{},
+      userName:"",
+      groupUser:"QUANLY",
       PHONE_USER: "",
       ID_USER: -1,
       isLoading: false,
@@ -83,7 +86,9 @@ export default class DanhSachXe extends Component<Props> {
       data: null,
       listLoaiDongCo: [],
       listLoaiXe: [],
+      listChuXe:[],
       //thong tin xe
+      chuxe:null,
       tenxe: null,
       loaixeId: 1,
       loaidongcoId: 1,
@@ -94,6 +99,7 @@ export default class DanhSachXe extends Component<Props> {
       tylechuxe:null,
       ghichu:null,
       hinhxe: [],
+      hopso:null,
       //end thong tin xe
       modalVisibleXoa: false,
       modalVisible: false,
@@ -125,6 +131,42 @@ export default class DanhSachXe extends Component<Props> {
     };
   }
 
+  GetInfoUser() {
+    InfoUser(responseJson => {
+      if(responseJson){
+        this.setState({
+          user:responseJson,
+          userName:responseJson.Username,
+          groupUser: responseJson.GroupUser
+        }, function() {
+          this.loadDanhSach(responseJson.Username);
+          this._loadDataChuXe(responseJson.Username);
+            //alert(this.state.userName);
+        });
+      }
+    });
+  }
+
+  // GetInfoUser() {
+  //     AsyncStorage.getItem("@UserInfo")
+  //     .then(userName_tmp => {
+  //       if (userName_tmp) {
+  //           var user = JSON.parse(userName_tmp);
+  //           this.loadDanhSach(user.Username);
+  //           this._loadDataChuXe(user.Username);
+  //           this.state({user:user, userName:user.Username, groupUser: 'CHUXE'});
+  //       }
+  //     });
+  //
+  //     // AsyncStorage.getItem("@GroupUser")
+  //     // .then(group => {
+  //     //   if (group) {
+  //     //     this.state({groupUser:group});
+  //     //     alert(group);
+  //     //   }
+  //     // });
+  // }
+
   openModalTimKiemXe() {
     this.setState({modalTimKiemXeVisible: true})
   }
@@ -132,12 +174,14 @@ export default class DanhSachXe extends Component<Props> {
   closeModalTimKiemXe(){
     this.setState({modalTimKiemXeVisible: false})
   }
-
+  componentDidMount() {
+     this.GetInfoUser();
+  }
   componentWillMount() {
-
+    //this.GetInfoUser();
     this._loadDataLoaiXe('admin');
     this._loadDataLoaiDongCo('admin');
-    this.loadDanhSach();
+    //this.loadDanhSach();
     this._loadDataStatus('admin');
   }
 
@@ -183,6 +227,43 @@ export default class DanhSachXe extends Component<Props> {
 
   }
 
+  _loadDataChuXe(userName) {
+    fetch(myApi.NguoiDung.DanhSach, {
+      method: "GET"
+    }).then(response => {
+      if (response.status === 200) {
+        return response.json().then(responseJson => {
+          this.setState({
+            listChuXe: responseJson.DataResult
+          });
+        });
+      }
+    }).then(response => {
+      console.debug(response);
+      this.setState({isLoading: false, refreshing : false});
+    }).catch(error => {
+      console.error(error);
+      this.setState({isLoading: false, refreshing : false});
+    });
+
+  }
+
+  _buildPickerByListDataChuXe(listData){
+    //var listData = this.state.arrStatus;
+    //build data to picker.item
+    let mycontent = [],
+       length = listData.length,
+       i = 0,
+       item;
+     if (length > 0) {
+       for (; i < length; i++) {
+         item = listData[i];
+         mycontent.push(<Picker.Item label={item.FullName} value={item.Username} tilte={item.FullName}/>);
+       }
+     }
+    return mycontent;
+  }
+
   _buildPickerByListData(listData){
     //var listData = this.state.arrStatus;
     //build data to picker.item
@@ -200,11 +281,12 @@ export default class DanhSachXe extends Component<Props> {
   }
 
   // Gọi API Load danh sách
-  loadDanhSach() {
+  loadDanhSach(userName) {
+    //alert(this.state.userName);
     this.setState({
       refreshing: true
     });
-    fetch(myApi.Xe.DanhSach, {
+    fetch(myApi.Xe.DanhSach + userName, {
       method: "GET"
     }).then(response => {
       if (response.status === 200) {
@@ -224,7 +306,7 @@ export default class DanhSachXe extends Component<Props> {
     });
   }
   updateContent(){
-      this.loadDanhSach();
+      this.loadDanhSach(this.state.userName);
   }
   navToChiTiet(_xeId){
       //alert(_xeId);
@@ -243,6 +325,7 @@ export default class DanhSachXe extends Component<Props> {
       tylechuxe:null,
       ghichu:null,
       dataHinhXe: {},
+      hopso:null
 
     });
   }
@@ -252,21 +335,23 @@ export default class DanhSachXe extends Component<Props> {
   //alert(xeId)
     fetch(myApi.Xe.ChiTiet + `${xeId}`).then(response => response.json()).then(responseJson => {
       //alert(JSON.stringify(responseJson));
-      var result = responseJson.DataResult[0];
+      var result = responseJson.DataResult;
       //alert(result.SoChoNgoi);
       this.setState({
         dataDetail: responseJson
       }, function() {
         this.setState({
+          chuxe:result.UserName,
           tenxe: result.TenXe,
           bienso: result.BienSo,
           loaixeId: result.LoaiXeCode,
           loaidongcoId: result.LoaiDongCoCode,
-          sochongoi: `${result.SoChoNgoi}`,
+          sochongoi: result.SoChoNgoi ? `${result.SoChoNgoi}` : `${0}`,
           mauxe:result.Mau,
-          sotien: `${result.SoTien}`,
-          tilechuxe: `${result.TiLeChuXe}`,
-          ghichu: result.GhiChu
+          sotien: result.SoTien ? `${result.SoTien}` : `${0}`,
+          tilechuxe: result.TiLeChuXe ? `${result.TiLeChuXe}` : `${0}`,
+          ghichu: result.GhiChu,
+          hopso:result.HopSo
           }, function(){
             //this.onValueChangeTinhTP(result)
             //this.setState({refreshingHinhXe: false})
@@ -288,7 +373,7 @@ export default class DanhSachXe extends Component<Props> {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-        "UserName": "admin",
+        "UserName": this.state.chuxe,
         "TenXe": this.state.tenxe,
         "BienSo": this.state.bienso,
         "Mau": this.state.mauxe,
@@ -301,7 +386,8 @@ export default class DanhSachXe extends Component<Props> {
         "TinhThanhID": 0,
         "Images": this.state.dataHinhXe.Base64String,
         "FileName": this.state.dataHinhXe.FileName,
-        "TiLeChuXe": this.state.tilechuxe
+        "TiLeChuXe": this.state.tilechuxe,
+        "HopSo":this.state.hopso
     })
     }).then(response => {
     if (response.status === 200) {
@@ -339,7 +425,7 @@ export default class DanhSachXe extends Component<Props> {
     },
     body: JSON.stringify({
         "ID":this.state.idCurrent,
-        "UserName": "admin",
+        "UserName": this.state.chuxe,
         "TenXe": this.state.tenxe,
         "BienSo": this.state.bienso,
         "Mau": this.state.mauxe,
@@ -352,7 +438,8 @@ export default class DanhSachXe extends Component<Props> {
         "TinhThanhID": 0,
         "Images": this.state.dataHinhXe.Base64String,
         "FileName": this.state.dataHinhXe.FileName,
-        "TiLeChuXe": this.state.tilechuxe
+        "TiLeChuXe": this.state.tilechuxe,
+        "HopSo":this.state.hopso
     })
     }).then(response => {
     if (response.status === 200) {
@@ -501,6 +588,7 @@ export default class DanhSachXe extends Component<Props> {
      }
     return mycontent;
   }
+
   render() {
     return (<Container style={{
         backgroundColor: "#f4f4f4"
@@ -522,7 +610,7 @@ export default class DanhSachXe extends Component<Props> {
                                   onRefresh={()=>{this.updateContent()}}/>
                               }>
         <FlatList data={this.state.listCar} refreshing={this.state.refreshing} renderItem={({item, index}) => (<View style={[styles.bgf, styles.shadow]}>
-            <TouchableOpacity style={styles.button_more_list_car} onPress={() => this.openModalMore(item.ID)}>
+            <TouchableOpacity style={[styles.button_more_list_car, {opacity: this.state.groupUser =='QUANLY' ? 1 : 0}]} onPress={() => this.openModalMore(item.ID)}>
               <Ionicons name="md-more" size={25} color={"grey"}/>
             </TouchableOpacity>
             <ListItem style={[styles.news_item]}>
@@ -552,9 +640,10 @@ export default class DanhSachXe extends Component<Props> {
             </ListItem>
           </View>)}/>
       </Content>
-      <Fab style={styles.fabAdd} position="bottomRight" onPress={() => {
-        this.openModalThemMoiXe();  }}>
-       <Entypo name="plus"/>
+      <Fab style={[styles.fabAdd, {opacity: this.state.groupUser =='QUANLY' ? 1 : 0}]}
+        position="bottomRight"  pointerEvents = { this.state.groupUser =='QUANLY' ? 'auto' : 'none'}
+        onPress={() => {this.openModalThemMoiXe();  }}>
+            <Entypo name="plus"/>
       </Fab>
       {/* Modal more */}
        <Modal animationType="fade" presentationStyle="fullScreen" transparent={true} visible={this.state.modalVisible}>
@@ -650,6 +739,18 @@ export default class DanhSachXe extends Component<Props> {
                 <View style={styles.title_chuyenhang2}>
                   <Text style={[styles.text_blue]}>Thông tin xe</Text>
                 </View>
+                <Item stackedLabel={true} style={[styles.frmInput__item]}>
+                  <Text style={styles.frm__label}>
+                    Chủ xe
+                  </Text>
+                  <Picker style={styles.picker__style_2} textStyle={styles.hanghoa_picker__textStyle} mode="dialog" headerBackButtonText={<FontAwesome name = "angle-left" size = {
+                      20
+                    } />
+                  } iosHeader="Chủ xe" iosIcon={<FontAwesome name = "angle-down" />} selectedValue={this.state.chuxe} onValueChange={(value, index) => this.setState({chuxe: value})} itemStyle={styles.picker__itemStyle}>
+                    {this._buildPickerByListDataChuXe(this.state.listChuXe)}
+                  </Picker>
+                </Item>
+
                 <Item stackedLabel={true}  style={[styles.frmInput__item]} >
                   <Label style={styles.frm__label}>Tên xe</Label>
                   <Input style={styles.frm_input} value={this.state.tenxe} onChangeText={tenxe => this.setState({tenxe})} ref={input => (this.tenxe = input)}/>
@@ -719,11 +820,14 @@ export default class DanhSachXe extends Component<Props> {
                     }}>
                     <Item stackedLabel={true}  style={[styles.frmInput__item]}>
                       <Label style={styles.frm__label}>Tiền chủ xe (%)</Label>
-                      <Input style={styles.frm_input} value={this.state.tilechuxe} onChangeText={tilechuxe => this.setState({tilechuxe})} ref={input => (this.tilechuxe = input)}/>
+                      <Input keyboardType="numeric" style={styles.frm_input} value={this.state.tilechuxe} onChangeText={tilechuxe => this.setState({tilechuxe})} ref={input => (this.tilechuxe = input)}/>
                     </Item>
                   </View>
                 </View>
-
+                <Item stackedLabel={true}  style={[styles.frmInput__item]}>
+                  <Label style={styles.frm__label}>Hộp số</Label>
+                  <Input style={styles.frm_input} value={this.state.hopso} onChangeText={hopso => this.setState({hopso})} ref={input => (this.hopso = input)}/>
+                </Item>
                 <Item stackedLabel={true}  style={[styles.frmInput__item]}>
                   <Label style={styles.frm__label}>Ghi chú</Label>
                   <Input style={styles.frm_input} value={this.state.ghichu} onChangeText={ghichu => this.setState({ghichu})} ref={input => (this.ghichu = input)}/>
