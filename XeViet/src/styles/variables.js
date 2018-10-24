@@ -12,8 +12,8 @@ export default {
     tabNavActiveBgc: '#F64E4F',
     tabs: '#757575',
     tabsActive: '#004BA0',
-    headerTitle: '#fff',
-    loading: '#fff'
+    headerTitle: '#fff'
+
   },
   fontSize:{
     headerTitle: 16,

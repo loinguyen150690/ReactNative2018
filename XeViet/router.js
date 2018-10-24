@@ -248,18 +248,18 @@ export const RootStack = StackNavigator(
 
 export default RootDrawer = DrawerNavigator(
  {
-   LoginStack:{
+   Test22:{
      screen: UserOption
    },
 
    // Intro:{
    //   screen: IntroStack
    // },
-   //LoginStack: {
-   //  screen: LoginStack,
-   //   //screen: DanhSachXe,
+   LoginStack: {
+     screen: LoginStack,
+      //screen: DanhSachXe,
 
-   //},
+   },
    HomePage: {
      screen: HomeDrawer
    }

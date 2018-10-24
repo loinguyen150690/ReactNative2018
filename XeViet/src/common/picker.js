@@ -8,7 +8,7 @@ var options = {
   chooseFromLibraryButtonTitle: 'Chọn ảnh có sẵn',
   mediaType: 'photo',
   quality: 0.3,
-  allowsEditing: false,
+  allowsEditing: true,
   maxWidth: 667,
   maxHeight: 667,
   // noData: true,
@@ -16,7 +16,7 @@ var options = {
   //   {name: 'fb', title: 'Chọn  hình từ Facebook'},
   // ],
   storageOptions: {
-    skipBackup: false,
+    skipBackup: true,
     path: 'images'
   }
 };

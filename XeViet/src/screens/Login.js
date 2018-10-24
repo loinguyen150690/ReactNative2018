@@ -33,9 +33,9 @@ import globals from "../styles/variables.js";
 import myApi from "../common/api.js";
 import lang from "../languages/vn.js";
 import Ionicons from "react-native-vector-icons/Ionicons";
-const background_img = "../images/background.jpg";
+const background_img = "../images/background.png";
 const logo_img = "../images/logo.png";
-import { LoginButton } from 'react-native-fbsdk';
+
 
 export default class Login extends Component<Props> {
   constructor(props) {
@@ -75,18 +75,8 @@ export default class Login extends Component<Props> {
   }
 
   onLogin() {
-<<<<<<< HEAD
       //this.setTabBarActive();
       //return;
-=======
-    this.setState({isLoading:true});
-    setTimeout(()=>{
-        this.setState({isLoading:false});
-        this.setTabBarActive();
-    },2000);
-
-      return;
->>>>>>> 5f6ff6c053fc4dec1ad2727bec91c105b61c8315
 
     if (this.state.userName == "") {
       Alert.alert(lang.alert.title, lang.alert.errlogin6);
@@ -97,7 +87,7 @@ export default class Login extends Component<Props> {
       return;
     }
 
-
+    this.setState({ isLoading: true });
     fetch(myApi.NguoiDung.DangNhap, {
       method: "POST",
       headers: {
@@ -139,16 +129,6 @@ export default class Login extends Component<Props> {
   async navToUserOption(){
     await AsyncStorage.removeItem("@TypeUse");
     this.props.navigation.navigate("UserOption");
-  }
-
-  loginWithFaceBook(error, result){
-    if (error) {
-      Alert.alert("Login failed with error: " + error.message);
-    } else if (result.isCancelled) {
-      Alert.alert("Login was cancelled");
-    } else {
-      Alert.alert("Login was successful with permissions: " + result.grantedPermissions)
-    }
   }
   render() {
     return (
@@ -201,7 +181,7 @@ export default class Login extends Component<Props> {
                   />
                 </View>
               </View>
-              <View style={styles.mgt10}>
+              <View style={styles.mgt20}>
               <View style={styles.frmlogin__item}>
                 <Label style={styles.frmlogin__label}>
                   {lang.form.password}
@@ -227,7 +207,7 @@ export default class Login extends Component<Props> {
                 </Text>
               </Button>
 
-              {/* <Button
+              <Button
                 block={true}
                 bordered={true}
                 rounded={true}
@@ -240,22 +220,7 @@ export default class Login extends Component<Props> {
                 <Text style={styles.frmlogin__btn__txt}>
                   {lang.button.registry}
                 </Text>
-              </Button> */}
-
-              <Button
-                block={true}
-                bordered={true}
-                rounded={true}
-                light={true}
-                style={[styles.frmlogin__btn2, {backgroundColor: "#4267B2", borderWidth: 0, borderColor:"transparent" }]}
-              >
-                <LoginButton
-                  publishPermissions={["email"]}
-                  onLoginFinished={ (error, result)=> this.loginWithFaceBook(error, result)}
-                  onLogoutFinished={() => alert("User logged out")}/>
               </Button>
-
-
             </View>
           </KeyboardAvoidingView>
         </Content>

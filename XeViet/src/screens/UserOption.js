@@ -68,7 +68,7 @@ const styles2 = StyleSheet.create({
     color: "#fff"
   }
 })
-const background_img = "../images/background.jpg";
+const background_img = "../images/background.png";
 
 export default class Home extends Component<Props> {
   constructor(props) {
