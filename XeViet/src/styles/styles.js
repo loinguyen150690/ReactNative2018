@@ -561,18 +561,22 @@ frmlogin__label: {
     marginLeft: 0,
     marginRight: 0,
     marginTop: 35,
-    backgroundColor: variables.color.yellow,
+    backgroundColor: variables.color.darkblue,
     shadowOpacity: 0,
     shadowColor: "transparent"
   },
   frmlogin__btn2: {
     marginTop: 10
   },
-
+  frmlogin__btn__txt:{
+    fontSize: 16,
+    fontWeight: 'bold'
+  },
   forget_pass_txt: {
     color: "#fff",
     marginTop: 20
   },
+<<<<<<< HEAD
   frm_create_acc: {
    paddingTop: 16
  },
@@ -610,4 +614,41 @@ frmlogin__label: {
  },
  dieu_khoan_su_dung_txt: {},
  dieu_khoan_su_dung_link: {},
+=======
+
+  btn_abs_input: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    width: "100%",
+    height: 40,
+    //backgroundColor:'red'
+    zIndex: 2
+  },
+  button__lichtrinh: {
+    marginTop: 8,
+    height: 28,
+    borderWidth: 1,
+    borderColor: variables.color.darkblue,
+    backgroundColor: "white",
+    shadowOpacity: 0,
+    shadowColor: "transparent",
+    marginLeft: 10,
+    paddingTop: 0,
+    paddingBottom: 0
+  },
+  button__lichtrinh_txt: {
+    color: variables.color.darkblue,
+    fontSize: 12
+  },
+  color_red:{
+    color: variables.color.darkblue,
+  },
+  mgt10:{
+    marginTop: 10
+  },
+  mgt30:{
+    marginTop: 30
+  }
+>>>>>>> 5f6ff6c053fc4dec1ad2727bec91c105b61c8315
 });

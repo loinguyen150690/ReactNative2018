@@ -11,7 +11,8 @@ import {
   RefreshControl,
   AsyncStorage
 } from "react-native";
-
+const currentDate = new Date();
+import DateTimePicker from "react-native-modal-datetime-picker";
 import {
   Button,
   Text,
@@ -124,10 +125,11 @@ export default class DanhSachXe extends Component<Props> {
       statusId: null,
       timkiem_giatu: null,
       timkiem_giaden: null,
-      timkiem_tungay: null,
       timkiem_denngay: null,
       timkiem_sochongoi: null,
       timkiem_namsx: null,
+      timkiem_tungay: null,
+      tungay_isDatePickerVisible: false,
     };
   }
 
@@ -308,7 +310,7 @@ export default class DanhSachXe extends Component<Props> {
   updateContent(){
       this.loadDanhSach(this.state.userName);
   }
-  navToChiTiet(_xeId){
+  navToLichTrinh(_xeId){
       //alert(_xeId);
       this.props.navigation.navigate("Calendar", {id:_xeId});
   }
@@ -589,6 +591,80 @@ export default class DanhSachXe extends Component<Props> {
     return mycontent;
   }
 
+<<<<<<< HEAD
+=======
+  _showDatePicker_TuNgay = () => {
+    this.setState({ tungay_isDatePickerVisible: true });
+  };
+  _handleDatePicked_TuNgay = datetime => {
+    var ngay = new Date(datetime);
+    let y = ngay.getFullYear(),
+      m = ngay.getMonth(),
+      d = ngay.getDate();
+      m++;
+      let str_m='', str_d = '';
+
+      if(m<10){
+        str_m ='0'+`${m}`;
+      }
+      else {
+        str_m =`${m}`;
+      }
+      if(d<10){
+        str_d ='0'+`${d}`;
+      }
+      else {
+        str_d = `${d}`;
+      }
+
+    let str = str_d + "/" + str_m + "/" + `${y}`;
+    this.setState({
+      tungay_isDatePickerVisible: false,
+      timkiem_tungay: str
+    });
+  };
+  _hideDatePicker_TuNgay = () => {
+    this.setState({ tungay_isDatePickerVisible: false });
+  };
+
+  _showDatePicker_DenNgay = () => {
+    this.setState({ denngay_isDatePickerVisible: true });
+  };
+  _handleDatePicked_DenNgay = datetime => {
+    var ngay = new Date(datetime);
+    let y = ngay.getFullYear(),
+      m = ngay.getMonth(),
+      d = ngay.getDate();
+      m++;
+      let str_m='', str_d = '';
+
+      if(m<10){
+        str_m ='0'+`${m}`;
+      }
+      else {
+        str_m =`${m}`;
+      }
+      if(d<10){
+        str_d ='0'+`${d}`;
+      }
+      else {
+        str_d = `${d}`;
+      }
+    let str = str_d + "/" + str_m + "/" + `${y}`;
+    this.setState({
+      denngay_isDatePickerVisible: false,
+      timkiem_denngay: str
+    });
+  };
+  _hideDatePicker_DenNgay = () => {
+    this.setState({ denngay_isDatePickerVisible: false });
+  };
+  navToChiTietXe(id){
+    Alert.alert(id.toString())
+    return;
+  }
+
+>>>>>>> 5f6ff6c053fc4dec1ad2727bec91c105b61c8315
   render() {
     return (<Container style={{
         backgroundColor: "#f4f4f4"
@@ -610,11 +686,16 @@ export default class DanhSachXe extends Component<Props> {
                                   onRefresh={()=>{this.updateContent()}}/>
                               }>
         <FlatList data={this.state.listCar} refreshing={this.state.refreshing} renderItem={({item, index}) => (<View style={[styles.bgf, styles.shadow]}>
+<<<<<<< HEAD
             <TouchableOpacity style={[styles.button_more_list_car, {opacity: this.state.groupUser =='QUANLY' ? 1 : 0}]} onPress={() => this.openModalMore(item.ID)}>
               <Ionicons name="md-more" size={25} color={"grey"}/>
+=======
+            <TouchableOpacity style={styles.button_more_list_car} onPress={() => this.openModalMore(item.ID)}>
+              <Ionicons name="md-more" size={25} style={styles.color_red}/>
+>>>>>>> 5f6ff6c053fc4dec1ad2727bec91c105b61c8315
             </TouchableOpacity>
             <ListItem style={[styles.news_item]}>
-              <TouchableOpacity onPress={() => this.navToChiTiet(item.ID)} style={{
+              <TouchableOpacity onPress={() => this.navToLichTrinh(item.ID)} style={{
                   margin: 0,
                   padding: 0
                 }}>
@@ -623,7 +704,7 @@ export default class DanhSachXe extends Component<Props> {
                   }}/>
               </TouchableOpacity>
               <Body>
-                <TouchableOpacity onPress={() => this.navToChiTiet(item.Id)}>
+                <TouchableOpacity onPress={() => this.navToLichTrinh(item.ID)}>
                   {/* <Text>{item.Id}</Text> */}
                   <Text style={styles.news__title_3}>{item.TenXe}</Text>
                   <View style={{
@@ -635,6 +716,12 @@ export default class DanhSachXe extends Component<Props> {
                     </Text>
                   </View>
                 </TouchableOpacity>
+                <Button style={styles.button__lichtrinh} rounded={true}
+                  onPress={() => this.navToChiTietXe(item.ID)}>
+                  <Text style={styles.button__lichtrinh_txt}>
+                    CHI TIẾT
+                  </Text>
+                </Button>
 
               </Body>
             </ListItem>
@@ -939,7 +1026,7 @@ export default class DanhSachXe extends Component<Props> {
                     }}>
                     <Item stackedLabel={true}  style={[styles.frmInput__item]}>
                       <Label style={styles.frm__label}>Giá từ(50000)</Label>
-                      <Input style={styles.frm_input} value={this.state.timkiem_giatu} onChangeText={timkiem_giatu => this.setState({timkiem_giatu})} ref={input => (this.timkiem_giatu = input)}/>
+                      <Input keyboardType="numeric" style={styles.frm_input} value={this.state.timkiem_giatu} onChangeText={timkiem_giatu => this.setState({timkiem_giatu})} ref={input => (this.timkiem_giatu = input)}/>
                     </Item>
                   </View>
                   <View style={{
@@ -948,7 +1035,7 @@ export default class DanhSachXe extends Component<Props> {
                     }}>
                     <Item stackedLabel={true}  style={[styles.frmInput__item]}>
                       <Label style={styles.frm__label}>Giá đến(500000)</Label>
-                      <Input style={styles.frm_input} value={this.state.timkiem_giaden} onChangeText={timkiem_giaden => this.setState({timkiem_giaden})} ref={input => (this.timkiem_giaden = input)}/>
+                      <Input style={styles.frm_input}  keyboardType="numeric"  value={this.state.timkiem_giaden} onChangeText={timkiem_giaden => this.setState({timkiem_giaden})} ref={input => (this.timkiem_giaden = input)}/>
                     </Item>
                   </View>
                 </View>
@@ -969,7 +1056,7 @@ export default class DanhSachXe extends Component<Props> {
                     }}>
                     <Item stackedLabel={true}  style={[styles.frmInput__item]}>
                       <Label style={styles.frm__label}>Số chỗ ngồi</Label>
-                      <Input style={styles.frm_input} value={this.state.timkiem_sochongoi} onChangeText={timkiem_sochongoi => this.setState({timkiem_sochongoi})} ref={input => (this.timkiem_sochongoi = input)}/>
+                      <Input style={styles.frm_input}  keyboardType="numeric" value={this.state.timkiem_sochongoi} onChangeText={timkiem_sochongoi => this.setState({timkiem_sochongoi})} ref={input => (this.timkiem_sochongoi = input)}/>
                     </Item>
                   </View>
                 </View>
@@ -982,6 +1069,19 @@ export default class DanhSachXe extends Component<Props> {
                     <Item stackedLabel={true}  style={[styles.frmInput__item]}>
                       <Label style={styles.frm__label}>Từ ngày</Label>
                       <Input style={styles.frm_input} value={this.state.timkiem_tungay} onChangeText={timkiem_tungay => this.setState({timkiem_tungay})} ref={input => (this.timkiem_tungay = input)}/>
+                      <TouchableOpacity
+                        onPress={this._showDatePicker_TuNgay}
+                        style={styles.btn_abs_input}
+                      />
+                      <DateTimePicker
+                        isVisible={this.state.tungay_isDatePickerVisible}
+                        onConfirm={this._handleDatePicked_TuNgay}
+                        onCancel={this._hideDatePicker_TuNgay}
+                        mode={"date"}
+                        cancelTextIOS={"Hủy"}
+                        confirmTextIOS={"Chọn"}
+                        titleIOS={"Từ ngày"}
+                      />
                     </Item>
                   </View>
                   <View style={{
@@ -991,6 +1091,19 @@ export default class DanhSachXe extends Component<Props> {
                     <Item stackedLabel={true}  style={[styles.frmInput__item]}>
                       <Label style={styles.frm__label}>Đến ngày</Label>
                       <Input style={styles.frm_input} value={this.state.timkiem_denngay} onChangeText={timkiem_denngay => this.setState({timkiem_denngay})} ref={input => (this.timkiem_denngay = input)}/>
+                      <TouchableOpacity
+                        onPress={this._showDatePicker_DenNgay}
+                        style={styles.btn_abs_input}
+                      />
+                      <DateTimePicker
+                        isVisible={this.state.denngay_isDatePickerVisible}
+                        onConfirm={this._handleDatePicked_DenNgay}
+                        onCancel={this._hideDatePicker_DenNgay}
+                        mode={"date"}
+                        cancelTextIOS={"Hủy"}
+                        confirmTextIOS={"Chọn"}
+                        titleIOS={"Từ ngày"}
+                      />
                     </Item>
                   </View>
                 </View>
