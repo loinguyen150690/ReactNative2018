@@ -22,6 +22,17 @@ import myApi from "../common/api.js";
 
 LocaleConfig.defaultLocale = 'vn';
 export default class App extends Component<Props> {
+  static navigationOptions = ({ navigation }) => {
+    const { params = {}} = navigation.state;
+    return {
+     headerRight: (
+       <TouchableOpacity onPress={params.handleSubmit}
+          style={{paddingRight: 20,paddingLeft: 20}}>
+          <FontAwesome name="search" size={25} color={"white"}/>
+        </TouchableOpacity>
+     ),
+   };
+  };
   constructor(props) {
     super(props);
     this.state = {
@@ -52,6 +63,18 @@ export default class App extends Component<Props> {
       }
     });
 
+  }
+  componentDidMount() {
+     this.props.navigation.setParams({handleSubmit: this.submitStatus});
+  }
+  submitStatus = () => {
+      this.openModal2();
+  };
+  openModal2(){
+    return;
+    // this.setState({
+    //   modalVisible: true
+    // })
   }
 
   _getId() {
@@ -100,47 +123,7 @@ export default class App extends Component<Props> {
     return mycontent;
   }
   _loadDataXeDetail(id, month) {
-    //alert(id.toString() + ":"+ month);
-    //data temp
-    //   this.setState({
-    //     DataCalendar:{
-    //       '2018-10-01' : {
-    //         bgColor: 'blue',
-    //         textColor: '#000',
-    //         content: "Complete",
-    //         statusId:"1"
-    //
-    //       },
-    //       '2018-10-16' : {
-    //         bgColor: 'green',
-    //         textColor: '#000',
-    //         content: "OnGoing",
-    //         statusId:"2"
-    //       },
-    //       '2018-10-17' : {
-    //         bgColor: 'red',
-    //         textColor: '#000',
-    //         content: "Off",
-    //         statusId:"3"
-    //       },
-    //       '2018-10-18' : {
-    //         bgColor: 'pink',
-    //         textColor: '#000',
-    //         content: "Booked",
-    //         statusId:"4"
-    //       },
-    //       '2018-10-19' : {
-    //         bgColor: 'red',
-    //         textColor: '#000',
-    //         content: "Off",
-    //         statusId:"3"
-    //       }
-    //
-    //     }
-    // })
-
     //api
-    //var dayNow =
     this.setState({isLoading:true});
     fetch(myApi.LichXe.DanhSach + "?xeid=" + id + "&thang="  + month, {
       method: "GET"
@@ -214,7 +197,6 @@ export default class App extends Component<Props> {
   }
 
   openModal(day, statusId){
-    //alert(JSON.stringify(day));
     var status_tmp =this.state.statusId;
     if(statusId){
       status_tmp = statusId;

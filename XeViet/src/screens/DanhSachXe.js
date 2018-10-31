@@ -43,7 +43,6 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 import pick from "../common/picker.js";
 import InfoUser from "../common/InfoUser.js";
-const MAX_IMG_BAOHIEM = 2, MAX_IMG_GIAYDANGKIEM = 2, MAX_IMG_XE = 4;
 export default class DanhSachXe extends Component<Props> {
 
   static navigationOptions = ({ navigation }) => {
@@ -57,12 +56,8 @@ export default class DanhSachXe extends Component<Props> {
      ),
    };
   };
-  componentDidMount() {
-    this.props.navigation.setParams({handleSubmit: this.submitStatus});
-  }
-  submitStatus = () => {
-      this.openModalTimKiemXe();
-  };
+
+
 
   constructor(props) {
     super(props);
@@ -156,7 +151,12 @@ export default class DanhSachXe extends Component<Props> {
   }
   componentDidMount() {
      this.GetInfoUser();
+     this.props.navigation.setParams({handleSubmit: this.submitStatus});
   }
+  submitStatus = () => {
+      this.openModalTimKiemXe();
+  };
+  
   componentWillMount() {
     this._loadDataLoaiXe('admin');
     this._loadDataLoaiDongCo('admin');
