@@ -1,5 +1,19 @@
 const URL = "http://api.emdiu.com";
-
+/*
+int tinhthanhid = 0,
+string userName = "",
+int xeid = 0,
+int pagenum = 1,
+int pagesize = 100,
+string LoaiXeCode= "",
+string MauXe = "",
+int SoChoNgoi = 0,
+string LoaiDongCoCode ="",
+string TuNgay = "",
+string DenNgay ="",
+int GiaTu = 0,
+int GiaDen = 0
+*/
 export default {
    Xe:{
      DanhSach:URL + "/api/XeGetAll?UserName=",

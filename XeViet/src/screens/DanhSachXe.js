@@ -172,6 +172,7 @@ export default class DanhSachXe extends Component<Props> {
       if (response.status === 200) {
         return response.json().then(responseJson => {
           this.setState({
+            loaixeId: responseJson.DataResult[0].Ma,
             listLoaiXe: responseJson.DataResult
           });
         });
@@ -193,6 +194,7 @@ export default class DanhSachXe extends Component<Props> {
       if (response.status === 200) {
         return response.json().then(responseJson => {
           this.setState({
+            loaidongcoId: responseJson.DataResult[0].Ma,
             listLoaiDongCo: responseJson.DataResult
           });
         });
@@ -214,6 +216,7 @@ export default class DanhSachXe extends Component<Props> {
       if (response.status === 200) {
         return response.json().then(responseJson => {
           this.setState({
+            chuxe:responseJson.DataResult[0].Username,
             listChuXe: responseJson.DataResult
           });
         });
@@ -345,6 +348,11 @@ export default class DanhSachXe extends Component<Props> {
 
   //them moi xe
   onThemMoiXe(){
+    if (!this.state.tenxe) {
+      Alert.alert("Thông báo", "Chưa nhập tên xe!");
+      return;
+    }
+
     this.setState({isLoading: true});
     fetch(myApi.Xe.CapNhat, {
     method: "POST",
@@ -396,6 +404,11 @@ export default class DanhSachXe extends Component<Props> {
 
   //cap nhat thong tin xe
   onCapNhatXe(){
+    if (!this.state.tenxe) {
+      Alert.alert("Thông báo", "Chưa nhập tên xe!");
+      return;
+    }
+
     this.setState({isLoading: true});
     fetch(myApi.Xe.CapNhat, {
     method: "POST",

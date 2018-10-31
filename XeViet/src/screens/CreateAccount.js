@@ -36,7 +36,7 @@ export default class FogotPass extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      TYPE_USER: -1,
+      TYPE_USER: "CHUXE",
       companyname: "",
       username:"",
       fullname: "",
@@ -45,32 +45,29 @@ export default class FogotPass extends Component<Props> {
       password: "",
       repassword: "",
       isLoading: false,
-      testString: null,
+      groupNameUser: null,
       focusDescriptionInput: false,
       value_checkbox: false
     };
   }
 
   GetTypeUserSelected() {
-    AsyncStorage.getItem("@TypeUse").then(token => {
-      if (token !== null && token !== "") {
-        this.setState({
-          TYPE_USER: parseInt(token)
-        }, function(){
-          let x =null;
-          if(parseInt(token) ==1){
-            x ="CHỦ XE"
-          }
-          else if(parseInt(token) == 2){
-            x ="CHỦ XE"
-          }
+    let _groupUser = "CHUXE";
+    if (this.props.navigation.state.params) {
+      _groupUser = this.props.navigation.state.params.groupUser;
+    }
 
-          this.setState({
-            testString: x
-          })
-        })
-      }
-    });
+    var _groupNameUser ="";
+    if(_groupUser == "QUANLY"){
+      _groupNameUser = "QUẢN LÝ";
+    }else if(_groupUser == "CHUXE"){
+      _groupNameUser = "CHỦ XE"
+    }
+    else if(_groupUser == "KHACH"){
+      _groupNameUser = "KHÁCH"
+    }
+
+    this.setState({TYPE_USER : _groupUser, groupNameUser : _groupNameUser});
   }
   componentWillMount() {
     this.GetTypeUserSelected();
@@ -164,7 +161,7 @@ export default class FogotPass extends Component<Props> {
         });
     }
     //Them moi chu xe
-    else if(this.state.TYPE_USER == 2){
+    else{ //if(this.state.TYPE_USER == 2){
       let isdriver= 0;
       if(this.state.value_checkbox){
         isdriver= 1;
@@ -176,7 +173,7 @@ export default class FogotPass extends Component<Props> {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          GroupUser: 'CHUXE',//this.state.TYPE_USER,
+          GroupUser: this.state.TYPE_USER,
           CompanyName: this.state.companyname,
           FullName: this.state.fullname,
           Username:this.state.email,
@@ -239,7 +236,7 @@ export default class FogotPass extends Component<Props> {
         <Content>
           <View style={[styles.frm_create_acc, styles.bgf, {paddingBottom: 20}]}>
             <Text style={[styles.pd10, styles.text_blue]}>
-                {this.state.testString}
+                {this.state.groupNameUser}
             </Text>
              <KeyboardAvoidingView behavior="padding" enabled={true}>
             <View style={styles.text_group}>
@@ -333,7 +330,11 @@ export default class FogotPass extends Component<Props> {
             </Button>
           </View>
         </Content>
-
+        <TouchableOpacity   onPress={() =>
+            this.props.navigation.navigate("Login", {groupUser:this.state.TYPE_USER})
+          }  style={{position: 'absolute', bottom: 0, right: 0, padding: 24}}>
+          <Text style={{color: 'red', fontSize: 13}}>Trở lại</Text>
+        </TouchableOpacity>
       </Container>
     );
   }
