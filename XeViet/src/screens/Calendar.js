@@ -28,7 +28,7 @@ export default class App extends Component<Props> {
      headerRight: (
        <TouchableOpacity onPress={params.handleSubmit}
           style={{paddingRight: 20,paddingLeft: 20}}>
-          <FontAwesome name="search" size={25} color={"white"}/>
+          <FontAwesome name="clock-o" size={25} color={"white"}/>
         </TouchableOpacity>
      ),
    };
@@ -71,6 +71,7 @@ export default class App extends Component<Props> {
       this.openModal2();
   };
   openModal2(){
+    Alert.alert("Hi mai xinh dep")
     return;
     // this.setState({
     //   modalVisible: true
