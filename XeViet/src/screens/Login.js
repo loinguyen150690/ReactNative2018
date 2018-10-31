@@ -33,7 +33,7 @@ import globals from "../styles/variables.js";
 import myApi from "../common/api.js";
 import lang from "../languages/vn.js";
 import Ionicons from "react-native-vector-icons/Ionicons";
-const background_img = "../images/background.png";
+const background_img = "../images/background.jpg";
 const logo_img = "../images/logo.png";
 
 
