@@ -11,7 +11,7 @@ import {
   RefreshControl,
   AsyncStorage
 } from "react-native";
-
+import DateTimePicker from "react-native-modal-datetime-picker";
 import {
   Button,
   Text,
@@ -123,6 +123,8 @@ export default class DanhSachXe extends Component<Props> {
       timkiem_denngay: null,
       timkiem_sochongoi: null,
       timkiem_namsx: null,
+      tungay_isDatePickerVisible: false,
+      denngay_isDatePickerVisible: false,
     };
   }
 
@@ -156,7 +158,7 @@ export default class DanhSachXe extends Component<Props> {
   submitStatus = () => {
       this.openModalTimKiemXe();
   };
-  
+
   componentWillMount() {
     this._loadDataLoaiXe('admin');
     this._loadDataLoaiDongCo('admin');
@@ -567,6 +569,72 @@ export default class DanhSachXe extends Component<Props> {
     return mycontent;
   }
 
+  _showDatePicker_TuNgay = () => {
+      this.setState({ tungay_isDatePickerVisible: true });
+    };
+    _handleDatePicked_TuNgay = datetime => {
+      var ngay = new Date(datetime);
+      let y = ngay.getFullYear(),
+        m = ngay.getMonth(),
+        d = ngay.getDate();
+        m++;
+        let str_m='', str_d = '';
+
+        if(m<10){
+          str_m ='0'+`${m}`;
+        }
+        else {
+          str_m =`${m}`;
+        }
+        if(d<10){
+          str_d ='0'+`${d}`;
+        }
+        else {
+          str_d = `${d}`;
+        }
+
+      let str = str_d + "/" + str_m + "/" + `${y}`;
+      this.setState({
+        tungay_isDatePickerVisible: false,
+        timkiem_tungay: str
+      });
+    };
+    _hideDatePicker_TuNgay = () => {
+      this.setState({ tungay_isDatePickerVisible: false });
+    };
+
+    _showDatePicker_DenNgay = () => {
+      this.setState({ denngay_isDatePickerVisible: true });
+    };
+    _handleDatePicked_DenNgay = datetime => {
+      var ngay = new Date(datetime);
+      let y = ngay.getFullYear(),
+        m = ngay.getMonth(),
+        d = ngay.getDate();
+        m++;
+        let str_m='', str_d = '';
+
+        if(m<10){
+          str_m ='0'+`${m}`;
+        }
+        else {
+          str_m =`${m}`;
+        }
+        if(d<10){
+          str_d ='0'+`${d}`;
+        }
+        else {
+          str_d = `${d}`;
+        }
+      let str = str_d + "/" + str_m + "/" + `${y}`;
+      this.setState({
+        denngay_isDatePickerVisible: false,
+        timkiem_denngay: str
+      });
+    };
+    _hideDatePicker_DenNgay = () => {
+      this.setState({ denngay_isDatePickerVisible: false });
+    };
   render() {
     return (<Container style={{
         backgroundColor: "#f4f4f4"
@@ -960,6 +1028,19 @@ export default class DanhSachXe extends Component<Props> {
                     <Item stackedLabel={true}  style={[styles.frmInput__item]}>
                       <Label style={styles.frm__label}>Từ ngày</Label>
                       <Input style={styles.frm_input} value={this.state.timkiem_tungay} onChangeText={timkiem_tungay => this.setState({timkiem_tungay})} ref={input => (this.timkiem_tungay = input)}/>
+                      <TouchableOpacity
+                       onPress={this._showDatePicker_TuNgay}
+                       style={styles.btn_abs_input}
+                     />
+                     <DateTimePicker
+                       isVisible={this.state.tungay_isDatePickerVisible}
+                       onConfirm={this._handleDatePicked_TuNgay}
+                       onCancel={this._hideDatePicker_TuNgay}
+                       mode={"date"}
+                       cancelTextIOS={"Hủy"}
+                       confirmTextIOS={"Chọn"}
+                       titleIOS={"Từ ngày"}
+                     />
                     </Item>
                   </View>
                   <View style={{
@@ -969,6 +1050,19 @@ export default class DanhSachXe extends Component<Props> {
                     <Item stackedLabel={true}  style={[styles.frmInput__item]}>
                       <Label style={styles.frm__label}>Đến ngày</Label>
                       <Input style={styles.frm_input} value={this.state.timkiem_denngay} onChangeText={timkiem_denngay => this.setState({timkiem_denngay})} ref={input => (this.timkiem_denngay = input)}/>
+                      <TouchableOpacity
+                        onPress={this._showDatePicker_DenNgay}
+                        style={styles.btn_abs_input}
+                      />
+                      <DateTimePicker
+                        isVisible={this.state.denngay_isDatePickerVisible}
+                        onConfirm={this._handleDatePicked_DenNgay}
+                        onCancel={this._hideDatePicker_DenNgay}
+                        mode={"date"}
+                        cancelTextIOS={"Hủy"}
+                        confirmTextIOS={"Chọn"}
+                        titleIOS={"Đến ngày"}
+                      />
                     </Item>
                   </View>
                 </View>
