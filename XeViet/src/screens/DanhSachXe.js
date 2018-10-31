@@ -156,7 +156,7 @@ export default class DanhSachXe extends Component<Props> {
   submitStatus = () => {
       this.openModalTimKiemXe();
   };
-  
+
   componentWillMount() {
     this._loadDataLoaiXe('admin');
     this._loadDataLoaiDongCo('admin');
@@ -346,6 +346,11 @@ export default class DanhSachXe extends Component<Props> {
 
   //them moi xe
   onThemMoiXe(){
+    if (!this.state.tenxe) {
+      Alert.alert("Thông báo", "Chưa nhập tên xe!");
+      return;
+    }
+
     this.setState({isLoading: true});
     fetch(myApi.Xe.CapNhat, {
     method: "POST",
@@ -397,6 +402,11 @@ export default class DanhSachXe extends Component<Props> {
 
   //cap nhat thong tin xe
   onCapNhatXe(){
+    if (!this.state.tenxe) {
+      Alert.alert("Thông báo", "Chưa nhập tên xe!");
+      return;
+    }
+
     this.setState({isLoading: true});
     fetch(myApi.Xe.CapNhat, {
     method: "POST",
