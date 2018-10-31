@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {
   Image,
   StyleSheet,
+  Alert,
   AsyncStorage
 } from "react-native";
 import {
@@ -26,9 +27,6 @@ export default class TabScreen extends Component<Props> {
       TAB_ACTIVE: 4,
     };
   };
-  componentWillMount() {
-
-  }
   async saveItem(item, selectedValue) {
     try {
       await AsyncStorage.setItem(item, selectedValue);
@@ -37,10 +35,8 @@ export default class TabScreen extends Component<Props> {
     }
   }
 
-
   navToDanhSachXe() {
     this.setState({TAB_ACTIVE: 4});
-    this.saveItem("@TabBarActive",'4');
     this.props.navigation.navigate("DanhSachXe");
   }
   openMenuright() {
@@ -48,12 +44,12 @@ export default class TabScreen extends Component<Props> {
   }
   navTest() {
     this.setState({TAB_ACTIVE: 1});
-    this.saveItem("@TabBarActive",'1');
-    this.props.navigation.navigate("Test");
+    this.props.navigation.navigate("TaiKhoan");
   }
   render() {
     return (<Footer style={{display:this.state.TYPE_USER == -1 ? 'none' : 'flex'}}>
       <FooterTab style={styles.footerTab} tabBarActiveTextColor='#000'>
+
         <Button style={[
             st.btnTabNav, {
               backgroundColor: this.state.TAB_ACTIVE === 4
@@ -70,7 +66,6 @@ export default class TabScreen extends Component<Props> {
               }
             ]} uppercase={false}>Danh sách xe</Text>
         </Button>
-
         <Button style={[
             st.btnTabNav, {
               backgroundColor: this.state.TAB_ACTIVE === 1
@@ -89,7 +84,6 @@ export default class TabScreen extends Component<Props> {
               }
             ]} uppercase={false}>Tài khoản</Text>
         </Button>
-
       </FooterTab>
     </Footer>);
   }

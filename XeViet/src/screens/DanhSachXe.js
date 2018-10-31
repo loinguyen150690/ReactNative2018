@@ -141,31 +141,11 @@ export default class DanhSachXe extends Component<Props> {
         }, function() {
           this.loadDanhSach(responseJson.Username);
           this._loadDataChuXe(responseJson.Username);
-            //alert(this.state.userName);
         });
       }
     });
   }
 
-  // GetInfoUser() {
-  //     AsyncStorage.getItem("@UserInfo")
-  //     .then(userName_tmp => {
-  //       if (userName_tmp) {
-  //           var user = JSON.parse(userName_tmp);
-  //           this.loadDanhSach(user.Username);
-  //           this._loadDataChuXe(user.Username);
-  //           this.state({user:user, userName:user.Username, groupUser: 'CHUXE'});
-  //       }
-  //     });
-  //
-  //     // AsyncStorage.getItem("@GroupUser")
-  //     // .then(group => {
-  //     //   if (group) {
-  //     //     this.state({groupUser:group});
-  //     //     alert(group);
-  //     //   }
-  //     // });
-  // }
 
   openModalTimKiemXe() {
     this.setState({modalTimKiemXeVisible: true})
@@ -178,10 +158,8 @@ export default class DanhSachXe extends Component<Props> {
      this.GetInfoUser();
   }
   componentWillMount() {
-    //this.GetInfoUser();
     this._loadDataLoaiXe('admin');
     this._loadDataLoaiDongCo('admin');
-    //this.loadDanhSach();
     this._loadDataStatus('admin');
   }
 

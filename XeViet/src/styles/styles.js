@@ -571,7 +571,7 @@ frmlogin__label: {
 
   forget_pass_txt: {
     color: "#fff",
-    marginTop: 20
+    marginTop: 0
   },
   frm_create_acc: {
    paddingTop: 16

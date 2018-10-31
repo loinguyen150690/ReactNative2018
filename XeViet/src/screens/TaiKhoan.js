@@ -18,7 +18,6 @@ export default class App extends Component<Props> {
         // await AsyncStorage.clear();
         // await AsyncStorage.removeItem("@Phone");
         await AsyncStorage.removeItem("@Logined");
-        await AsyncStorage.removeItem("@UserName");
         this.props.navigation.navigate("LoginStack");
       } catch (error) {
         console.log("AsyncStorage error: " + error.message);

@@ -13,7 +13,7 @@ import styles     from "./src/styles/styles.js";
 import DrawerScreen   from "./src/screens/DrawerScreen.js";
 import TabScreen   from "./src/screens/TabScreen.js";
 import Calendar   from "./src/screens/Calendar.js";
-import Test from "./src/screens/Test.js";
+import TaiKhoan from "./src/screens/TaiKhoan.js";
 import Test2 from "./src/screens/Test2.js";
 import Test3 from "./src/screens/Test3.js";
 import DanhSachXe   from "./src/screens/DanhSachXe.js";
@@ -55,15 +55,14 @@ const MenuRightStack = StackNavigator(
 
 export const RootTab = TabNavigator(
   {
-
     DanhSachXe: {
       screen: DanhSachXe,
       navigationOptions: {
         title: "Danh sách xe"
       }
     },
-    Test: {
-      screen: Test,
+    TaiKhoan: {
+      screen: TaiKhoan,
       navigationOptions: {
         title: "Tài khoản"
       }
@@ -80,8 +79,6 @@ export const RootTab = TabNavigator(
         fontSize: variables.fontSize.headerTitle,
         textAlign: "center",
         alignSelf: "stretch",
-        // flex: 1,
-        // alignItems:'center',
         paddingLeft: 0,
         marginLeft: 0
       }
@@ -104,17 +101,9 @@ export const RootTab = TabNavigator(
     },
     tabBarOptions: {
       showIcon: true,
-      //iconStyle: styles.icon,
-      //style: styles.tabBar,
       upperCaseLabel: false,
-      //labelStyle: styles.labelTabBar,
-      //indicatorStyle: styles.indicatorTabBar,
-      //inactiveTintColor: variables.color.tabNav,
-      //activeTintColor: variables.color.tabNavActive,
-      //activeBackgroundColor: variables.color.darkblue, //not change on android, only ios
-      //tabBarSelectedItemStyle: styles.tabBarSelectedItemStyle
     },
-  // initialRouteName: "ChuyenHang"
+	   initialRouteName: "DanhSachXe"
 });
 
 export const IntroStack = StackNavigator({
@@ -130,8 +119,6 @@ export const IntroStack = StackNavigator({
     headerBackTitle: null,
     headerStyle: {
       backgroundColor: variables.color.darkblue,
-      // flexDirection: "row",
-      // alignItems: "center",
       paddingLeft: 0,
       marginLeft: 0
     },
@@ -139,7 +126,6 @@ export const IntroStack = StackNavigator({
     headerTitleStyle: {
       fontWeight: "bold",
       textAlign: "center",
-      // alignItems: "center",
       fontSize: variables.fontSize.headerTitle,
       paddingLeft: 0,
       marginLeft: 0
@@ -155,18 +141,18 @@ export const LoginStack = StackNavigator({
       header: null
     }
   },
-  Login: {
-    screen: Login,
-    navigationOptions: {
-      header: null
-    }
-  },
-  CreateAccount: {
-    screen: CreateAccount,
-    navigationOptions: {
-      title: "Tạo tài khoản"
-    }
-  }
+  // Login: {
+  //   screen: Login,
+  //   navigationOptions: {
+  //     header: null
+  //   }
+  // },
+  // CreateAccount: {
+  //   screen: CreateAccount,
+  //   navigationOptions: {
+  //     title: "Tạo tài khoản"
+  //   }
+  // }
 },
 {
   navigationOptions: {
@@ -186,7 +172,7 @@ export const LoginStack = StackNavigator({
       marginLeft: 0
     }
   },
-  initialRouteName: "Login"
+  initialRouteName: "UserOption"
 })
 export const RootStack = StackNavigator(
   {
@@ -208,12 +194,8 @@ export const RootStack = StackNavigator(
       },
       headerStyle: {
        backgroundColor: variables.color.darkblue,
-        // flexDirection: "row",
-        // alignItems: "center",
         paddingLeft: 0,
         marginLeft: 0,
-        //flex:1,
-      //  width: win.width,
       },
      headerTintColor: variables.color.headerTitle,
       headerTitleStyle: {
@@ -248,20 +230,24 @@ export const RootStack = StackNavigator(
 
 export default RootDrawer = DrawerNavigator(
  {
-   Test22:{
-     screen: UserOption
-   },
+   // Test22:{
+   //   screen: UserOption
+   // },
 
    // Intro:{
    //   screen: IntroStack
    // },
    LoginStack: {
      screen: LoginStack,
-      //screen: DanhSachXe,
-
    },
-   HomePage: {
+   MainPage: {
      screen: HomeDrawer
+   },
+   Login:{
+     screen: Login
+   },
+   CreateAccount:{
+     screen: CreateAccount
    }
  }
 );

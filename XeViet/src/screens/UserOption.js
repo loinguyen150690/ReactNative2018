@@ -74,7 +74,7 @@ export default class Home extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      type: 1,
+      groupUser: 'QUANLY',
     };
   }
   async saveItem(item, selectedValue) {
@@ -89,7 +89,7 @@ export default class Home extends Component<Props> {
         AsyncStorage.getItem("@Logined")
         .then(token => {
           if (token) {
-           this.props.navigation.navigate("HomePage");
+            this.props.navigation.navigate("HomePage");
           }
         });
   }
@@ -104,8 +104,8 @@ export default class Home extends Component<Props> {
     this.GetInfoUser();
   }
   navToLogin(){
-    this.saveItem("@TypeUse",this.state.type.toString());
-    this.props.navigation.navigate("Login");
+    //this.saveItem("@TypeUse",this.state.type.toString());
+    this.props.navigation.navigate("Login", {groupUser:this.state.groupUser});
   }
   render() {
     return (<Container>
@@ -120,43 +120,43 @@ export default class Home extends Component<Props> {
         <Text style={{color: '#fff', fontSize: 50,}}>Xe Việt</Text>
       </View>
       <View style={[{width:'100%', marginTop: 50, flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}]}>
-        <ListItem onPress={()=> this.setState({ type: 1 })}
+        <ListItem onPress={()=> this.setState({ groupUser: "QUANLY" })}
           radioColor="red"
           style={[styles.radio__item]}>
           <Radio
             radioColor="red"
             radioSelectedColor={"red"}
-            selected={this.state.type === 1}
-            onPress={()=> this.setState({ type: 1 })}
+            selected={this.state.groupUser === "QUANLY"}
+            onPress={()=> this.setState({ groupUser: "QUANLY" })}
             style={styles.rdo}
           />
           <Text style={styles.rdo__txt}>Quản lý</Text>
         </ListItem>
 
-        <ListItem onPress={()=> this.setState({ type: 2 })}
+        <ListItem onPress={()=> this.setState({ groupUser: "CHUXE" })}
           radioColor="red"
           style={styles.radio__item}>
           <Radio
             radioColor="red"
             radioSelectedColor={"red"}
-            selected={this.state.type ===2}
-            onPress={()=> this.setState({ type: 2 })}
+            selected={this.state.groupUser ==="CHUXE"}
+            onPress={()=> this.setState({ groupUser: "CHUXE" })}
             style={styles.rdo}
           />
           <Text style={styles.rdo__txt}>Chủ xe</Text>
         </ListItem>
 
-        <ListItem onPress={()=> this.setState({ type: 5 })}
+        <ListItem onPress={()=> this.setState({ groupUser: "KHACH" })}
           radioColor="red"
           style={styles.radio__item}>
           <Radio
             radioColor="red"
             radioSelectedColor={"red"}
-            selected={this.state.type === 5}
-            onPress={()=> this.setState({ type: 5 })}
+            selected={this.state.groupUser === "KHACH"}
+            onPress={()=> this.setState({ groupUser: "KHACH" })}
             style={styles.rdo}
           />
-          <Text style={styles.rdo__txt}>Tài xế</Text>
+          <Text style={styles.rdo__txt}>Khách</Text>
         </ListItem>
       </View>
       <TouchableOpacity onPress={()=> this.navToLogin()}  style={{position: 'absolute', bottom: 0, right: 0, padding: 24}}>

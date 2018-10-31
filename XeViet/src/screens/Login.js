@@ -42,8 +42,9 @@ export default class Login extends Component<Props> {
     super(props);
     this.state = {
       isLoading: false,
-      userName: '',
-      password: '',
+      groupUser:"QUANLY",
+      userName: 'admin',
+      password: '123456',
     };
   }
 
@@ -58,7 +59,12 @@ export default class Login extends Component<Props> {
   }
   componentWillMount() {
     //Kiem tra so dien thoai hop le & da dang nhap chuyen sang homepage
-    this.GetInfoUser();
+    //this.GetInfoUser();
+    let _groupUser = "QUANLY";
+    if (this.props.navigation.state.params) {
+      _groupUser = this.props.navigation.state.params.groupUser;
+    }
+    this.setState({groupUser : _groupUser});
   }
 
   async saveItem(item, selectedValue) {
@@ -70,8 +76,12 @@ export default class Login extends Component<Props> {
   }
 
   setTabBarActive(){
-     this.saveItem("@TabBarActive","4");
      this.props.navigation.navigate("HomePage");
+  }
+
+  navUserOption(){
+    //this.saveItem("@TypeUse",this.state.type.toString());
+    this.props.navigation.navigate("LoginStack");
   }
 
   onLogin() {
@@ -96,7 +106,8 @@ export default class Login extends Component<Props> {
       },
       body: JSON.stringify({
         Username: this.state.userName,
-        Password: this.state.password
+        Password: this.state.password,
+        GroupUser:this.state.groupUser
       })
     })
     .then(response => {
@@ -108,6 +119,9 @@ export default class Login extends Component<Props> {
             this.saveItem("@UserInfo", JSON.stringify(responseJson.DataResult));
             this.saveItem("@Logined", "1");
             this.setTabBarActive();
+          } else if(responseJson.ErrorMessage){
+            Alert.alert(lang.alert.title, responseJson.ErrorMessage);
+            this.setState({ isLoading: false });
           } else {
             Alert.alert(lang.alert.title, lang.alert.errlogin0);
             this.setState({ isLoading: false });
@@ -212,7 +226,9 @@ export default class Login extends Component<Props> {
                 bordered={true}
                 rounded={true}
                 light={true}
-                style={[styles.frmlogin__btn2]}
+                style={[styles.frmlogin__btn2, {display: this.state.groupUser == "QUANLY"
+                ? "none"
+                : "flex"}]}
                 onPress={() =>
                   this.props.navigation.navigate("CreateAccount", {})
                 }
@@ -235,6 +251,9 @@ export default class Login extends Component<Props> {
             <Text style={styles.forget_pass_txt}>{lang.form.fogotPass}</Text>
           </TouchableOpacity>
         </Footer>
+        <TouchableOpacity onPress={()=> this.navUserOption()}  style={{position: 'absolute', bottom: 0, right: 0, padding: 24}}>
+          <Text style={{color: '#fff', fontSize: 13}}>Trở lại</Text>
+        </TouchableOpacity>
       </Container>
     );
   }
