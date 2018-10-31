@@ -230,7 +230,7 @@ export default class Login extends Component<Props> {
                 ? "none"
                 : "flex"}]}
                 onPress={() =>
-                  this.props.navigation.navigate("CreateAccount", {})
+                  this.props.navigation.navigate("CreateAccount", {groupUser:this.state.groupUser})
                 }
               >
                 <Text style={styles.frmlogin__btn__txt}>

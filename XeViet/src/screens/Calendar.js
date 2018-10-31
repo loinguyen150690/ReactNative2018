@@ -184,7 +184,9 @@ export default class App extends Component<Props> {
     body: JSON.stringify({
       xeid: this.state.xeId,
       ngay: this.state.datecurrent,
-      trangthai: this.state.statusId
+      trangthai: this.state.statusId,
+      tungay: this.state.datecurrent,
+      denngay: this.state.datecurrent
     })
   }).then(response => {
     if (response.status === 200) {

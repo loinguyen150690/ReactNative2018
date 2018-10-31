@@ -170,6 +170,7 @@ export default class DanhSachXe extends Component<Props> {
       if (response.status === 200) {
         return response.json().then(responseJson => {
           this.setState({
+            loaixeId: responseJson.DataResult[0].Ma,
             listLoaiXe: responseJson.DataResult
           });
         });
@@ -191,6 +192,7 @@ export default class DanhSachXe extends Component<Props> {
       if (response.status === 200) {
         return response.json().then(responseJson => {
           this.setState({
+            loaidongcoId: responseJson.DataResult[0].Ma,
             listLoaiDongCo: responseJson.DataResult
           });
         });
@@ -212,6 +214,7 @@ export default class DanhSachXe extends Component<Props> {
       if (response.status === 200) {
         return response.json().then(responseJson => {
           this.setState({
+            chuxe:responseJson.DataResult[0].Username,
             listChuXe: responseJson.DataResult
           });
         });
