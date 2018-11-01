@@ -11,7 +11,8 @@ import {
   Picker,
   AsyncStorage
 } from 'react-native';
-import {Icon, Button, Item, Footer, Spinner } from 'native-base';
+import {Icon, Button, Item, Footer, Spinner, Label, Input } from 'native-base';
+import DateTimePicker from "react-native-modal-datetime-picker";
 
 import {Calendar, CalendarList, Agenda, LocaleConfig} from 'react-native-calendars';
 
@@ -19,6 +20,7 @@ import styles from "../styles/styles";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import myApi from "../common/api.js";
+import InfoUser from "../common/InfoUser.js";
 
 LocaleConfig.defaultLocale = 'vn';
 export default class App extends Component<Props> {
@@ -36,47 +38,65 @@ export default class App extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
+      groupUser:null,
       modalVisible: false,
+      modalMultiVisible:false,
       xeId:null,
       statusId: 'Off',
       DataCalendar:{},
       arrStatus:[],
       monthcurrent: '10',
       datecurrent:'',
-      isLoading: false
+      isLoading: false,
+      tungay:null,
+      denngay:null,
+      timkiem_tungay: null,
+      timkiem_denngay: null,
+      tungay_isDatePickerVisible: false,
+      denngay_isDatePickerVisible: false
     }
   }
 
-  componentWillMount() {
-    var id = this._getId();
-    var date = new Date();
-    this.setState({xeId:id}, function () {
-        this._loadDataXeDetail(id, this.state.monthcurrent);
-    });
-
-    AsyncStorage.getItem("@UserName")
-    .then(userName_tmp => {
-      if (userName_tmp) {
-          //alert(userName_tmp);
-          this.setState({userName:userName_tmp});
-          this._loadDataStatus(userName_tmp);
+  GetInfoUser() {
+    InfoUser(responseJson => {
+      if(responseJson){
+        this.setState({
+          user:responseJson,
+          userName:responseJson.Username,
+          groupUser: responseJson.GroupUser
+        }, function() {
+          // this.loadDanhSach(responseJson.Username);
+          // this._loadDataChuXe(responseJson.Username);
+          this._loadDataStatus(responseJson.Username);
+        });
       }
     });
+  }
+
+  componentWillMount() {
+    this.GetInfoUser();
+    var id = this._getId();
+    var date = new Date();
+    var m = date.getMonth() + 1;
+    this.setState({xeId:id, monthcurrent: m}, function () {
+        this._loadDataXeDetail(id, m);
+    });
+    // AsyncStorage.getItem("@UserName")
+    // .then(userName_tmp => {
+    //   if (userName_tmp) {
+    //       //alert(userName_tmp);
+    //       this.setState({userName:userName_tmp});
+    //       this._loadDataStatus(userName_tmp);
+    //   }
+    // });
 
   }
   componentDidMount() {
      this.props.navigation.setParams({handleSubmit: this.submitStatus});
   }
   submitStatus = () => {
-      this.openModal2();
+      this.openModalChangeStatusMultiDay();
   };
-  openModal2(){
-    Alert.alert("Hi mai xinh dep")
-    return;
-    // this.setState({
-    //   modalVisible: true
-    // })
-  }
 
   _getId() {
     let id = 0;
@@ -199,7 +219,79 @@ export default class App extends Component<Props> {
     });
   }
 
+  GetFormattedDate(todayTime) {
+    var month = todayTime.getMonth() + 1;
+    var day = todayTime.getDate();
+    var year = todayTime.getFullYear();
+    return year + "-" + month + "-" + day;
+  }
+  _updateStatusMulti(){
+    //alert(JSON.stringify(this.state.denngay));
+    //return;
+    if (!this.state.tungay) {
+      Alert.alert("Thông báo", "Chưa nhập từ ngày!");
+      return;
+    }
+    else if (!this.state.denngay) {
+      Alert.alert("Thông báo", "Chưa nhập đến ngày!");
+      return;
+    }
+
+    var strTuNgay = this.GetFormattedDate(this.state.tungay);
+    var strDenNgay = this.GetFormattedDate(this.state.denngay);
+
+    this.setState({isLoading: true});
+    fetch(myApi.LichXe.CapNhat, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      xeid: this.state.xeId,
+      ngay: strTuNgay,
+      trangthai: this.state.statusId,
+      tungay: strTuNgay,
+      denngay: strDenNgay
+    })
+  }).then(response => {
+    if (response.status === 200) {
+      return response.json().then(responseJson => {
+        if (responseJson.Result == true) {
+          this.setState({
+                          isLoading: false,
+                          idCurrent: responseJson
+                      });
+          Alert.alert("Thông báo", "Thành công");
+          this.closeModalMulti();
+          this._loadDataXeDetail(this.state.xeId, this.state.monthcurrent);
+        } else {
+          this.setState({isLoading: false});
+          Alert.alert("Thông báo", "Không thành công");
+        }
+    });
+      } else {
+        this.setState({isLoading: false});
+        Alert.alert("Thông báo", "API lỗi, xin vui lòng thử lại sau");
+        console.debug(response);
+      }
+
+    }).catch(error => {
+      console.error(error);
+      this.setState({isLoading: false});
+      Alert.alert("Thông báo", "Lỗi kết nối, xin vui lòng thử lại sau");
+    });
+  }
+
   openModal(day, statusId){
+    //alert(statusId);
+    if(this.state.groupUser =="KHACH"){
+      alert('liên hệ số điện thoại (0812) 680.680 để đặt xe');
+      return;
+    }
+    else if(this.state.groupUser =="CHUXE" && (statusId != "Free" && statusId)){
+      return;
+    }
     var status_tmp =this.state.statusId;
     if(statusId){
       status_tmp = statusId;
@@ -217,6 +309,100 @@ export default class App extends Component<Props> {
       modalVisible: false
     })
   }
+
+  openModalChangeStatusMultiDay(){
+    //Alert.alert("Hi mai xinh dep")
+    //return;
+    // this.setState({
+    //   modalVisible: true,
+    //   datecurrent: day.dateString,
+    //   statusId: status_tmp
+    // })
+    this.setState({
+      modalMultiVisible: true
+    })
+  }
+
+  closeModalMulti(){
+    this.setState({
+      modalMultiVisible: false
+    })
+  }
+
+
+  /*
+picker
+  */
+
+  _showDatePicker_TuNgay = () => {
+      this.setState({ tungay_isDatePickerVisible: true });
+    };
+    _handleDatePicked_TuNgay = datetime => {
+      var ngay = new Date(datetime);
+      let y = ngay.getFullYear(),
+        m = ngay.getMonth(),
+        d = ngay.getDate();
+        m++;
+        let str_m='', str_d = '';
+
+        if(m<10){
+          str_m ='0'+`${m}`;
+        }
+        else {
+          str_m =`${m}`;
+        }
+        if(d<10){
+          str_d ='0'+`${d}`;
+        }
+        else {
+          str_d = `${d}`;
+        }
+
+      let str = str_d + "-" + str_m + "-" + `${y}`;
+      this.setState({
+        tungay_isDatePickerVisible: false,
+        timkiem_tungay: str,
+        tungay:datetime
+      });
+    };
+    _hideDatePicker_TuNgay = () => {
+      this.setState({ tungay_isDatePickerVisible: false });
+    };
+
+    _showDatePicker_DenNgay = () => {
+      this.setState({ denngay_isDatePickerVisible: true });
+    };
+    _handleDatePicked_DenNgay = datetime => {
+      var ngay = new Date(datetime);
+      let y = ngay.getFullYear(),
+        m = ngay.getMonth(),
+        d = ngay.getDate();
+        m++;
+        let str_m='', str_d = '';
+
+        if(m<10){
+          str_m ='0'+`${m}`;
+        }
+        else {
+          str_m =`${m}`;
+        }
+        if(d<10){
+          str_d ='0'+`${d}`;
+        }
+        else {
+          str_d = `${d}`;
+        }
+      let str = str_d + "-" + str_m + "-" + `${y}`;
+      this.setState({
+        denngay_isDatePickerVisible: false,
+        timkiem_denngay: str,
+        denngay:datetime
+      });
+    };
+    _hideDatePicker_DenNgay = () => {
+      this.setState({ denngay_isDatePickerVisible: false });
+    };
+
   render() {
     return (
       <View>
@@ -395,6 +581,93 @@ export default class App extends Component<Props> {
           </Footer>
         </View>
       </Modal>
+
+      <Modal animationType="fade" transparent={false} visible={this.state.modalMultiVisible}  presentationStyle="fullScreen" onRequestClose={() => this.setState({modalMultiVisible: false})}>
+      <View style={[styles.modal__bg_nopad]}>
+        <View style={styles.modal_header_page}>
+            <TouchableOpacity style={ styles.buton_back_header}
+              onPress={() => this.closeModalMulti()}>
+              <Ionicons name={'md-close'} style={styles.icon_back_header}/>
+            </TouchableOpacity>
+            <Text style={[styles.modal_header_tilte]}>Thay đổi trạng thái</Text>
+        </View>
+        <ScrollView>
+        <View style={[styles.pd10, styles.mgt20, styles.flexrow]}>
+          <View style={{
+              flex: 1,
+              paddingRight: 12
+            }}>
+            <Item stackedLabel={true}  style={[styles.frmInput__item]}>
+              <Label style={styles.frm__label}>Từ ngày</Label>
+              <Input style={styles.frm_input} value={this.state.timkiem_tungay} onChangeText={timkiem_tungay => this.setState({timkiem_tungay})} ref={input => (this.timkiem_tungay = input)}/>
+              <TouchableOpacity
+               onPress={this._showDatePicker_TuNgay}
+               style={styles.btn_abs_input}
+             />
+             <DateTimePicker
+               isVisible={this.state.tungay_isDatePickerVisible}
+               onConfirm={this._handleDatePicked_TuNgay}
+               onCancel={this._hideDatePicker_TuNgay}
+               mode={"date"}
+               cancelTextIOS={"Hủy"}
+               confirmTextIOS={"Chọn"}
+               titleIOS={"Từ ngày"}
+             />
+            </Item>
+          </View>
+          <View style={{
+              flex: 1,
+              paddingLeft: 12
+            }}>
+            <Item stackedLabel={true}  style={[styles.frmInput__item]}>
+              <Label style={styles.frm__label}>Đến ngày</Label>
+              <Input style={styles.frm_input} value={this.state.timkiem_denngay} onChangeText={timkiem_denngay => this.setState({timkiem_denngay})} ref={input => (this.timkiem_denngay = input)}/>
+              <TouchableOpacity
+                onPress={this._showDatePicker_DenNgay}
+                style={styles.btn_abs_input}
+              />
+              <DateTimePicker
+                isVisible={this.state.denngay_isDatePickerVisible}
+                onConfirm={this._handleDatePicked_DenNgay}
+                onCancel={this._hideDatePicker_DenNgay}
+                mode={"date"}
+                cancelTextIOS={"Hủy"}
+                confirmTextIOS={"Chọn"}
+                titleIOS={"Đến ngày"}
+              />
+            </Item>
+          </View>
+        </View>
+          <View style={[styles.pd10]}>
+            <Item stackedLabel={true} style={[styles.frmInput__item]}>
+              <Text style={styles.frm__label}>
+                Trạng thái
+              </Text>
+              <Picker style={styles.picker__style_2}
+                       textStyle={styles.hanghoa_picker__textStyle} mode="dialog"
+                       headerBackButtonText={<FontAwesome name = "angle-left" size = {20} />}
+                       iosHeader="Trạng thái" iosIcon={<FontAwesome name = "angle-down" />}
+                       selectedValue={this.state.statusId}
+                       onValueChange={(value, index) => this.setState({statusId: value})}
+                       itemStyle={styles.picker__itemStyle}>
+                       {this._buidPickerStatus()}
+                     </Picker>
+            </Item>
+          </View>
+          <View style={{padding: 10}}>
+
+          </View>
+        </ScrollView>
+        <Footer style={[styles.footer_page, styles.footer_action]}>
+          <Button full={true} block={true} bordered={true} rounded={true} style={[
+              styles.frmgetpass__btn
+            ]} onPress={() => this._updateStatusMulti()}>
+          <Text style={styles.btn_border_blue__txt}>CẬP NHẬT</Text>
+        </Button>
+        </Footer>
+      </View>
+    </Modal>
+
     </View>);
   }
 }

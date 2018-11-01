@@ -43,8 +43,8 @@ export default class Login extends Component<Props> {
     this.state = {
       isLoading: false,
       groupUser:"QUANLY",
-      userName: 'admin',
-      password: '123456',
+      userName: null, //'admin',
+      password:  null //'123456',
     };
   }
 

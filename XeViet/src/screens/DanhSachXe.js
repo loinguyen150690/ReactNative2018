@@ -84,7 +84,7 @@ export default class DanhSachXe extends Component<Props> {
       listChuXe:[],
       //thong tin xe
       chuxe:null,
-      tenxe: null,
+      tenxe: "",
       loaixeId: 1,
       loaidongcoId: 1,
       bienso: null,
@@ -117,6 +117,8 @@ export default class DanhSachXe extends Component<Props> {
       //timkiem
       arrStatus:[],
       statusId: null,
+      tungay:null,
+      denngay:null,
       timkiem_giatu: null,
       timkiem_giaden: null,
       timkiem_tungay: null,
@@ -145,7 +147,7 @@ export default class DanhSachXe extends Component<Props> {
 
 
   openModalTimKiemXe() {
-    this.setState({modalTimKiemXeVisible: true})
+    this.setState({modalTimKiemXeVisible: true,  loaixeId:'All'})
   }
 
   closeModalTimKiemXe(){
@@ -247,13 +249,16 @@ export default class DanhSachXe extends Component<Props> {
     return mycontent;
   }
 
-  _buildPickerByListData(listData){
+  _buildPickerByListData(listData, isItemEmpty){
     //var listData = this.state.arrStatus;
     //build data to picker.item
     let mycontent = [],
        length = listData.length,
        i = 0,
        item;
+     if(isItemEmpty){
+        mycontent.push(<Picker.Item label='Tất cả' value='All' tilte='Tất cả'/>);
+     }
      if (length > 0) {
        for (; i < length; i++) {
          item = listData[i];
@@ -288,6 +293,53 @@ export default class DanhSachXe extends Component<Props> {
       this.setState({isLoading: false, refreshing : false});
     });
   }
+
+  GetFormattedDate(todayTime) {
+    var month = todayTime.getMonth() + 1;
+    var day = todayTime.getDate();
+    var year = todayTime.getFullYear();
+    return year + "-" + month + "-" + day;
+  }
+  onTimXe(){
+    var strTuNgay = '';
+    if(this.state.tungay){
+        strTuNgay= this.GetFormattedDate(this.state.tungay);
+    };
+    var strDenNgay ='';
+    if(this.state.denngay){
+        strDenNgay = this.GetFormattedDate(this.state.denngay);
+    }
+    var url = myApi.Xe.DanhSach + this.state.userName + '&TrangThaiCode='+ this.state.statusId + '&LoaiXeCode=' + this.state.loaixeId + '&TuNgay=' + strTuNgay + '&DenNgay=' + strDenNgay+ '&TenXe=' + this.state.tenxe;
+    //alert(url);
+    this.setState({
+      isLoading: true
+    });
+
+    fetch(url, {
+      method: "GET"
+    }).then(response => {
+      if (response.status === 200) {
+        return response.json().then(responseJson => {
+          this.setState({
+            listCar: responseJson.DataResult,
+            isLoading: false
+          });
+          this.closeModalTimKiemXe();
+        });
+      }
+      else{
+          //alert(JSON.stringify(response));
+          this.setState({isLoading: false, refreshing : false});
+      }
+    }).then(response => {
+      console.debug(response);
+      this.setState({isLoading: false, refreshing : false});
+    }).catch(error => {
+      console.error(error);
+      this.setState({isLoading: false, refreshing : false});
+    });
+  }
+
   updateContent(){
       this.loadDanhSach(this.state.userName);
   }
@@ -546,12 +598,14 @@ export default class DanhSachXe extends Component<Props> {
 
 
   _loadDataStatus(userName) {
-    fetch(myApi.TrangThai.DanhSach, {
+    fetch(myApi.TrangThai.DanhSach  + userName, {
       method: "GET"
     }).then(response => {
       if (response.status === 200) {
         return response.json().then(responseJson => {
+          //alert(JSON.stringify(responseJson.DataResult));
           this.setState({
+            //statusId:responseJson.DataResult[0].Ma,
             arrStatus: responseJson.DataResult
           });
         });
@@ -566,14 +620,20 @@ export default class DanhSachXe extends Component<Props> {
 
   }
 
-  _buidPickerStatus(){
+  _buidPickerStatus(isItemEmpty){
     var list = this.state.arrStatus;
     //build data to picker.item
     let mycontent = [],
        length = list.length,
        i = 0,
        item;
-     if (length > 0) {
+    if(isItemEmpty){
+        // this.setState({
+        //   statusId: 'All'
+        // });
+        mycontent.push(<Picker.Item label='Tất cả' value='All' tilte='Tất cả'/>);
+    }
+    if (length > 0) {
        for (; i < length; i++) {
          item = list[i];
          mycontent.push(<Picker.Item label={item.Ten} value={item.Ma} tilte={item.Ten}/>);
@@ -609,7 +669,8 @@ export default class DanhSachXe extends Component<Props> {
       let str = str_d + "/" + str_m + "/" + `${y}`;
       this.setState({
         tungay_isDatePickerVisible: false,
-        timkiem_tungay: str
+        timkiem_tungay: str,
+        tungay:datetime
       });
     };
     _hideDatePicker_TuNgay = () => {
@@ -642,7 +703,8 @@ export default class DanhSachXe extends Component<Props> {
       let str = str_d + "/" + str_m + "/" + `${y}`;
       this.setState({
         denngay_isDatePickerVisible: false,
-        timkiem_denngay: str
+        timkiem_denngay: str,
+        denngay:datetime
       });
     };
     _hideDatePicker_DenNgay = () => {
@@ -828,7 +890,7 @@ export default class DanhSachXe extends Component<Props> {
                       20
                     } />
                   } iosHeader="Loại xe" iosIcon={<FontAwesome name = "angle-down" />} selectedValue={this.state.loaixeId} onValueChange={(value, index) => this.setState({loaixeId: value})} itemStyle={styles.picker__itemStyle}>
-                    {this._buildPickerByListData(this.state.listLoaiXe)}
+                    {this._buildPickerByListData(this.state.listLoaiXe, false)}
                   </Picker>
                 </Item>
 
@@ -838,7 +900,7 @@ export default class DanhSachXe extends Component<Props> {
                       20
                     } />
                   } iosHeader="Loại động cơ" iosIcon={<FontAwesome name = "angle-down" />} selectedValue={this.state.loaidongcoId} onValueChange={(value, index) => this.setState ({loaidongcoId:value})} itemStyle={styles.picker__itemStyle}>
-                    {this._buildPickerByListData(this.state.listLoaiDongCo)}
+                    {this._buildPickerByListData(this.state.listLoaiDongCo, false)}
                   </Picker>
                 </Item>
 
@@ -965,7 +1027,7 @@ export default class DanhSachXe extends Component<Props> {
                   selectedValue={this.state.statusId}
                   onValueChange={(value, index) => this.setState({statusId: value})}
                   itemStyle={styles.picker__itemStyle}>
-                    {this._buidPickerStatus()}
+                    {this._buidPickerStatus(true)}
                   </Picker>
                 </Item>
 
@@ -977,21 +1039,21 @@ export default class DanhSachXe extends Component<Props> {
                       20
                     } />
                   } iosHeader="Loại xe" iosIcon={<FontAwesome name = "angle-down" />} selectedValue={this.state.loaixeId} onValueChange={(value, index) => this.setState({loaixeId: value})} itemStyle={styles.picker__itemStyle}>
-                    {this._buildPickerByListData(this.state.listLoaiXe)}
+                    {this._buildPickerByListData(this.state.listLoaiXe, true)}
                   </Picker>
                 </Item>
 
-                <Item stackedLabel={true}  style={[styles.frmInput__item]}>
+                <Item stackedLabel={true}  style={[styles.frmInput__item, {display:"none"}]}>
                   <Text style={styles.frm__label}>Loại động cơ xe</Text>
                   <Picker style={styles.picker__style_2} textStyle={styles.hanghoa_picker__textStyle} mode="dialog" headerBackButtonText={<FontAwesome name = "angle-left" size = {
                       20
                     } />
                   } iosHeader="Loại động cơ" iosIcon={<FontAwesome name = "angle-down" />} selectedValue={this.state.loaidongcoId} onValueChange={(value, index) => this.setState ({loaidongcoId:value})} itemStyle={styles.picker__itemStyle}>
-                    {this._buildPickerByListData(this.state.listLoaiDongCo)}
+                    {this._buildPickerByListData(this.state.listLoaiDongCo, true)}
                   </Picker>
                 </Item>
 
-                <View style={[styles.mgt20, styles.pdb, styles.flexrow]}>
+                <View style={[styles.mgt20, styles.pdb, styles.flexrow, {display:"none"}]}>
                   <View style={{
                       flex: 1,
                       paddingRight: 12
@@ -1012,7 +1074,7 @@ export default class DanhSachXe extends Component<Props> {
                   </View>
                 </View>
 
-                <View style={[styles.mgt20, styles.pdb, styles.flexrow]}>
+                <View style={[styles.mgt20, styles.pdb, styles.flexrow, {display:"none"}]}>
                   <View style={{
                       flex: 1,
                       paddingRight: 12
