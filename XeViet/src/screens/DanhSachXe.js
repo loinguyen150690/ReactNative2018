@@ -754,6 +754,15 @@ export default class DanhSachXe extends Component<Props> {
                     <Text style={styles.news__txt3}>
                         {item.BienSo}
                     </Text>
+                    <Text style={styles.news__txt3}>
+                        Giá thuê: 200.000đ/ngày
+                    </Text>
+                    <Text style={styles.news__txt3}>
+                        Màu sắc: Đen
+                    </Text>
+                    <Text style={styles.news__txt3}>
+                        Hộp số: Số sàn
+                    </Text>
                   </View>
                 </TouchableOpacity>
 
