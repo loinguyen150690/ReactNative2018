@@ -54,7 +54,9 @@ export default class App extends Component<Props> {
       timkiem_denngay: null,
       tungay_isDatePickerVisible: false,
       denngay_isDatePickerVisible: false,
-      minimumDate:new Date()
+      minimumDate:new Date(),
+      firstDay:null,
+      lastDay:null
     }
   }
 
@@ -74,13 +76,24 @@ export default class App extends Component<Props> {
     });
   }
 
+  GetFormattedDate(todayTime) {
+    var month = todayTime.getMonth() + 1;
+    var day = todayTime.getDate();
+    var year = todayTime.getFullYear();
+    return year + "-" + month + "-" + day;
+  };
   componentWillMount() {
     this.GetInfoUser();
     var id = this._getId();
     var date = new Date();
+    var y = date.getFullYear();
     var m = date.getMonth() + 1;
-    this.setState({xeId:id, monthcurrent: m}, function () {
-        this._loadDataXeDetail(id, m);
+    var firstDay = this.GetFormattedDate(new Date(y, m - 1, 1, 0,0,0));
+    var lastDay = this.GetFormattedDate(new Date(y, m, 0));
+    //alert(firstDay);
+    this.setState({xeId:id, monthcurrent: m, firstDay: firstDay, lastDay: lastDay},
+    function () {
+        this._loadDataXeDetail(id, m, this.state.firstDay, this.state.lastDay);
     });
     // AsyncStorage.getItem("@UserName")
     // .then(userName_tmp => {
@@ -144,10 +157,10 @@ export default class App extends Component<Props> {
      }
     return mycontent;
   }
-  _loadDataXeDetail(id, month) {
+  _loadDataXeDetail(id, month, firstDay, lastDay) {
     //api
     this.setState({isLoading:true});
-    fetch(myApi.LichXe.DanhSach + "?xeid=" + id + "&thang="  + month, {
+    fetch(myApi.LichXe.DanhSach + "?xeid=" + id + "&TuNgay="  + firstDay + "&DenNgay=" + lastDay, {
       method: "GET"
     }).then(response => {
       if (response.status === 200) {
@@ -201,7 +214,8 @@ export default class App extends Component<Props> {
           this.setState({idCurrent: responseJson});
           Alert.alert("Thông báo", "Thành công");
           this.closeModal();
-          this._loadDataXeDetail(this.state.xeId, this.state.monthcurrent);
+          //reload lich xe
+          this._loadDataXeDetail(this.state.xeId, this.state.monthcurrent, this.state.firstDay, this.state.lastDay);
         } else {
           this.setState({isLoading: false});
           Alert.alert("Thông báo", "Không thành công");
@@ -265,7 +279,7 @@ export default class App extends Component<Props> {
                       });
           Alert.alert("Thông báo", "Thành công");
           this.closeModalMulti();
-          this._loadDataXeDetail(this.state.xeId, this.state.monthcurrent);
+          this._loadDataXeDetail(this.state.xeId, this.state.monthcurrent, this.state.firstDay, this.state.lastDay);
         } else {
           this.setState({isLoading: false});
           Alert.alert("Thông báo", "Không thành công");
@@ -457,13 +471,18 @@ picker
         onMonthChange={(month) => {
           //console.log('month changed', month)
           var date = new Date(), y = month.year,  m = month.month;
-          // var firstDay = new Date(y, m - 1, 1, 0,0,0);
-          // var lastDay = new Date(y, m, 0);
+          var firstDay = this.GetFormattedDate(new Date(y, m - 1, 1, 0,0,0));
+          var lastDay = this.GetFormattedDate(new Date(y, m, 0));
           // firstDay.setMinutes(firstDay.getMinutes() - firstDay.getTimezoneOffset())
-          // alert(firstDay);
+          //alert(lastDay);
           //alert('month changed:' m);
-          this.setState({monthcurrent:m});
-          this._loadDataXeDetail(this.state.xeId, m)
+
+          this.setState({monthcurrent:m, firstDay:firstDay, lastDay: lastDay},
+          function ()
+          {
+              this._loadDataXeDetail(this.state.xeId, m, firstDay, lastDay)
+          });
+
         }}
         // Hide month navigation arrows. Default = false
         hideArrows={false}

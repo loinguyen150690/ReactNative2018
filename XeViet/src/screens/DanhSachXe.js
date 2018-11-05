@@ -752,7 +752,7 @@ export default class DanhSachXe extends Component<Props> {
                   }}/>
               </TouchableOpacity>
               <Body>
-                <TouchableOpacity onPress={() => this.navToChiTiet(item.Id)}>
+                <TouchableOpacity onPress={() => this.navToChiTiet(item.ID)}>
                   {/* <Text>{item.Id}</Text> */}
                   <Text style={styles.news__title_3}>{item.TenXe}</Text>
                   <View style={{
