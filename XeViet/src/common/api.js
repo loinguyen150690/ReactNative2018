@@ -41,5 +41,8 @@ export default {
      DanhSach:URL + "/api/UserGetAll",
      DangNhap:URL + "/api/UserLogin",
      DangKy:URL + "/api/UserCreateUpdate"
+   },
+   Contact:{
+     PhoneCall: URL + "api/DanhMucHotLine"
    }
 }

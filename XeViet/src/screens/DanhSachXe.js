@@ -43,6 +43,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 import pick from "../common/picker.js";
 import InfoUser from "../common/InfoUser.js";
+import call from 'react-native-phone-call';
 export default class DanhSachXe extends Component<Props> {
 
   static navigationOptions = ({ navigation }) => {
@@ -50,7 +51,7 @@ export default class DanhSachXe extends Component<Props> {
     return {
      headerRight: (
        <TouchableOpacity onPress={params.handleSubmit}
-          style={{paddingRight: 20,paddingLeft: 20}}>
+          style={{paddingRight: 20,paddingLeft: 20, display: params.groupUser == "KHACH" ? "none" : "flex"}}>
           <FontAwesome name="search" size={25} color={"white"}/>
         </TouchableOpacity>
      ),
@@ -140,14 +141,17 @@ export default class DanhSachXe extends Component<Props> {
         }, function() {
           this.loadDanhSach(responseJson.Username);
           this._loadDataChuXe(responseJson.Username);
+          this.props.navigation.setParams({handleSubmit: this.submitStatus, groupUser: responseJson.GroupUser});
         });
       }
     });
   }
 
-
+  _call(phone){
+      call({number: phone, prompt: false}).catch(console.error)
+  }
   openModalTimKiemXe() {
-    this.setState({modalTimKiemXeVisible: true,  loaixeId:'All'})
+    this.setState({modalTimKiemXeVisible: true,  loaixeId:'All', statusId:'All'})
   }
 
   closeModalTimKiemXe(){
@@ -155,7 +159,7 @@ export default class DanhSachXe extends Component<Props> {
   }
   componentDidMount() {
      this.GetInfoUser();
-     this.props.navigation.setParams({handleSubmit: this.submitStatus});
+     //alert(this.state.groupUser);
   }
   submitStatus = () => {
       this.openModalTimKiemXe();
@@ -345,6 +349,10 @@ export default class DanhSachXe extends Component<Props> {
   }
   navToChiTiet(_xeId){
       //alert(_xeId);
+      if(this.state.groupUser == "KHACH"){
+        this._call('0812680680');
+        return;
+      }
       this.props.navigation.navigate("Calendar", {id:_xeId});
   }
   _clearDataInput() {
@@ -755,13 +763,13 @@ export default class DanhSachXe extends Component<Props> {
                         {item.BienSo}
                     </Text>
                     <Text style={styles.news__txt3}>
-                        Giá thuê: 200.000đ/ngày
+                        Giá thuê: {item.SoTienStr}đ/ngày
                     </Text>
                     <Text style={styles.news__txt3}>
-                        Màu sắc: Đen
+                        Màu sắc: {item.Mau}
                     </Text>
                     <Text style={styles.news__txt3}>
-                        Hộp số: Số sàn
+                        Hộp số: {item.HopSo}
                     </Text>
                   </View>
                 </TouchableOpacity>

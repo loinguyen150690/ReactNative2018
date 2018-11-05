@@ -53,7 +53,8 @@ export default class App extends Component<Props> {
       timkiem_tungay: null,
       timkiem_denngay: null,
       tungay_isDatePickerVisible: false,
-      denngay_isDatePickerVisible: false
+      denngay_isDatePickerVisible: false,
+      minimumDate:new Date()
     }
   }
 
@@ -285,11 +286,18 @@ export default class App extends Component<Props> {
 
   openModal(day, statusId){
     //alert(statusId);
+    var date = new Date();
+    var y = day.year,  m = day.month, d = day.day;
+    var datecurrent = new Date(y, m - 1, d, 0,0,0);
+    var dataNow = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0,0,0);
+    //alert(datecurrent);
+    //alert(dataNow);
+    //return;
     if(this.state.groupUser =="KHACH"){
       alert('liên hệ số điện thoại (0812) 680.680 để đặt xe');
       return;
     }
-    else if(this.state.groupUser =="CHUXE" && (statusId != "Free" && statusId)){
+    else if(this.state.groupUser =="CHUXE" && ((statusId != "Free" && statusId != "Off" && statusId) || datecurrent < dataNow)){
       return;
     }
     var status_tmp =this.state.statusId;
@@ -612,6 +620,7 @@ picker
                cancelTextIOS={"Hủy"}
                confirmTextIOS={"Chọn"}
                titleIOS={"Từ ngày"}
+               minimumDate={this.state.groupUser == 'CHUXE' ? this.state.minimumDate : undefined}
              />
             </Item>
           </View>
