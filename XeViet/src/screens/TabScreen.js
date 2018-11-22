@@ -39,10 +39,14 @@ export default class TabScreen extends Component<Props> {
     this.setState({TAB_ACTIVE: 4});
     this.props.navigation.navigate("DanhSachXe");
   }
+  navToQuanLy() {
+    this.setState({TAB_ACTIVE: 2});
+    this.props.navigation.navigate("DanhSachTaiKhoan");
+  }
   openMenuright() {
     this.props.navigation.navigate("DrawerOpen");
   }
-  navTest() {
+  navToTaiKhoan() {
     this.setState({TAB_ACTIVE: 1});
     this.props.navigation.navigate("TaiKhoan");
   }
@@ -72,7 +76,7 @@ export default class TabScreen extends Component<Props> {
                 ? tabActiveBgColor
                 : tabBgColor
             }
-          ]} vertical={true} onPress={() => this.navTest()}
+          ]} vertical={true} onPress={() => this.navToTaiKhoan()}
           active={this.state.TAB_ACTIVE === 1}>
           <Ionicons name='ios-person' size={30}
             color={this.state.TAB_ACTIVE === 1 ? tabBarActiveTextColor : tabBarTextColor }/>

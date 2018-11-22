@@ -20,6 +20,7 @@ import DanhSachXe   from "./src/screens/DanhSachXe.js";
 import UserOption   from "./src/screens/UserOption.js";
 import Login from "./src/screens/Login.js";
 import CreateAccount from "./src/screens/CreateAccount.js";
+import DanhSachTaiKhoan   from "./src/screens/DanhSachTaiKhoan.js";
 
 
 const MenuRightStack = StackNavigator(
@@ -59,6 +60,12 @@ export const RootTab = TabNavigator(
       screen: DanhSachXe,
       navigationOptions: {
         title: "Danh sách xe"
+      }
+    },
+    DanhSachTaiKhoan: {
+      screen: DanhSachTaiKhoan,
+      navigationOptions: {
+        title: "Danh sách tài khoản"
       }
     },
     TaiKhoan: {

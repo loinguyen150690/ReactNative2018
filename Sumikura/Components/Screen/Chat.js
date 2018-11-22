@@ -32,10 +32,7 @@ export default class Chat extends Component {
             userInfo:{},
             userId:"11"
         };
-
         //var test = this.state.userInfo;
-
-
     }
 
     generateChatId() {
@@ -52,7 +49,6 @@ export default class Chat extends Component {
     //     }
     // }
     getRef() {
-
         return firebase.database().ref();
     }
 
