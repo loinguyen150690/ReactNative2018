@@ -9,7 +9,8 @@ import {
     KeyboardAvoidingView,
     ScrollView,
     Dimensions,
-    TextInput
+    TextInput,
+    AsyncStorage
 } from "react-native";
 
 import {
@@ -38,7 +39,8 @@ export default class More extends Component<Props> {
             fullname: "",
             phone: "",
             address: "",
-            isLoading: false
+            isLoading: false,
+            userInfo:{}
         };
     }
     onSelect = data => {
@@ -46,6 +48,12 @@ export default class More extends Component<Props> {
       var serial_tmp = data;
       this.setState({serial:serial_tmp});
     };
+
+    componentDidMount() {
+      AsyncStorage.getItem("username").then((value) => {
+          this.setState({userInfo:JSON.parse(value)});
+      })
+    }
 
     onActive() {
       this.setState({isLoading: true});
@@ -59,7 +67,7 @@ export default class More extends Component<Props> {
           //'ProductModel': $scope.S_ProductModel,
           ProductSerial: this.state.serial,
           ProductModel: 'NoSearch',
-          PhoneNumber: '0979150724',
+          PhoneNumber: this.state.userInfo.CellPhone,
           CustomerPhone: this.state.phone,
           CustomerName: this.state.fullname,
           PurchaseArea: this.state.address

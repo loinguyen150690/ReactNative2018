@@ -298,25 +298,31 @@ export default class App extends Component<Props> {
     });
   }
 
+  checkChangeStatus(statusId){
+      var status =  this.state.arrStatus.filter(function(status) {
+            return status.Ma == statusId;
+      });
+      //alert(status.length > 0);
+      return status.length > 0
+  }
   openModal(day, statusId){
     //alert(statusId);
     var date = new Date();
     var y = day.year,  m = day.month, d = day.day;
     var datecurrent = new Date(y, m - 1, d, 0,0,0);
     var dataNow = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0,0,0);
-    //alert(datecurrent);
-    //alert(dataNow);
-    //return;
+
     if(this.state.groupUser =="KHACH"){
       alert('liên hệ số điện thoại (0812) 680.680 để đặt xe');
-      return;
+        return;
     }
-    else if(this.state.groupUser =="CHUXE" && ((statusId != "Free" && statusId != "Off" && statusId) || datecurrent < dataNow)){
-      return;
+    else if(this.state.groupUser =="CHUXE" && ((!this.checkChangeStatus(statusId) && statusId) || datecurrent < dataNow)){
+        return;
     }
+
     var status_tmp =this.state.statusId;
     if(statusId){
-      status_tmp = statusId;
+        status_tmp = statusId;
     }
 
     this.setState({
