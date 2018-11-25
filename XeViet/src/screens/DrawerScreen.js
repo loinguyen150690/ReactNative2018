@@ -25,7 +25,7 @@ import {
 import navstyle from "../styles/nav.js";
 import globals from "../styles/variables";
 
-import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
+
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
