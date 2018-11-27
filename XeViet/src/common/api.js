@@ -43,6 +43,6 @@ export default {
      DangKy:URL + "/api/UserCreateUpdate"
    },
    Contact:{
-     PhoneCall: URL + "api/DanhMucHotLine"
+     PhoneCall: URL + "/api/DanhMucHotLine"
    }
 }

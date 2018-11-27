@@ -43,8 +43,8 @@ export default class Login extends Component<Props> {
     this.state = {
       isLoading: false,
       groupUser:"QUANLY",
-      userName: null, //'admin',
-      password:  null //'123456',
+      userName: "", //'admin',
+      password:  "" //'123456',
     };
   }
 
@@ -85,14 +85,15 @@ export default class Login extends Component<Props> {
   }
 
   onLogin() {
-      //this.setTabBarActive();
-      //return;
+  //alert(myApi.NguoiDung.DangNhap);
+    //this.setTabBarActive();
+     //return;
 
-    if (this.state.userName == "") {
+    if (!this.state.userName) {
       Alert.alert(lang.alert.title, lang.alert.errlogin6);
       return;
     }
-    if (this.state.password == "") {
+    if (!this.state.password) {
       Alert.alert(lang.alert.title, lang.alert.errlogin7);
       return;
     }
@@ -129,14 +130,14 @@ export default class Login extends Component<Props> {
         });
       } else {
         this.setState({ isLoading: false });
-        Alert.alert(lang.alert.title, lang.alert.errlogin4);
+        Alert.alert(lang.alert.title, "Loi ket noi");
       }
     })
     .catch(error => {
       this.setState({ isLoading: false });
-      Alert.alert('Thông báo',error)
+      // Alert.alert('Thông báo',error)
+      Alert.alert('Thông báo',"Loi ket noi 2")
     });
-
     this.setState({ isLoading: false });
   }
 

@@ -292,43 +292,56 @@ frm__input: {
   fontSize: 14
 },
 picker__style: {
-  height: 35,
-  width: "100%",
-  paddingLeft: 0,
-  left: 0,
-  marginLeft: 0
-},
-picker__style_full: {
-  height: 35,
-  width: Platform.OS === "ios"
-    ? 'auto'
-    : win.width - 20,
-  paddingLeft: 0,
-  left: 0,
-  marginLeft: 0
-},
-picker__style_2: {
-  height: 35,
-  width: Platform.OS === "ios"
-    ? 'auto'
-    : '100%',
-  paddingLeft: 0,
-  left: 0,
-  marginLeft: 0,
-  alignSelf: 'stretch'
-},
-picker__itemStyle: {
-  paddingLeft: 0,
-  marginLeft: 0,
-  left: 0,
-  fontSize: 12
-},
-picker__itemSelected: {
-  paddingLeft: 0,
-  marginLeft: 0,
-  left: 0,
-  fontSize: 14
-},
+    height: 35,
+    width: "100%",
+    paddingLeft: 0,
+    left: 0,
+    marginLeft: 0
+  },
+  picker__style_full: {
+    margin: 0,
+    padding: 0,
+    height: 35,
+    width: Platform.OS == "ios"
+      ? '100%'
+      : win.width - 40,
+    paddingLeft: 0,
+    left: 0,
+    marginLeft: 0
+  },
+  picker__style_50:{
+    height: 35,
+    width: Platform.OS == "ios"
+      ? '100%'
+      : (win.width/2) - 20,
+    paddingLeft: 0,
+    left: 0,
+    marginLeft: 0
+  },
+  picker__style_2: {
+    height: 35,
+    width: Platform.OS === "ios"
+      ? 'auto'
+      : '100%',
+    paddingLeft: 0,
+    left: 0,
+    marginLeft: 0,
+    alignSelf: 'stretch'
+  },
+  picker__itemStyle: {
+    paddingLeft: Platform.OS === "ios"
+      ? 16
+      : 0,
+    marginLeft: 0,
+    left: 0,
+    fontSize: 12
+  },
+  picker__itemSelected: {
+    paddingLeft: 0,
+    marginLeft: 0,
+    left: 0,
+    fontSize: 14
+  },
 text_blue: {
     color: variables.color.darkblue,
     fontWeight: "bold",
