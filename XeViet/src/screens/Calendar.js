@@ -8,10 +8,9 @@ import {
   Alert,
   ScrollView,
   Modal,
-  Picker,
   AsyncStorage
 } from 'react-native';
-import {Icon, Button, Item, Footer, Spinner, Label, Input } from 'native-base';
+import {Icon, Button, Item, Footer, Spinner, Label, Input,Picker } from 'native-base';
 import DateTimePicker from "react-native-modal-datetime-picker";
 
 import {Calendar, CalendarList, Agenda, LocaleConfig} from 'react-native-calendars';
