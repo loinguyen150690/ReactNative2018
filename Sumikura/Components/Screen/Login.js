@@ -9,7 +9,8 @@ import {
   Alert,
   KeyboardAvoidingView,
   AsyncStorage,
-  Modal
+  Modal,
+  Linking
 } from 'react-native';
 
 import {
@@ -161,7 +162,8 @@ export default class Login extends Component<Props> {
     this.props.navigation.navigate('QuenMatKhau');
   }
   navToDangKy(){
-    this.props.navigation.navigate('DangKy');
+    Linking.openURL("http://baohanh.sumikura.com.vn/Agency/Register");
+    //this.props.navigation.navigate('DangKy');
   }
 
   render() {
@@ -215,16 +217,10 @@ export default class Login extends Component<Props> {
                 <Image source={require(touch_id)} style={styles.icon_touch_id}/><Text style={{color: '#fff', fontSize: 13, }}>{'  '}Mở khóa bằng vân tay</Text>
             </View>*/}
             <View style={[{flexDirection: 'row',marginTop: 36,}]}>
-              <TouchableOpacity style={{alignItems: 'flex-start', flex: 1}} onPress={()=> this.navToQuenMatKhau()}>
-                <Text style={{color: '#fff'}}>QUÊN MẬT KHẨU</Text>
+              <TouchableOpacity style={{alignItems: 'center', flex: 1}}  onPress={()=> this.navToDangKy()}>
+                <Text style={{color: '#033359'}}>ĐĂNG KÝ</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={{alignItems: 'flex-end', flex: 1}} >
-                <Text style={{color: '#fff'}}>ĐĂNG KÝ</Text>
-              </TouchableOpacity>
-
-
             </View>
-
             {/* <Button block={true} bordered={true} rounded={true} light={true}  style={styles.frmlogin__btn2} onPress={() => this.props.navigation.navigate("CreateAccount", {})}>
               <Text style={styles.frmlogin__btn__txt}>ĐĂNG KÝ</Text>
             </Button> */}

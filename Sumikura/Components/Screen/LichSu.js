@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, View, Image, FlatList, TouchableOpacity} from 'react-native';
+import {Platform, View, Image, FlatList, TouchableOpacity, AsyncStorage} from 'react-native';
 
 import {
   Button,
@@ -33,15 +33,22 @@ export default class More extends Component<Props> {
   this.state = {
     data: [],
      isLoading: false,
-     refreshing: false
+     refreshing: false,
+     userInfo:null,
+     userId:null
    };
  }
  componentWillMount() {
-    this.loadDanhSach();
+   AsyncStorage.getItem("username").then((value) => {
+       this.setState({userInfo:JSON.parse(value)});
+       this.setState({userId:String(this.state.userInfo.ID)});
+       this.loadDanhSach();
+   })
+
  }
  loadDanhSach() {
    this.setState({isLoading: true});
-   fetch('http://dev.baohanhdientu.net/api/ActiveHistory?UserName=""', {method: "GET"}).then(response => {
+   fetch('http://dev.baohanhdientu.net/api/ActiveHistory?UserName='+this.state.userInfo.LoginName, {method: "GET"}).then(response => {
      if (response.status === 200) {
        return response.json().then(responseJson => {
          this.setState({

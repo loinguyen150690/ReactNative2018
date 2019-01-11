@@ -53,7 +53,7 @@ export default class FriendsList extends Component {
         //new user from api bao hanh dien tu
         var items = [];
 
-        fetch('http://dev.baohanhdientu.net/api/Member_API/GetList?UserName=""', {method: "GET"}).then(response => {
+        fetch('http://dev.baohanhdientu.net/api/Member_API/GetList?UserName='+ this.state.userInfo.LoginName, {method: "GET"}).then(response => {
           if (response.status === 200) {
             return response.json().then(responseJson => {
               responseJson.forEach((child) => {
@@ -130,12 +130,6 @@ export default class FriendsList extends Component {
       }
       return (
           <View style={styles.container}>
-              <View style={styles.topGroup}>
-                  <Text style={styles.myFriends}>My Friends</Text>
-                  <TouchableOpacity>
-                      <Text style={styles.inviteFriends}>Invite More Freinds</Text>
-                  </TouchableOpacity>
-              </View>
               <ListView
                   dataSource={this.state.dataSource}
                   renderRow={this.renderRow} />

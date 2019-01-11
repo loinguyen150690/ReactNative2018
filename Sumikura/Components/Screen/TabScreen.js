@@ -176,24 +176,7 @@ export default class TabScreen extends Component<Props> {
         </Button>
 
 
-        <Button style={[
-            st.btnTabNav, {
-              backgroundColor: this.state.TAB_ACTIVE === 4
-                ? tabActiveBgColor
-                : tabBgColor
-            }
-          ]} vertical={true} onPress={() => this.navToThongBao()} active={this.state.TAB_ACTIVE === 4}>
-          <Image source={this.state.TAB_ACTIVE === 4
-              ? require(icon_tabbar_thong_bao_active)
-              : require(icon_tabbar_thong_bao)} style={styles.tabIcon}/>
-          <Text style={[
-              st.tabBarText, {
-                color: this.state.TAB_ACTIVE === 4
-                  ? tabBarActiveTextColor
-                  : tabBarTextColor
-              }
-            ]} uppercase={false}>Thông báo</Text>
-        </Button>
+    
       </FooterTab>
     </Footer>);
   }
