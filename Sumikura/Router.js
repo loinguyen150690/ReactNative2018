@@ -27,6 +27,7 @@ import TabScreen from "./Components/Screen/TabScreen.js";
 import ChiTietLichSu from "./Components/Screen/ChiTietLichSu.js";
 import DiemTichLuy from "./Components/Screen/DiemTichLuy.js";
 import DoanhThu from "./Components/Screen/DoanhThu.js";
+import TraCuu from "./Components/Screen/TraCuu.js";
 //Danh sach chuyen change
 
 import globals from "./Components/Styles/Globals.js";
@@ -200,6 +201,12 @@ export const RootStack = StackNavigator({
     screen: DoanhThu,
     navigationOptions: {
       title: "Doanh thu"
+    }
+  },
+   TraCuu: {
+    screen: TraCuu,
+    navigationOptions: {
+      title: "Tra cứu"
     }
   }
 }, {

@@ -133,7 +133,7 @@ export default class TrangChu extends Component<Props> {
     this.props.navigation.navigate("DoanhThu");
   }
   navToThongKe() {
-    // this.props.navigation.navigate("ThongKe");
+    this.props.navigation.navigate("TraCuu");
   }
   navToSuaChuaBaoHanh() {
     // this.props.navigation.navigate("SuaChuaBaoHanh");
@@ -209,11 +209,11 @@ export default class TrangChu extends Component<Props> {
             </Text>
             <Text style={styles.footer_home__item__text}>Điểm tích lũy</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.footer_home__item,styles.footer_home__item_mid ]} >
+          <TouchableOpacity style={[styles.footer_home__item,styles.footer_home__item_mid ]} onPress={()=> this.navToThongKe()} >
             <Text style={styles.footer_home__item__icon}>
               <MaterialIcons name='pie-chart-outlined' size={30}/>
             </Text>
-            <Text style={styles.footer_home__item__text}>Thống kê</Text>
+            <Text style={styles.footer_home__item__text}>Tra cứu</Text>
           </TouchableOpacity>
           <TouchableOpacity style={[styles.footer_home__item]} onPress={()=> this.navToDoanhThu()}>
             <Text style={styles.footer_home__item__icon}>

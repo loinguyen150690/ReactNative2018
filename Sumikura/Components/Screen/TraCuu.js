@@ -35,7 +35,7 @@ export default class More extends Component<Props> {
     constructor(props) {
         super(props);
         this.state = {
-            serial: "",
+            serial: "",//"ISC092T4180501141,ISC092T4180501433",
             fullname: "",
             phone: "",
             address: "",
@@ -64,13 +64,10 @@ export default class More extends Component<Props> {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          //'ProductModel': $scope.S_ProductModel,
+          PhoneNumber: this.state.userInfo.CellPhone,
           ProductSerial: this.state.serial,
           ProductModel: 'NoSearch',
-          PhoneNumber: this.state.userInfo.CellPhone,
-          CustomerPhone: this.state.phone,
-          CustomerName: this.state.fullname,
-          PurchaseArea: this.state.address
+          SMSType:"2"
         })
       })
 
@@ -153,55 +150,7 @@ export default class More extends Component<Props> {
                                 </View>
                             </View>
                         </View>
-                        <View style={styles.text_group}>
-                        <Item
-                            floatingLabel={true}
-                            style={styles.frmlogin__item}
-                        >
-                            <Label style={styles.frm__label}>
-                                Số điện thoại
-                            </Label>
-                            <Input
-                                keyboardType="phone-pad"
-                                value={this.state.phone}
-                                onChangeText={phone =>
-                                    this.setState({ phone })
-                                }
-                                style={styles.frm_input}
-                            />
-                        </Item>
 
-                            <Item
-                                floatingLabel={true}
-                                style={styles.frmlogin__item}
-                            >
-                                <Label style={styles.frm__label}>Họ tên</Label>
-                                <Input
-                                    value={this.state.fullname}
-                                    onChangeText={fullname =>
-                                        this.setState({ fullname })
-                                    }
-                                    style={styles.frm_input}
-                                />
-                            </Item>
-
-
-                            <Item
-                                floatingLabel={true}
-                                style={styles.frmlogin__item}
-                            >
-                                <Label style={styles.frm__label}>
-                                    Địa chỉ
-                                </Label>
-                                <Input
-                                    value={this.state.address}
-                                    onChangeText={address =>
-                                        this.setState({ address })
-                                    }
-                                    style={styles.frm_input}
-                                />
-                            </Item>
-                        </View>
                     </KeyboardAvoidingView>
                     <View
                         style={
@@ -217,7 +166,7 @@ export default class More extends Component<Props> {
                             onPress={this.onActive.bind(this)}
                         >
                             <Text style={styles.btn_blue__text}>
-                                KÍCH HOẠT
+                                TRA CỨU
                             </Text>
                         </Button>
                     </View>

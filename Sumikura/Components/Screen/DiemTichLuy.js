@@ -46,7 +46,7 @@ export default class ChiTietLichSu extends Component<Props> {
   // }
 
   componentWillMount = () => AsyncStorage.getItem('username').then((value) => this.setState(
-        { 'DiemTichLuy': JSON.parse(value).dynamicProperties.DiemTichLuy }
+      { 'DoanhThu': JSON.parse(value).dynamicProperties.DoanhThu, 'NgayTao': JSON.parse(value).dynamicProperties.NgayTao }
       )
     )
 
@@ -88,7 +88,7 @@ export default class ChiTietLichSu extends Component<Props> {
         <View style={{flexDirection:"column", flex:1, justifyContent:"center",alignItems:"center", paddingTop:40}}>
         <Text>SỐ ĐIỂM TÍCH LŨY</Text>
         <Text style={{fontSize:40, color:"orange"}}>{this.state.DiemTichLuy}</Text>
-        <Text>Tính đến ngày 20/09/2018</Text>
+        <Text>Tính đến ngày {this.state.NgayTao}</Text>
         </View>
 
         </Content>

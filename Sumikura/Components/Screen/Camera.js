@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, View, Image, Modal, TouchableHighlight, StyleSheet, Alert} from 'react-native';
+import {Platform, View, Image, Modal, TouchableHighlight, StyleSheet, Alert, AsyncStorage, PermissionsAndroid} from 'react-native';
 import Camera from 'react-native-camera';
 import {
   Button,
@@ -14,97 +14,88 @@ import {
   Footer,
   Content
 } from 'native-base';
+import { withNavigationFocus } from "react-navigation";
 
+  export default class ScanCamera  extends React.Component {
+    static navigationOptions = {
+      title: "Ariadne's Thread",
+    };
 
-export default class ScanCamera extends Component<Props> {
-  constructor(props) {
-        super(props);
-        this.state = {
-            qrcode: ''//,
-          //  modalVisible: false
+    state = {
+      focusedScreen: true,
+      hasCameraPermission: null,
+      qrcode: ''
+    };
+
+    onBarCodeRead = (e) => {
+      const { navigation } = this.props;
+      var serial_tmp = (navigation.state.params.serial ? (navigation.state.params.serial + ',' + e.data) :  e.data)
+      navigation.goBack();
+      navigation.state.params.onSelect(serial_tmp);
+    }
+
+    async componentWillMount() {
+      //const { status } = await Permissions.askAsync(Permissions.CAMERA);
+      const status = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.CAMERA,{
+          'title': 'AndoridPermissionExample App Camera Permission',
+          'message': 'AndoridPermissionExample App needs access to your camera '
         }
+      )
+      this.setState({ hasCameraPermission: status === PermissionsAndroid.RESULTS.GRANTED });
     }
 
-    // onBarCodeRead = (e) => {
-    // Alert.alert(
-    //   'Scan successful!',
-    //   JSON.stringify(e.data)
-    // ); //this.setState({qrcode: e.data});
-    // const { navigation } = this.props;
-    // navigation.goBack();
-    // navigation.state.params.onSelect({ resulttext: e.data });
-
-        onBarCodeRead = (e) => {
-          Alert.alert(
-            'Scan successful!',
-            JSON.stringify(e.data)
-          ); //this.setState({qrcode: e.data});
-          const { navigation } = this.props;
-          var serial_tmp = (navigation.state.params.serial ? (navigation.state.params.serial + ',' + e.data) :  e.data)
-          navigation.goBack();
-          navigation.state.params.onSelect(serial_tmp);
-          //navigation.setParams({ id: data });
+    componentDidMount() {
+      const { navigation } = this.props;
+      navigation.addListener('willFocus', () =>
+        this.setState({ focusedScreen: true })
+      );
+      navigation.addListener('willBlur', () =>
+        this.setState({ focusedScreen: false })
+      );
     }
-    // _goBack() {
-    //   Alert.alert(
-    //     'Scan successful!',
-    //     JSON.stringify('go back')
-    //   );
-    //   const { navigation } = this.props;
-    //   navigation.goBack();
-    //   navigation.state.params.onSelect({ selected: '0979150724' });
-    //   //this.props.navigation.state.params.onSelect({ resulttext: 'ok nha'  });
-    // }
-    //
-    //   navigation.state.params({ resulttext: 'ok nha'  });
-    //const { navigation } = this.props;
-    //navigation.goBack();
-    //navigation.state.params({ resulttext: 'ok nha'  });
-//  }
-//}
 
-  /*setModalVisible(visible) {
-    this.setState({modalVisible: visible});
-  }*/
+    render() {
+      const { hasCameraPermission, focusedScreen } = this.state;
+      if (hasCameraPermission === null) {
+        return <View />;
+      } else if (hasCameraPermission === false) {
+        return <Text>No access to camera</Text>;
+      } else if (focusedScreen){
+        return (this.cameraView());
+      } else {
+        return <View />;
+      }
+    }
 
-  render() {
-    //const { goBack } = this.props.navigation;
-    return (
-     //<View  style={styles.container}>
-      <Camera
-        style={styles.preview}
-        onBarCodeRead={this.onBarCodeRead}
-        ref={cam => this.camera = cam}
-        aspect={Camera.constants.Aspect.fill}
-        barCodeTypes={['org.iso.QRCode']}
-        >
-            <Text style={{
-                backgroundColor: 'white'
-            }}>{this.state.qrcode}</Text>
+    cameraView() {
+      return (
+        <View style={{ flex: 1, backgroundColor :"#0C0D0E" }}>
+          <Camera
+            style={styles.preview}
+            onBarCodeRead={this.onBarCodeRead}
+            ref={cam => this.camera = cam}
+            aspect={Camera.constants.Aspect.fill}
+            barCodeTypes={['org.iso.QRCode']}
+            >
+                <Text style={{
+                    backgroundColor: 'white'
+                }}>{this.state.qrcode}</Text>
 
-        </Camera>
-
-        // <Button block={true} rounded={true} bordered={true} style={{
-        //     backgroundColor: 'black'
-        // }} onPress={this._goBack.bind(this)}>
-        //   <Text style={{
-        //       backgroundColor: 'black'
-        //   }}>TẠO MỚI</Text>
-        // </Button>
-
-    //  </View>
-  );
-}
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-  },
-  preview: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center'
+            </Camera>
+        </View>
+      );
+    }
   }
-});
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      flexDirection: 'row',
+    },
+    preview: {
+      flex: 1,
+      justifyContent: 'flex-end',
+      alignItems: 'center'
+    }
+  });
