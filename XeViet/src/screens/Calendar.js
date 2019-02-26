@@ -212,7 +212,7 @@ export default class App extends Component<Props> {
           this.setState({isLoading: false});
           this.setState({idCurrent: responseJson});
           Alert.alert("Thông báo", "Thành công");
-          this.closeModal();
+          //this.closeMfcloaszzodal();
           //reload lich xe
           this._loadDataXeDetail(this.state.xeId, this.state.monthcurrent, this.state.firstDay, this.state.lastDay);
         } else {
@@ -277,7 +277,7 @@ export default class App extends Component<Props> {
                           idCurrent: responseJson
                       });
           Alert.alert("Thông báo", "Thành công");
-          this.closeModalMulti();
+          //this.closeModalMulti();
           this._loadDataXeDetail(this.state.xeId, this.state.monthcurrent, this.state.firstDay, this.state.lastDay);
         } else {
           this.setState({isLoading: false});
