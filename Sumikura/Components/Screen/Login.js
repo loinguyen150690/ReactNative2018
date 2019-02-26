@@ -200,7 +200,7 @@ export default class Login extends Component<Props> {
       <Content>
         <View style={styles.page_title}>
           <Text full={true} style={styles.welcome}>Chào mừng đến với</Text>
-          <Text style={styles.shipper_text}>Ewarranty</Text>
+          <Text style={styles.shipper_text}>Sumikura</Text>
         </View>
         <KeyboardAvoidingView behavior="padding" enabled={true}>
           <Form style={styles.frmlogin}>
