@@ -1,0 +1,132 @@
+// https://css-tricks.com/the-sass-ampersand/
+
+@mixin clearfix {
+  &::after {
+    content: "";
+    display: block;
+    clear: both;
+    height: 0;
+    overflow: hidden;
+  }
+}
+
+@mixin portrait {
+  @media only screen and (orientation: portrait) {
+    @content;
+  }
+}
+
+@mixin landscape {
+  @media only screen and (orientation: landscape) {
+    @content;
+  }
+}
+
+@mixin orientation($o) {
+  @if $o==1 {
+    @media only screen and (orientation: portrait) {
+      @content;
+    }
+  }
+  @else if $o==0 {
+    @media only screen and (orientation: landscape) {
+      @content;
+    }
+  }
+}
+@mixin mdevice($d) {
+  @if $d==desktop{
+    .isDesktop & {
+      @content;
+    }
+  }
+  @else if $d==mobile{
+    .isMobile & {
+      @content;
+    }
+  }
+  @else if $d==tablet{
+    .isTablet & {
+      @content;
+    }
+  }
+  @else if $d==phone{
+    .isPhone & {
+      @content;
+    }
+  }
+
+}
+
+@mixin mscreen($point) {
+  @if $point==xl {
+    @media (min-width: $xl) {
+      @content;
+    }
+  }
+  @else if $point==lg {
+    @media (min-width: $lg) {
+      @content;
+    }
+  }
+  @else if $point==md {
+    @media (max-width: $lg - 1px) {
+      @content;
+    }
+  }
+  @else if $point==sm {
+    @media (max-width: $md - 1px) {
+      @content;
+    }
+  }
+}
+
+@mixin shadow($s) {
+  @if $s==bsh1 {
+    box-shadow: 0 0 4px rgba(0, 0, 0, .14), 0 4px 8px rgba(0, 0, 0, .28);
+  }
+  @else if $s==bsh2 {
+    box-shadow: 0 -1px 0 #e0e0e0, 0 0 2px rgba(0, 0, 0, .12), 0 2px 4px rgba(0, 0, 0, .12);
+  }
+}
+
+@mixin scrollbar-xs {
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    display: block;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 0px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,.1);
+    border-radius: 2px;
+  }
+}
+
+@mixin scrollbar-md {
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    display: block;
+    transition: linear 1s;
+  }
+  &::-webkit-scrollbar-track {
+    background: $site-color-1;
+    border-radius: 0px;
+    transition:  linear 1s;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $site-color-1 - #111;
+    border-radius:5px;
+    transition:  linear 1s;
+  }
+}
+
+
+@mixin brs($px){
+  border-radius: $px;
+}
+  

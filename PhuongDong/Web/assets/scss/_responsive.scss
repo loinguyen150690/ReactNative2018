@@ -1,0 +1,18 @@
+// .container{
+//     @include mscreen(lg){
+//         padding: 0;
+//     }
+// }
+
+.hide-mobile{
+    @include mdevice(mobile){
+        display: none;
+    }
+}
+
+
+.container{
+  @include mdevice(mobile){
+      width: 100%;
+  }
+}

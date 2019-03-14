@@ -1,0 +1,210 @@
+body {
+    font-family: $font1;
+}
+.tac{
+  text-align: center;
+}
+.section {
+    --pdt: 5em;
+
+    @include mdevice(phone) {
+        --pdt: 2em;
+    }
+
+    padding-top: var(--pdt);
+    padding-bottom: var(--pdt);
+
+
+
+    &__tt {
+        font-weight: 500;
+        position: relative;
+        font-size: 2.3em;
+        margin: 0;
+        padding: 0;
+        // border-bottom: 1px solid $site-color-1;
+        margin-bottom: 2em;
+        padding-bottom: 0.5em;
+        text-align: center;
+        text-transform: uppercase;
+
+        @include mdevice(phone) {
+            font-size: 1.5em;
+        }
+
+        &:before {
+            transition: all 0.3s;
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            width: 100px;
+            margin-left: -50px;
+            height: 1px;
+            display: inline-block;
+            background-color: $site-color-1;
+        }
+
+        &:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 60px;
+            margin-left: -30px;
+            height: 1px;
+            display: inline-block;
+            background-color: $site-color-1;
+            transition: all 0.3s;
+        }
+
+        &_2 {
+            text-align: left;
+            margin-bottom: 1em;
+            padding-bottom: 0.2em;
+
+            &:after,
+            &:before {
+                left: 0;
+                margin-left: 0;
+            }
+        }
+    }
+
+    &_0 {
+        img {
+            max-width: 100%;
+        }
+
+        .mybtn {
+            border-radius: 5px;
+            font-size: 1.3em;
+
+            &:hover {
+                color: #fff;
+            }
+        }
+
+        table {
+            margin-bottom: 1em;
+
+            td {
+                padding-top: 12px;
+                padding-bottom: 12px;
+                text-transform: uppercase;
+                font-weight: 500;
+
+                .icon {
+                    margin-right: 12px;
+
+                    img {
+                        height: 30px;
+                    }
+                }
+
+                &:last-child {
+                    padding-left: 24px;
+                }
+
+                @include mdevice(phone) {
+                    display: block;
+                    padding-left: 0 !important;
+                }
+            }
+        }
+
+        .txtsm {
+            font-size: 1.2em;
+            text-align: justify;
+
+            @include mdevice(mobile) {
+                margin-bottom: 2em;
+            }
+        }
+    }
+
+    &_1 {
+        background-color: #f4f4f4;
+    }
+
+    &_2 {
+        img {
+            max-width: 100%;
+        }
+
+        .txtsm {
+            font-size: 1em;
+
+            .icon_dv {
+                img {
+                    height: 40px;
+                }
+            }
+
+            .rows {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                grid-gap: 32px;
+            }
+
+            .txtsm_1 {
+                font-size: 1.3em;
+
+                @include mdevice(phone) {
+                    font-size: 1em;
+                }
+
+                a {
+                    text-decoration: none;
+                    text-transform: uppercase;
+                    color: #000;
+                }
+            }
+
+            .txtsm_2 {
+                text-align: justify;
+            }
+        }
+    }
+
+    &_3 {
+        background-color: #f2f2f2;
+    }
+}
+
+.p-footer {
+    padding-top: 2em;
+    padding-bottom: 2em;
+    background-image: url(../images/bgft.jpg);
+    background-size: cover;
+    color: #fff;
+
+    .ft_tt {
+        text-transform: uppercase;
+        font-size: 1.2em;
+        font-weight: 500;
+        margin-bottom: 1em;
+    }
+
+    a {
+        text-decoration: none;
+        color: #fff;
+    }
+
+    .inner_col {
+        ul {
+            padding-left: 0;
+        }
+
+        li {
+            list-style: none;
+            line-height: 1.8;
+        }
+    }
+
+    .mybtn {
+        padding: 0.5em 1em;
+        text-align: center;
+        border-radius: 5px;
+    }
+}

@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,500i,700,900&subset=vietnamese');
+// media screen
+$xl: 1200px;
+$lg: 1024px;
+$md: 768px;
+// padding depen on screen
+$pxl: 32px;
+$plg: 24px;
+$pmd: 16px;
+$psm: 8px;
+// container max width
+$maxWidthContent:1200px;
+// content page
+$widthMenu: 300px;
+$widthBtnAdd:56px + 24px;
+$heightHeader: 64px;
+// color
+$site-color-1: #B42821;
+$site-color-2: #3095CC;
+$site-color-3: #eceff1;
+$site-color-4: #3F51B5;
+$site-color-5: #E1F5FD;
+$site-color-6: #4152B4;
+$site-border-color: #e0e0e0;
+
+$colorValues: ( yellow : #FFC108, green: #28A745, blue: #18A2B9, pink: #DC3545);
+$font1:  'Roboto', sans-serif;

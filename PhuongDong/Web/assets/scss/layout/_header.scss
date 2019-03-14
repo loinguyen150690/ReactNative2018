@@ -1,0 +1,299 @@
+.p-header {
+  #navbar {
+    padding: 0;
+    position: relative;
+    @include mdevice(mobile){
+      position: fixed;
+     left: -130vw;
+     transition: all .1s;
+     display: block;
+     //height: calc(100vh - 165px ) !important;
+     height: 100vh !important;
+    //  top: 165px;
+    top: 0;
+      bottom: 0;
+      overflow: auto;
+      width: calc(100% + 30px - 90px);
+      background-color: #fff;
+      z-index: 9;
+      .navbar-nav{
+        margin: 1em
+      }
+      &.in{
+        left: 0;
+      }
+    }
+  }
+  .navbar-header{
+    @include mdevice(mobile){
+      float: none;
+    }
+  }
+  .navbar-toggle{
+    @include mdevice(mobile){
+      display: block;
+      margin-right: 0;
+    }
+    &.collapsed{
+      position: relative
+    }
+    z-index: 10;
+    .icon-bar{
+     background-color: #000;
+   }
+  }
+
+  nav.navbar {
+    border-radius: 0;
+    min-height: inherit;
+    margin: 0;
+    background-color: #fff;
+    .dropdown-menu{
+      @include mdevice(mobile){
+        float: none;
+        position: relative;
+        border: none;
+        box-shadow: none;
+        
+      }
+    }
+    li{
+      @include mdevice(mobile){
+        float: none;
+      }
+    }
+    h2,h3,h4,h5{
+      font-size: 1em;
+      padding: 0;
+      margin: 0;
+      font-weight: 300;
+      a{
+        padding: 1em 1.2em;
+        display: block;
+        text-decoration: none;
+      }
+    }
+    h2{
+      a{
+        color: #000;
+        font-weight: 500;
+        text-transform: uppercase;
+        @include mdevice(mobile) {
+            padding-left: 2em;
+            padding-right: 2em;
+        }
+        &:hover{
+          color: $site-color-1;
+        }
+      }
+    }
+    h3{
+      a{
+        font-weight: 400;
+        color: #000;
+        text-transform: uppercase;
+        white-space: nowrap;
+        font-size: 0.9em;
+        padding: 1em;
+        @include mdevice(mobile) {
+            padding-left:3em;
+            padding-right: 2em;
+        }
+        &:hover{
+          color: $site-color-1;
+        }
+      }
+    }
+  }
+
+  .navbar-brand {
+    height: auto;
+    padding: 0;
+    margin: 0;
+    //display: none;
+    position: relative;
+    z-index: 2;
+    margin-top: 6px;
+    margin-bottom: 6px;
+    @include mdevice(mobile){
+      display: inherit;
+      margin-left: 0;
+    }
+
+    img {
+      height: 40px;
+    }
+    @include mdevice(mobile) {
+      img {
+        height:40px;
+      }
+    }
+  }
+
+  .nav.navbar-nav {
+    float: right;
+    margin-top: 8px;
+    @include mdevice(mobile) {
+      float: none;
+      margin-top: 0;
+    }
+
+
+  }
+
+  .li1{
+    @include mdevice(desktop) {
+      .dropdown-menu{
+        visibility: hidden;
+        display: block;
+        padding-top: 3px;
+        background-color: transparent;
+        border: none;
+        box-shadow: none;
+        margin-top: 3px;
+        transition: all 0.2s;
+        li{
+          background-color: #fff;
+          border-bottom: 1px solid #eee;
+        }
+      }
+      &:hover{
+        .dropdown-menu{
+          visibility: visible;
+          margin-top: 0;
+        }
+      }
+    }
+  }
+
+  &__top {
+    background-color: $site-color-1;
+    color: #fff;
+    // border-bottom: 1px solid #555;
+    &__inner{
+      padding-top: 0.8em;
+      padding-bottom: 0.8em;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      justify-content: flex-end;
+      align-items: center;
+
+      @include mdevice(mobile) {
+          grid-template-columns: repeat(1, 1fr);
+      }
+      .phone_contact{
+        text-align: right;
+        font-size: 1em;
+        font-weight: 400;
+        @include mdevice(mobile) {
+            text-align: left;
+        }
+        a{
+          text-decoration: none;
+          color: #fff;
+          font-weight: 700;
+          font-size: 1.1em;
+        }
+
+        .icon{
+          font-size: 1.2em;
+        }
+         &__inner{
+           text-align: left;
+           display: inline-block;
+         }
+         .number{
+           margin-bottom: 0.3em;
+         }
+      }
+    }
+    .link_social{
+      margin-left: 24px;
+      @include mdevice(mobile) {
+          display: block;
+          margin-left: 0;
+      }
+      &__item{
+        cursor: pointer;
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        &:hover{
+          color: $site-color-1;
+        }
+      }
+    }
+
+  }
+  .dropdown_sp{
+    position: static;
+    &:hover{
+        #dropdown_menu_sanpham{
+          visibility: visible;
+          margin-top: 0;
+        }
+    }
+  }
+  #dropdown_menu_sanpham{
+    visibility: hidden;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 8;
+    transition: all 0.3s;
+    background: none;
+    width: 100%;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    margin: 0;
+    padding-top: 1px;
+    margin-top: 5px;
+
+    .dropdown_sp__inner{
+      background: #fff;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 16px;
+      padding: 16px;
+    }
+
+    .item{
+      border: 1px dashed #ccc;
+
+      h3{
+        font-weight: 500;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        font-size: 0.9em;
+        a{
+          color: $site-color-1;
+          text-decoration: none;
+          padding: 0.5em 0 ;
+
+        }
+      }
+      &__img{
+        text-align: center;
+        img{
+          display: inline-block;
+          max-width: 100%;
+          &:nth-child(2){
+            display: none;
+          }
+        }
+      }
+
+      &:hover{
+        background-color: $site-color-1;
+        h3 a{
+          color: $site-color-2;
+          color: #fff;
+        }
+      }
+
+    }
+  }
+}
