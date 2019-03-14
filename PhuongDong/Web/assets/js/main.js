@@ -32,6 +32,23 @@ $('.slide_sp_home').owlCarousel({
         }
     }
 })
+$('.slide_sp_khac').owlCarousel({
+    loop:false,
+    margin:0,
+    nav:true,
+    navText: '',
+    responsive:{
+        0:{
+            items:1
+        },
+        600:{
+            items:2
+        },
+        1000:{
+            items:4
+        }
+    }
+})
 
 $(".chk_color_box .list-color li span").on('click', function () {
   var inner = $(this).closest('.chk_color_box');
@@ -55,3 +72,5 @@ $(".section__tt, .icon_dv img, .txtsm td , .list_news .item").addClass('wow fade
 
 
 $(".section_0 .col-md-5 img, .section_2 .cols2 img").addClass('wow fadeInRight');
+
+$(".list_sp .item, .img_box img").addClass('wow zoomIn');

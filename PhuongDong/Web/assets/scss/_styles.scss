@@ -208,4 +208,54 @@ body {
         text-align: center;
         border-radius: 5px;
     }
+
+    .links {
+    display: grid;
+    grid-template-columns: auto auto;
+    padding-left: 2em;
+    @include mdevice(mobile) {
+      padding-top: 24px;
+      padding-bottom: 24px;
+      padding-left: 0;
+      display: none !important;
+    }
+    @include mdevice(phone) {
+      grid-template-columns: 1fr;
+      grid-gap: 12px;
+    }
+
+    a {
+      &:before {
+        content: "• ";
+      }
+      &:hover{
+        color: $site-color-1;
+      }
+
+    }
+  }
+
+  .link_social {
+    margin-top: 12px;
+    @include mdevice(mobile) {
+      margin-top: 16px;
+    }
+
+    &__item {
+      width: 30px;
+      height: 30px;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+      font-size: 23px;
+
+      &:hover {
+        color: $site-color-1;
+      }
+
+      i {
+        line-height: 18px;
+      }
+    }
+  }
 }
