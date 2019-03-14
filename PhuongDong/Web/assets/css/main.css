@@ -5360,6 +5360,16 @@ a {
         color: #555; }
         .isPhone .list_news .item__txt_2 {
           display: none; }
+      .list_news .item__txt_3 {
+        margin-bottom: 12px;
+        color: #666;
+        margin-top: 12px; }
+        .isPhone .list_news .item__txt_3 {
+          font-size: 12px; }
+        .list_news .item__txt_3 .icon {
+          margin-right: 6px; }
+        .list_news .item__txt_3 .icon_clock {
+          margin-left: 20px; }
       .list_news .item__txt .link {
         padding: 1em 0;
         color: #000;
@@ -5672,7 +5682,7 @@ a {
       height: 20px;
       display: inline-block; }
       .p-header__top .link_social__item:hover {
-        color: #B42821; }
+        color: yellow; }
 
 .p-header .dropdown_sp {
   position: static; }
@@ -6011,7 +6021,7 @@ body {
   .section_2 .txtsm {
     font-size: 1em; }
     .section_2 .txtsm .icon_dv img {
-      height: 40px; }
+      max-height: 100px; }
     .section_2 .txtsm .rows {
       display: -ms-grid;
       display: grid;
@@ -6036,7 +6046,8 @@ body {
   padding-bottom: 2em;
   background-image: url(../images/bgft.jpg);
   background-size: cover;
-  color: #fff; }
+  color: #fff;
+  background-color: #B42821; }
   .p-footer .ft_tt {
     text-transform: uppercase;
     font-size: 1.2em;

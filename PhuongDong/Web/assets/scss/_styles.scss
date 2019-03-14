@@ -137,7 +137,7 @@ body {
 
             .icon_dv {
                 img {
-                    height: 40px;
+                    max-height: 100px;
                 }
             }
 
@@ -178,6 +178,7 @@ body {
     background-image: url(../images/bgft.jpg);
     background-size: cover;
     color: #fff;
+    background-color: $site-color-1;
 
     .ft_tt {
         text-transform: uppercase;

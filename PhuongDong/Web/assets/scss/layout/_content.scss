@@ -250,6 +250,21 @@ a {
         }
       }
 
+      &_3{
+        margin-bottom: 12px;
+        color: #666;
+        margin-top: 12px;
+        @include mdevice(phone){
+          font-size: 12px;
+        }
+        .icon{
+          margin-right: 6px;
+        }
+        .icon_clock{
+          margin-left: 20px;
+        }
+      }
+
       .link {
         padding: 1em 0;
         color: #000;

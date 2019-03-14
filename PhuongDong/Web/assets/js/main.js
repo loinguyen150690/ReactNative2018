@@ -47,3 +47,11 @@ $(".p-header .phone_contact .icon i ").addClass("tada animated infinite");
 $(document).ready(function() {
 
 });
+
+
+new WOW().init();
+$(".section__tt, .icon_dv img, .txtsm td , .list_news .item").addClass('wow fadeInUp');
+
+
+
+$(".section_0 .col-md-5 img, .section_2 .cols2 img").addClass('wow fadeInRight');
