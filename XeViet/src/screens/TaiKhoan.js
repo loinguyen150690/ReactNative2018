@@ -77,7 +77,7 @@ export default class App extends Component<Props> {
       return;
     }
 
-    this.setState({isLoading:true});
+    //this.setState({isLoading:true});
     fetch(myApi.NguoiDung.DangKy, {
       method: "POST",
       headers: {
@@ -94,7 +94,7 @@ export default class App extends Component<Props> {
       })
     })
     .then(response => {
-        this.setState({ isLoading: false });
+        //this.setState({ isLoading: false });
         if (response.status === 200) {
           return response.json().then(responseJson => {
             if (responseJson.Result == true) {
@@ -118,12 +118,12 @@ export default class App extends Component<Props> {
       })
     .then(response => {
         console.debug(response);
-        this.setState({ isLoading: false });
+        //this.setState({ isLoading: false });
       })
 
     .catch(error => {
         console.error(error);
-        this.setState({ isLoading: false });
+        //this.setState({ isLoading: false });
         Alert.alert("Thông báo", "Lỗi kết nối, vui lòng thử lại sau!");
       });
   }
@@ -272,7 +272,7 @@ export default class App extends Component<Props> {
              </Button>
            </View>
 
-           <View style={styles.mgt10}>
+           <View style={styles.mgt30}>
              <Button
                block={true}
                bordered={true}

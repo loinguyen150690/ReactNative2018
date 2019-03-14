@@ -650,5 +650,8 @@ frmlogin__label: {
   },
   color_red:{
     color: variables.color.darkblue,
+  },
+  mgt30:{
+    marginTop: 30
   }
 });

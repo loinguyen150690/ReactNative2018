@@ -49,6 +49,7 @@
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		84B5C39AF69C4C509B0AC162 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 117C8AFB844145E99C560303 /* MaterialIcons.ttf */; };
 		9495BD4D24574BF9A35CA0D2 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B9368177B46B4F0EB4A2A34E /* EvilIcons.ttf */; };
+		A10F51DD21C398550014DA09 /* iTunesArtwork.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A10F51DC21C398550014DA09 /* iTunesArtwork.jpg */; };
 		A1C3679421AA55860083FB03 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A144F18421A9B292005B2773 /* libRNVectorIcons.a */; };
 		A1DD08E321AA4F30008C5ECE /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = A1DD08BA21AA4F30008C5ECE /* Fonts */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
@@ -401,6 +402,7 @@
 		8E345FF691D149CC8F629983 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
 		9505CE03E992D3CB6C772476 /* libPods-XeViet.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XeViet.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B1BA9EDE673447CAC136BE1 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
+		A10F51DC21C398550014DA09 /* iTunesArtwork.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = iTunesArtwork.jpg; sourceTree = "<group>"; };
 		A144F17E21A9B292005B2773 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../../../../../../../usr/local/lib/node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		A16AE5AE218AEC820003DAEB /* libFBSDKCoreKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libFBSDKCoreKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A16AE5D7218AEC860003DAEB /* libFBSDKShareKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libFBSDKShareKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -566,6 +568,7 @@
 		13B07FAE1A68108700A75B9A /* XeViet */ = {
 			isa = PBXGroup;
 			children = (
+				A10F51DC21C398550014DA09 /* iTunesArtwork.jpg */,
 				A1DD08BA21AA4F30008C5ECE /* Fonts */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -858,6 +861,7 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = YH2WYBMDVZ;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
@@ -1273,6 +1277,7 @@
 				394AEBAB70B14B5CAFDA6691 /* FontAwesome5_Solid.ttf in Resources */,
 				E94D65C39A7540168A0F1372 /* Foundation.ttf in Resources */,
 				7B8AAD75301E4445AA47AE06 /* Ionicons.ttf in Resources */,
+				A10F51DD21C398550014DA09 /* iTunesArtwork.jpg in Resources */,
 				F6C040E32381478E90CCCE65 /* MaterialCommunityIcons.ttf in Resources */,
 				84B5C39AF69C4C509B0AC162 /* MaterialIcons.ttf in Resources */,
 				F190D4CC64534CDB8A7EA714 /* Octicons.ttf in Resources */,
@@ -1414,6 +1419,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = YH2WYBMDVZ;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1445,6 +1451,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = YH2WYBMDVZ;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)..\node_modules\neact-native-fbsdkiosRCTFBSDK/**",
@@ -1492,6 +1499,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.XeViet-TBD";
 				PRODUCT_NAME = XeViet;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1520,6 +1528,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.XeViet-TBD";
 				PRODUCT_NAME = XeViet;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

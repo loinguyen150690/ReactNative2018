@@ -106,7 +106,7 @@ export default class FogotPass extends Component<Props> {
       return;
     }
 
-    this.setState({ isLoading: true });
+    //this.setState({ isLoading: true });
 
     //Them moi chu hang
     if(this.state.TYPE_USER == 1){
