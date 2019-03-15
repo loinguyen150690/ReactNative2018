@@ -75,7 +75,7 @@ a {
   .chk_color_box {
     text-align: center;
 
- 
+
 
     .img_box {
       text-align: center;
@@ -538,11 +538,12 @@ a {
     }
   }
 
-  .orther_news {
+  .other_news {
     &__tt {
       padding: 0;
       font-size: 24px;
-      text-transform: uppercase;
+      // text-transform: uppercase;
+      text-transform: none;
       margin: 0;
       padding-top: 16px;
       padding-bottom: 36px;
@@ -566,13 +567,14 @@ a {
           &__txt {
             margin-top: 0;
             padding-top: 0;
+            padding: 0;
           }
 
           &__txt_1 {
             margin-top: 0;
             font-size: 13px;
             line-height: 1.4;
-            text-transform: uppercase;
+            text-transform: none;
           }
 
           &__txt_4 {

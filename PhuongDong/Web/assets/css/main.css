@@ -4,6 +4,7 @@
  *  License - http://zavoloklom.github.io/material-design-iconic-font/license (Font: SIL OFL 1.1, CSS: MIT License)
  */
 @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,500i,700,900&subset=vietnamese");
+@import url("https://fonts.googleapis.com/css?family=Dancing+Script:400,700&subset=latin-ext,vietnamese");
 @font-face {
   font-family: 'Material-Design-Iconic-Font';
   src: url("../fonts/Material-Design-Iconic-Font.woff2?v=2.2.0") format("woff2"), url("../fonts/Material-Design-Iconic-Font.woff?v=2.2.0") format("woff"), url("../fonts/Material-Design-Iconic-Font.ttf?v=2.2.0") format("truetype");
@@ -5555,45 +5556,46 @@ a {
 .page_chitiettintuc .cols002 {
   width: 100%; }
 
-.page_chitiettintuc .orther_news__tt {
+.page_chitiettintuc .other_news__tt {
   padding: 0;
   font-size: 24px;
-  text-transform: uppercase;
+  text-transform: none;
   margin: 0;
   padding-top: 16px;
   padding-bottom: 36px; }
-  .isMobile .page_chitiettintuc .orther_news__tt {
+  .isMobile .page_chitiettintuc .other_news__tt {
     font-size: 16px; }
 
-.page_chitiettintuc .orther_news__body .list_news {
+.page_chitiettintuc .other_news__body .list_news {
   display: block; }
-  .page_chitiettintuc .orther_news__body .list_news a {
+  .page_chitiettintuc .other_news__body .list_news a {
     display: block; }
-  .isTablet .page_chitiettintuc .orther_news__body .list_news {
+  .isTablet .page_chitiettintuc .other_news__body .list_news {
     display: -ms-grid;
     display: grid;
     -ms-grid-columns: (1fr)[1];
     grid-template-columns: repeat(1, 1fr); }
-  .page_chitiettintuc .orther_news__body .list_news .item__txt {
+  .page_chitiettintuc .other_news__body .list_news .item__txt {
     margin-top: 0;
-    padding-top: 0; }
-  .page_chitiettintuc .orther_news__body .list_news .item__txt_1 {
+    padding-top: 0;
+    padding: 0; }
+  .page_chitiettintuc .other_news__body .list_news .item__txt_1 {
     margin-top: 0;
     font-size: 13px;
     line-height: 1.4;
-    text-transform: uppercase; }
-  .page_chitiettintuc .orther_news__body .list_news .item__txt_4 {
+    text-transform: none; }
+  .page_chitiettintuc .other_news__body .list_news .item__txt_4 {
     margin-top: 8px;
     font-size: 13px; }
-    .page_chitiettintuc .orther_news__body .list_news .item__txt_4 .icon_calendar_2 {
+    .page_chitiettintuc .other_news__body .list_news .item__txt_4 .icon_calendar_2 {
       top: 1px;
       position: relative;
       margin-right: 4px;
       font-size: 16px; }
-  .page_chitiettintuc .orther_news__body .list_news .item a {
+  .page_chitiettintuc .other_news__body .list_news .item a {
     color: #555;
     text-decoration: none; }
-  .page_chitiettintuc .orther_news__body .list_news .item .item__inner {
+  .page_chitiettintuc .other_news__body .list_news .item .item__inner {
     display: -ms-grid;
     display: grid;
     -ms-grid-columns: 2fr 3fr;
@@ -5602,7 +5604,7 @@ a {
     padding-bottom: 24px;
     margin-bottom: 24px;
     border-bottom: 1px solid #ddd; }
-  .page_chitiettintuc .orther_news__body .list_news .item:last-child .item__inner {
+  .page_chitiettintuc .other_news__body .list_news .item:last-child .item__inner {
     border-bottom: none; }
 
 .p-header #navbar {
@@ -5611,9 +5613,9 @@ a {
   .isMobile .p-header #navbar {
     position: fixed;
     left: -130vw;
-    -webkit-transition: all .1s;
-    -o-transition: all .1s;
-    transition: all .1s;
+    -webkit-transition: all 0.1s;
+    -o-transition: all 0.1s;
+    transition: all 0.1s;
     display: block;
     height: 100vh !important;
     top: 0;
@@ -5653,24 +5655,38 @@ a {
     box-shadow: none; }
   .isMobile .p-header nav.navbar li {
     float: none; }
-  .p-header nav.navbar h2, .p-header nav.navbar h3, .p-header nav.navbar h4, .p-header nav.navbar h5 {
+  .p-header nav.navbar h2,
+  .p-header nav.navbar h3,
+  .p-header nav.navbar h4,
+  .p-header nav.navbar h5 {
     font-size: 1em;
     padding: 0;
     margin: 0;
     font-weight: 300; }
-    .p-header nav.navbar h2 a, .p-header nav.navbar h3 a, .p-header nav.navbar h4 a, .p-header nav.navbar h5 a {
+    .p-header nav.navbar h2 a,
+    .p-header nav.navbar h3 a,
+    .p-header nav.navbar h4 a,
+    .p-header nav.navbar h5 a {
       padding: 1em 1.2em;
       display: block;
       text-decoration: none; }
-  .p-header nav.navbar h2 a {
-    color: #000;
-    font-weight: 500;
-    text-transform: uppercase; }
-    .isMobile .p-header nav.navbar h2 a {
+  .p-header nav.navbar h2 {
+    font-size: 15px;
+    letter-spacing: 1px; }
+    .p-header nav.navbar h2 a {
+      color: #000;
+      font-weight: 500;
+      text-transform: uppercase;
       padding-left: 2em;
       padding-right: 2em; }
-    .p-header nav.navbar h2 a:hover {
-      color: #B42821; }
+      .p-header nav.navbar h2 a .caret {
+        position: relative;
+        top: -2px; }
+      .isMobile .p-header nav.navbar h2 a {
+        padding-left: 2em;
+        padding-right: 2em; }
+      .p-header nav.navbar h2 a:hover {
+        color: #B42821; }
   .p-header nav.navbar h3 a {
     font-weight: 400;
     color: #000;
@@ -5702,7 +5718,7 @@ a {
 
 .p-header .nav.navbar-nav {
   float: right;
-  margin-top: 8px; }
+  margin-top: 5px; }
   .isMobile .p-header .nav.navbar-nav {
     float: none;
     margin-top: 0; }
@@ -5746,36 +5762,82 @@ a {
     .isMobile .p-header__top__inner {
       -ms-grid-columns: (1fr)[1];
       grid-template-columns: repeat(1, 1fr); }
+    .p-header__top__inner .txt_top_hd {
+      font-family: 'Dancing Script', cursive;
+      text-transform: capitalize;
+      font-size: 25px;
+      line-height: 0; }
+      .isMobile .p-header__top__inner .txt_top_hd {
+        line-height: 1.5; }
+      .isPhone .p-header__top__inner .txt_top_hd {
+        font-size: 16px; }
     .p-header__top__inner .phone_contact {
       text-align: right;
-      font-size: 1em;
+      font-size: 1.1em;
       font-weight: 400; }
       .isMobile .p-header__top__inner .phone_contact {
         text-align: left; }
-      .p-header__top__inner .phone_contact a {
+      .p-header__top__inner .phone_contact .phone {
         text-decoration: none;
         color: #fff;
-        font-weight: 700;
-        font-size: 1.1em; }
+        font-weight: 700; }
+        .p-header__top__inner .phone_contact .phone .number {
+          font-size: 1.2em;
+          color: yellow; }
       .p-header__top__inner .phone_contact .icon {
-        font-size: 1.2em; }
+        font-size: 1.3em;
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        margin-right: 4px;
+        border: 1px solid yellow;
+        border-radius: 50%;
+        text-align: center;
+        color: yellow;
+        line-height: 0; }
+        .p-header__top__inner .phone_contact .icon i {
+          line-height: 29px; }
       .p-header__top__inner .phone_contact__inner {
         text-align: left;
         display: inline-block; }
-      .p-header__top__inner .phone_contact .number {
-        margin-bottom: 0.3em; }
   .p-header__top .link_social {
-    margin-left: 24px; }
+    margin-left: 32px; }
     .isMobile .p-header__top .link_social {
       display: block;
-      margin-left: 0; }
+      margin-left: 0;
+      display: none; }
     .p-header__top .link_social__item {
       cursor: pointer;
-      width: 20px;
-      height: 20px;
-      display: inline-block; }
+      width: 26px;
+      height: 24px;
+      display: inline-block;
+      font-size: 16px;
+      color: #fff;
+      border: 1px solid #eee;
+      text-align: center;
+      margin-left: 8px; }
       .p-header__top .link_social__item:hover {
         color: yellow; }
+      .p-header__top .link_social__item i {
+        font-size: 1em;
+        line-height: 22px;
+        display: inline-block;
+        width: 100%; }
+        .p-header__top .link_social__item i.zmdi-facebook:hover {
+          background-color: #3D5A96;
+          color: #fff; }
+        .p-header__top .link_social__item i.zmdi-youtube:hover {
+          background-color: #F52929;
+          color: #fff; }
+        .p-header__top .link_social__item i.zmdi-google-plus:hover {
+          background-color: #DA483F;
+          color: #fff; }
+        .p-header__top .link_social__item i.zmdi-zalo {
+          font-size: 0.95em;
+          font-weight: bold; }
+          .p-header__top .link_social__item i.zmdi-zalo:hover {
+            background-color: #2AA3EF;
+            color: #fff; }
 
 .p-header .dropdown_sp {
   position: static; }
@@ -5833,6 +5895,10 @@ a {
       .p-header #dropdown_menu_sanpham .item:hover h3 a {
         color: #4BA2FE;
         color: #fff; }
+
+i.zmdi-zalo {
+  font-size: 0.9em;
+  font-weight: bold; }
 
 .owl-carousel .owl-nav {
   pointer-events: none;
