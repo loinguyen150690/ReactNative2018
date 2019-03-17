@@ -13,10 +13,11 @@
     "prop-types": "^15.6.2",
     "react": "16.3.1",
     "react-native": "0.55.4",
-    "react-native-camera": "^1.0.0",
+    "react-native-camera": "^1.12.0",
     "react-native-firebase": "^4.2.0",
     "react-native-gifted-chat": "^0.4.3",
     "react-native-image-slider": "^2.0.3",
+    "react-native-qrcode-scanner": "^1.1.2",
     "react-native-slideshow": "^1.0.1",
     "react-native-vector-icons": "^4.6.0",
     "react-navigation": "^1.5.12"

@@ -34,8 +34,8 @@ import globals from "./Components/Styles/Globals.js";
 import styles from "./Components/Styles/Styles.js";
 
 //LoiNguyen @20180526 : firebase init
-import firebase from 'firebase';
-var config = {
+//import firebase from 'firebase';
+/*var config = {
   apiKey: "AIzaSyDgwAeVWyT3MMYQpU_MK7oFHqgym_IRCO8",
   authDomain: "bluedata-a6730.firebaseapp.com",
   databaseURL: "https://bluedata-a6730.firebaseio.com",
@@ -45,7 +45,7 @@ var config = {
 };
 if (!firebase.apps.length) {
   firebase.initializeApp(config);
-}
+}*/
 //end firebase
 
 export const LoginStack = StackNavigator({

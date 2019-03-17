@@ -1,8 +1,8 @@
 import React , { Component }  from 'react';
 import {Text, View} from 'react-native';
 import RootDrawer from './Router.js';
-import firebase from 'react-native-firebase';
-import type { Notification, NotificationOpen } from 'react-native-firebase';
+//import firebase from 'react-native-firebase';
+//import type { Notification, NotificationOpen } from 'react-native-firebase';
 
 export default class App extends Component<Props> {
 	componentDidMount = async () => {

@@ -36,13 +36,18 @@ import { withNavigationFocus } from "react-navigation";
 
     async componentWillMount() {
       //const { status } = await Permissions.askAsync(Permissions.CAMERA);
-      const status = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.CAMERA,{
-          'title': 'AndoridPermissionExample App Camera Permission',
-          'message': 'AndoridPermissionExample App needs access to your camera '
-        }
-      )
-      this.setState({ hasCameraPermission: status === PermissionsAndroid.RESULTS.GRANTED });
+      if (Platform.OS === 'android') {
+        const status = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.CAMERA,{
+            'title': 'AndoridPermissionExample App Camera Permission',
+            'message': 'AndoridPermissionExample App needs access to your camera '
+          }
+        )
+        this.setState({ hasCameraPermission: status === PermissionsAndroid.RESULTS.GRANTED });
+      }
+      else{
+        this.setState({ hasCameraPermission: true});
+      }
     }
 
     componentDidMount() {
@@ -76,7 +81,18 @@ import { withNavigationFocus } from "react-navigation";
             onBarCodeRead={this.onBarCodeRead}
             ref={cam => this.camera = cam}
             aspect={Camera.constants.Aspect.fill}
-            barCodeTypes={['org.iso.QRCode']}
+            barCodeTypes={['org.iso.QRCode',
+                            'org.gs1.UPC-E',
+                            "org.iso.Code39",
+                            "org.iso.Code39Mod43",
+                            "org.gs1.EAN-13",
+                            "org.gs1.EAN-8",
+                            "com.intermec.Code93",
+                            "org.iso.Code128",
+                            "org.iso.PDF417",
+                            "org.iso.QRCode",
+                            "org.iso.Aztec"
+                          ]}
             >
                 <Text style={{
                     backgroundColor: 'white'

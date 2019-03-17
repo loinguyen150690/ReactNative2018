@@ -8,6 +8,8 @@
 	<string>Sumikura</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleGetInfoString</key>
+	<string></string>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -21,14 +23,14 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>6</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-		<key>NSAllowsArbitraryLoadsInWebContent</key>
 		<true/>
 		<key>NSExceptionDomains</key>
 		<dict>
@@ -39,16 +41,14 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
-	<key>NSCameraUsageDescription</key>
-	<string>Để quét mã vạch sản phẩm</string>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Để lấy hình ảnh mã vạch sản phẩm</string>
-	<key>CFBundleGetInfoString</key>
+	<key>NSCameraUsageDescription</key>
+	<string>Để quét mã vạch sản phẩm</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
-	<key>LSApplicationCategoryType</key>
-	<string></string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Để sử dụng khi quét mã vạch sản phẩm</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Entypo.ttf</string>

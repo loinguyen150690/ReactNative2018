@@ -10,4 +10,24 @@ target 'Sumikura' do
   # pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   # pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
   
+  # pod 'FBSDKShareKit'
+  #pod 'RNVectorIcons', :podspec => '../node_modules/react-native-vector-icons/RNVectorIcons.podspec'
+  
+  #pod 'RNFirebase', :path => '../node_modules/react-native-firebase/ios'
+  
+  # Explicitly include Yoga if you are using RN >= 0.42.0
+  #pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
+  
+  # Third party deps podspec link
+  #pod 'react-native-camera', path: '../node_modules/react-native-camera'
+  #pod 'ReactNativePermissions', :path => '../node_modules/react-native-permissions'
+
+end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    if target.name == "React"
+      target.remove_from_project
+    end
+  end
 end
