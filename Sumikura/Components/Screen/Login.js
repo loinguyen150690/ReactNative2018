@@ -162,8 +162,8 @@ export default class Login extends Component<Props> {
     this.props.navigation.navigate('QuenMatKhau');
   }
   navToDangKy(){
-    Linking.openURL("http://baohanh.sumikura.com.vn/Agency/Register");
-    //this.props.navigation.navigate('DangKy');
+    //Linking.openURL("http://baohanh.sumikura.com.vn/Agency/Register");
+    this.props.navigation.navigate('DangKy');
   }
 
   render() {
